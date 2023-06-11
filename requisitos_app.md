@@ -9,3 +9,9 @@
 8. Exportación de resultados: La aplicación debe permitir a los usuarios exportar los resultados de los problemas resueltos en diferentes formatos, como archivos de pdf, gráficos, para su posterior análisis o presentación.
 9. Compatibilidad multiplataforma: La aplicación debe ser compatible con diferentes plataformas, como sistemas operativos de escritorio  y dispositivos móviles, para garantizar su accesibilidad y usabilidad en distintos entornos.
 
+# Requisitos no funcionales.
+1. Usabilidad: La interfaz de usuario debe ser intuitiva, fácil de usar para el usuario.
+2. Rendimiento: La aplicación debe ser eficiente en términos de uso de recursos y tiempo de respuesta, especialmente al resolver problemas de programación lineal complejos.
+3. Mantenibilidad: La aplicación debe ser fácil de mantener y actualizar. Debe seguir buenas prácticas de desarrollo de software para facilitar la corrección de errores, la introducción de nuevas funcionalidades y mejoras.
+4. Compatibilidad: La aplicación debe ser compatible con las versiones más recientes de los navegadores web y sistemas operativos móviles y de escritorio.
+5. Disponibilidad: La aplicación debe estar disponible para ser usada sin conexión a internet, incluso por usuarios ne registrados.
