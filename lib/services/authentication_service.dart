@@ -1,7 +1,8 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:window_location_href/window_location_href.dart';
 
 part 'authentication_service.g.dart';
 
@@ -37,9 +38,12 @@ class AuthenticationService extends _$AuthenticationService {
 
   Future<void> signInWithGoogle() async {
     try {
+      final Uri? location = href == null ? null : Uri.parse(href!);
       final account = ref.read(accountProvider);
       await account.createOAuth2Session(
         provider: 'google',
+        success: kIsWeb ? '${location?.origin}/auth.html' : null,
+
       );
     } catch (e) {
       debugPrint('error: $e');

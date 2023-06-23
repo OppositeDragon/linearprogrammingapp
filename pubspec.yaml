@@ -15,6 +15,7 @@ dependencies:
   go_router: ^8.0.1
   json_annotation: ^4.8.1
   riverpod_annotation: ^2.1.1
+  window_location_href: ^1.0.1+2
 
 dev_dependencies:
   flutter_test:
