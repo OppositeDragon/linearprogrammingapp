@@ -1,4 +1,5 @@
 import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -18,8 +19,7 @@ Account account(AccountRef ref) {
 @riverpod
 class AuthenticationService extends _$AuthenticationService {
   @override
-  void build() async {
-  }
+  void build() async {}
 
   Future<void> createEmailAndPasswordAccount(String email, String password) async {
     final user = await ref.read(accountProvider).create(userId: ID.unique(), email: email, password: password);
@@ -38,14 +38,16 @@ class AuthenticationService extends _$AuthenticationService {
   Future<void> signInWithGoogle() async {
     try {
       final account = ref.read(accountProvider);
-      final result = await account.createOAuth2Session(
+      await account.createOAuth2Session(
         provider: 'google',
       );
-      debugPrint('result:$result');
-      final accountAfter = await account.get();
-      debugPrint('google account: ${accountAfter.email}');
     } catch (e) {
       debugPrint('error: $e');
     }
+  }
+
+  Future<User> getAccount() async {
+    final account = ref.read(accountProvider);
+    return await account.get();
   }
 }

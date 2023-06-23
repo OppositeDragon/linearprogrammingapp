@@ -1,4 +1,5 @@
 import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -23,8 +24,9 @@ class LoginController extends _$LoginController {
     state = state.copyWith(isLogin: !state.isLogin);
   }
 
-  Future<void> authenticate(AuthenticationMethod method,[ String? email, String? password]) async {
-    state = state.copyWith(isLoading: true, authenticationMethod: method,email: email??'', password: password??'');
+  Future<User?> authenticate(AuthenticationMethod method, [String? email, String? password]) async {
+    User? user;
+    state = state.copyWith(isLoading: true, authenticationMethod: method, email: email ?? '', password: password ?? '');
     try {
       if (state.isLogin) {
         await logIn();
@@ -32,6 +34,7 @@ class LoginController extends _$LoginController {
         await createAccount();
       }
       state = state.copyWith(isLoggedIn: true);
+      user =  await getAccount();
     } on AppwriteException catch (e) {
       state = state.copyWith(isLoggedIn: false);
       switch (e.type) {
@@ -45,11 +48,10 @@ class LoginController extends _$LoginController {
           state = state.copyWith(
               exception: const LoginException('La clave debe tener por lo menos 8 caracteres, intente de nuevo.'));
           break;
-					case 'user_invalid_credentials':
-					debugPrint('catched: $e');
-					state = state.copyWith(
-							exception: const LoginException('Credenciales invalidas, intente de nuevo. '));
-					break;
+        case 'user_invalid_credentials':
+          debugPrint('catched: $e');
+          state = state.copyWith(exception: const LoginException('Credenciales invalidas, intente de nuevo. '));
+          break;
         default:
           debugPrint('default: $e');
           state = state.copyWith(exception: const LoginException('Error de backend.'));
@@ -61,6 +63,7 @@ class LoginController extends _$LoginController {
     } finally {
       state = state.copyWith(isLoading: false, exception: null);
     }
+		return user;
   }
 
   Future<void> createAccount() async {
@@ -81,10 +84,11 @@ class LoginController extends _$LoginController {
         break;
       default:
     }
-}
+  }
+
   Future<void> signInWithGoogle() async {
-		await ref.read(authenticationServiceProvider.notifier).signInWithGoogle();
-	}
+    await ref.read(authenticationServiceProvider.notifier).signInWithGoogle();
+  }
 
   Future<void> createEmailAndPasswordAccount() async {
     await ref.read(authenticationServiceProvider.notifier).createEmailAndPasswordAccount(state.email, state.password);
@@ -92,6 +96,10 @@ class LoginController extends _$LoginController {
 
   Future<void> logInEmailAndPassword() async {
     await ref.read(authenticationServiceProvider.notifier).logInEmailAndPassword(state.email, state.password);
+  }
+
+  Future<User> getAccount() async {
+    return await ref.read(authenticationServiceProvider.notifier).getAccount();
   }
 }
 

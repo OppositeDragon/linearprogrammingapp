@@ -145,10 +145,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             const SizedBox(height: spaceL),
                             GoogleSignInButton(
                               onPressed: () async {
-                                await ref
-                                    .read(loginControllerProvider.notifier)
-                                    .authenticate(AuthenticationMethod.google);
-                                ref.read(goRouterProvider).goNamed('home');
+                                await authenticate(AuthenticationMethod.google);
                               },
                             ),
                             const SizedBox(height: spaceL),
@@ -164,5 +161,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> authenticate(AuthenticationMethod method) async {
+    try {
+      final user = await ref.read(loginControllerProvider.notifier).authenticate(method);
+      debugPrint('user: ${user?.email}');
+      ref.read(goRouterProvider).goNamed('home');
+    } on Exception catch (e) {
+      debugPrint('autentication error: $e');
+    }
   }
 }

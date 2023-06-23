@@ -15,6 +15,7 @@ class MainApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       themeMode: ThemeMode.dark,
+      theme: ThemeData(useMaterial3: true),
       darkTheme: ThemeData.dark(useMaterial3: true),
       routerConfig: ref.watch(goRouterProvider),
     );
