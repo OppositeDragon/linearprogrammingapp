@@ -6,7 +6,7 @@ part of 'authentication_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$clientHash() => r'45b1f0205ce69ec209040cce9d0eec0eaf2f3a06';
+String _$clientHash() => r'6b93ae48b61f3835b0baec5ef808e47b6cd7ede5';
 
 /// See also [client].
 @ProviderFor(client)
@@ -35,7 +35,7 @@ final accountProvider = AutoDisposeProvider<Account>.internal(
 
 typedef AccountRef = AutoDisposeProviderRef<Account>;
 String _$authenticationServiceHash() =>
-    r'e3ded6083608950376fabbb066198db48e5e5ffb';
+    r'ef2b42359a991cf7f4e979b72569e2a992a38418';
 
 /// See also [AuthenticationService].
 @ProviderFor(AuthenticationService)

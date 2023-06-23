@@ -1,6 +1,6 @@
 {
-    "name": "linear_programming_app",
-    "short_name": "linear_programming_app",
+    "name": "linearprogrammingapp",
+    "short_name": "linearprogrammingapp",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

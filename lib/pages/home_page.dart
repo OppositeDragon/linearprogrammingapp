@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:linear_programming_app/services/authentication_service.dart';
+import 'package:go_router/go_router.dart'; 
+
+import '../services/authentication_service.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -10,6 +12,7 @@ class HomePage extends ConsumerWidget {
     return ElevatedButton(
       onPressed: () {
         ref.read(authenticationServiceProvider.notifier).logOut();
+        context.goNamed('login');
       },
       child: const Text('exit'),
     );

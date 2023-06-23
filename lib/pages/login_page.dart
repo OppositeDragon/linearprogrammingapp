@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/numeric.dart';
 import '../controllers/login_controller.dart';
+import '../controllers/router_controller.dart';
+import '../widgets/google_signin_button.dart';
 import '../widgets/textfield_widget.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -120,7 +122,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 : FilledButton(
                                     onPressed: () async {
                                       if (_loginFormKey.currentState!.validate()) {
-                                          ref.read(loginControllerProvider.notifier).authenticate(emailEditingController.text, passEditingController.text);
+                                        await ref.read(loginControllerProvider.notifier).authenticate(
+                                              AuthenticationMethod.emailAndPassword,
+                                              emailEditingController.text,
+                                              passEditingController.text,
+                                            );
+                                        ref.read(goRouterProvider).goNamed('home');
                                       }
                                     },
                                     child:
@@ -132,6 +139,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 ref.read(loginControllerProvider.notifier).toggleLogin();
                               },
                               child: loginState.isLogin ? const Text('Crear cuenta') : const Text('Iniciar sesión'),
+                            ),
+                            const SizedBox(height: spaceL),
+                            const Divider(),
+                            const SizedBox(height: spaceL),
+                            GoogleSignInButton(
+                              onPressed: () async {
+                                await ref
+                                    .read(loginControllerProvider.notifier)
+                                    .authenticate(AuthenticationMethod.google);
+                                ref.read(goRouterProvider).goNamed('home');
+                              },
                             ),
                             const SizedBox(height: spaceL),
                           ],

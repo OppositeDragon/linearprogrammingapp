@@ -23,8 +23,8 @@ class LoginController extends _$LoginController {
     state = state.copyWith(isLogin: !state.isLogin);
   }
 
-  Future<void> authenticate(String email, String password) async {
-    state = state.copyWith(isLoading: true, email: email, password: password);
+  Future<void> authenticate(AuthenticationMethod method,[ String? email, String? password]) async {
+    state = state.copyWith(isLoading: true, authenticationMethod: method,email: email??'', password: password??'');
     try {
       if (state.isLogin) {
         await logIn();
@@ -76,10 +76,15 @@ class LoginController extends _$LoginController {
     switch (state.authenticationMethod) {
       case AuthenticationMethod.emailAndPassword:
         await logInEmailAndPassword();
+      case AuthenticationMethod.google:
+        await signInWithGoogle();
         break;
       default:
     }
-  }
+}
+  Future<void> signInWithGoogle() async {
+		await ref.read(authenticationServiceProvider.notifier).signInWithGoogle();
+	}
 
   Future<void> createEmailAndPasswordAccount() async {
     await ref.read(authenticationServiceProvider.notifier).createEmailAndPasswordAccount(state.email, state.password);

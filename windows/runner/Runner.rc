@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "linear_programming_app" "\0"
+            VALUE "CompanyName", "app.oppositedragon.linearprogrammingapp" "\0"
+            VALUE "FileDescription", "linearprogrammingapp" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "linear_programming_app" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "linear_programming_app.exe" "\0"
-            VALUE "ProductName", "linear_programming_app" "\0"
+            VALUE "InternalName", "linearprogrammingapp" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 app.oppositedragon.linearprogrammingapp. All rights reserved." "\0"
+            VALUE "OriginalFilename", "linearprogrammingapp.exe" "\0"
+            VALUE "ProductName", "linearprogrammingapp" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
