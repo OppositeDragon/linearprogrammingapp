@@ -122,12 +122,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 : FilledButton(
                                     onPressed: () async {
                                       if (_loginFormKey.currentState!.validate()) {
-                                        await ref.read(loginControllerProvider.notifier).authenticate(
-                                              AuthenticationMethod.emailAndPassword,
-                                              emailEditingController.text,
-                                              passEditingController.text,
-                                            );
-                                        ref.read(goRouterProvider).goNamed('home');
+                                        authenticate(
+                                          AuthenticationMethod.emailAndPassword,
+                                          emailEditingController.text,
+                                          passEditingController.text,
+                                        );
                                       }
                                     },
                                     child:
@@ -163,13 +162,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
-  Future<void> authenticate(AuthenticationMethod method) async {
-    try {
-      final user = await ref.read(loginControllerProvider.notifier).authenticate(method);
-      debugPrint('user: ${user?.email}');
-      ref.read(goRouterProvider).goNamed('home');
-    } on Exception catch (e) {
-      debugPrint('autentication error: $e');
-    }
+  Future<void> authenticate(AuthenticationMethod method, [String? email, String? password]) async {
+    final user = await ref.read(loginControllerProvider.notifier).authenticate(method, email,password);
+    debugPrint('user: ${user?.email}');
+    if (user != null) ref.read(goRouterProvider).goNamed('home');
   }
 }

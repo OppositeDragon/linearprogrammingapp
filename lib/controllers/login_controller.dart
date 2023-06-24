@@ -46,7 +46,7 @@ class LoginController extends _$LoginController {
         case 'general_argument_invalid':
           debugPrint('catched: $e');
           state = state.copyWith(
-              exception: const LoginException('La clave debe tener por lo menos 8 caracteres, intente de nuevo.'));
+              exception: const LoginException('Asegurese de proveer una direccion de correo electronico valido, y una clave valida de por lo menos 8 caracteres. Intente de nuevo.'));
           break;
         case 'user_invalid_credentials':
           debugPrint('catched: $e');
