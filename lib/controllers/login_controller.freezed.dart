@@ -19,7 +19,6 @@ mixin _$LoginState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isVisible => throw _privateConstructorUsedError;
   bool get isLogin => throw _privateConstructorUsedError;
-  bool get isLoggedIn => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
   AuthenticationMethod get authenticationMethod =>
@@ -41,7 +40,6 @@ abstract class $LoginStateCopyWith<$Res> {
       {bool isLoading,
       bool isVisible,
       bool isLogin,
-      bool isLoggedIn,
       String email,
       String password,
       AuthenticationMethod authenticationMethod,
@@ -64,7 +62,6 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
     Object? isLoading = null,
     Object? isVisible = null,
     Object? isLogin = null,
-    Object? isLoggedIn = null,
     Object? email = null,
     Object? password = null,
     Object? authenticationMethod = null,
@@ -82,10 +79,6 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
       isLogin: null == isLogin
           ? _value.isLogin
           : isLogin // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isLoggedIn: null == isLoggedIn
-          ? _value.isLoggedIn
-          : isLoggedIn // ignore: cast_nullable_to_non_nullable
               as bool,
       email: null == email
           ? _value.email
@@ -119,7 +112,6 @@ abstract class _$$_LoginStateCopyWith<$Res>
       {bool isLoading,
       bool isVisible,
       bool isLogin,
-      bool isLoggedIn,
       String email,
       String password,
       AuthenticationMethod authenticationMethod,
@@ -140,7 +132,6 @@ class __$$_LoginStateCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? isVisible = null,
     Object? isLogin = null,
-    Object? isLoggedIn = null,
     Object? email = null,
     Object? password = null,
     Object? authenticationMethod = null,
@@ -158,10 +149,6 @@ class __$$_LoginStateCopyWithImpl<$Res>
       isLogin: null == isLogin
           ? _value.isLogin
           : isLogin // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isLoggedIn: null == isLoggedIn
-          ? _value.isLoggedIn
-          : isLoggedIn // ignore: cast_nullable_to_non_nullable
               as bool,
       email: null == email
           ? _value.email
@@ -190,7 +177,6 @@ class _$_LoginState extends _LoginState with DiagnosticableTreeMixin {
       {this.isLoading = false,
       this.isVisible = false,
       this.isLogin = true,
-      this.isLoggedIn = false,
       this.email = '',
       this.password = '',
       this.authenticationMethod = AuthenticationMethod.emailAndPassword,
@@ -208,9 +194,6 @@ class _$_LoginState extends _LoginState with DiagnosticableTreeMixin {
   final bool isLogin;
   @override
   @JsonKey()
-  final bool isLoggedIn;
-  @override
-  @JsonKey()
   final String email;
   @override
   @JsonKey()
@@ -223,7 +206,7 @@ class _$_LoginState extends _LoginState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LoginState(isLoading: $isLoading, isVisible: $isVisible, isLogin: $isLogin, isLoggedIn: $isLoggedIn, email: $email, password: $password, authenticationMethod: $authenticationMethod, exception: $exception)';
+    return 'LoginState(isLoading: $isLoading, isVisible: $isVisible, isLogin: $isLogin, email: $email, password: $password, authenticationMethod: $authenticationMethod, exception: $exception)';
   }
 
   @override
@@ -234,7 +217,6 @@ class _$_LoginState extends _LoginState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('isLoading', isLoading))
       ..add(DiagnosticsProperty('isVisible', isVisible))
       ..add(DiagnosticsProperty('isLogin', isLogin))
-      ..add(DiagnosticsProperty('isLoggedIn', isLoggedIn))
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('password', password))
       ..add(DiagnosticsProperty('authenticationMethod', authenticationMethod))
@@ -251,8 +233,6 @@ class _$_LoginState extends _LoginState with DiagnosticableTreeMixin {
             (identical(other.isVisible, isVisible) ||
                 other.isVisible == isVisible) &&
             (identical(other.isLogin, isLogin) || other.isLogin == isLogin) &&
-            (identical(other.isLoggedIn, isLoggedIn) ||
-                other.isLoggedIn == isLoggedIn) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
@@ -264,7 +244,7 @@ class _$_LoginState extends _LoginState with DiagnosticableTreeMixin {
 
   @override
   int get hashCode => Object.hash(runtimeType, isLoading, isVisible, isLogin,
-      isLoggedIn, email, password, authenticationMethod, exception);
+      email, password, authenticationMethod, exception);
 
   @JsonKey(ignore: true)
   @override
@@ -278,7 +258,6 @@ abstract class _LoginState extends LoginState {
       {final bool isLoading,
       final bool isVisible,
       final bool isLogin,
-      final bool isLoggedIn,
       final String email,
       final String password,
       final AuthenticationMethod authenticationMethod,
@@ -291,8 +270,6 @@ abstract class _LoginState extends LoginState {
   bool get isVisible;
   @override
   bool get isLogin;
-  @override
-  bool get isLoggedIn;
   @override
   String get email;
   @override

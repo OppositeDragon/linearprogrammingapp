@@ -1,5 +1,6 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/foundation.dart';
+import 'package:linearprogrammingapp/models/user_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:window_location_href/window_location_href.dart';
 
@@ -44,10 +45,10 @@ class AuthenticationService extends _$AuthenticationService {
     );
   }
 
-  Future<({String id, String email, String name})> getAccount() async {
+  Future<UserModel> getAccount() async {
     final account = ref.read(accountProvider);
     final userAccount = await account.get();
-    return (id: userAccount.$id, email: userAccount.email, name: userAccount.name);
+    return UserModel(id: userAccount.$id, email: userAccount.email, name: userAccount.name);
   }
 
   String? _successCallback() {

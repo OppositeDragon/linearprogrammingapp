@@ -1,6 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:linearprogrammingapp/models/user_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../services/authentication_service.dart';
@@ -24,9 +25,8 @@ class LoginController extends _$LoginController {
     state = state.copyWith(isLogin: !state.isLogin);
   }
 
-  Future<({String id, String email, String name})?> authenticate(AuthenticationMethod method,
-      [String? email, String? password]) async {
-    ({String id, String email, String name})? user;
+  Future<UserModel?> authenticate(AuthenticationMethod method, [String? email, String? password]) async {
+    UserModel? user;
     state = state.copyWith(isLoading: true, authenticationMethod: method, email: email ?? '', password: password ?? '');
     try {
       if (state.isLogin) {
@@ -37,9 +37,8 @@ class LoginController extends _$LoginController {
       await Future.delayed(const Duration(milliseconds: 500), () {});
       user = await getAccount();
       final loginBox = ref.read(dbLoginProvider);
-      loginBox.put(userKey, user);
+      loginBox.put(userKey, user.toJson());
     } on AppwriteException catch (e) {
-      state = state.copyWith(isLoggedIn: false);
       switch (e.type) {
         case 'user_already_exists':
           debugPrint('catched: $e');
@@ -63,7 +62,7 @@ class LoginController extends _$LoginController {
       }
     } catch (e) {
       debugPrint('other exception: $e');
-      state = state.copyWith(exception: const LoginException('Error.'), isLoggedIn: false);
+      state = state.copyWith(exception: const LoginException('Error.'));
     } finally {
       state = state.copyWith(isLoading: false, exception: null);
     }
@@ -88,7 +87,7 @@ class LoginController extends _$LoginController {
         await signInWithGoogle();
         break;
       case AuthenticationMethod.guest:
-        await signInAsGuest();
+        signInAsGuest();
         break;
       default:
         throw UnimplementedError();
@@ -107,19 +106,24 @@ class LoginController extends _$LoginController {
     await ref.read(authenticationServiceProvider.notifier).logInEmailAndPassword(state.email, state.password);
   }
 
-  Future<({String id, String email, String name})> getAccount() async {
+  Future<UserModel> getAccount() async {
+    if (AuthenticationMethod.guest == state.authenticationMethod) return signInAsGuest();
     return await ref.read(authenticationServiceProvider.notifier).getAccount();
   }
 
   Future<void> logOut() async {
-    await ref.read(authenticationServiceProvider.notifier).logOut();
-    final loginBox = ref.read(dbLoginProvider);
-    loginBox.deleteAll([userKey]);
-    state = const LoginState();
+    try {
+      final loginBox = ref.read(dbLoginProvider);
+      await loginBox.deleteAll([userKey]);
+      await ref.read(authenticationServiceProvider.notifier).logOut();
+      state = const LoginState();
+    } on AppwriteException catch (e) {
+			 debugPrint('logout: $e');
+		}
   }
 
-  signInAsGuest() {
-    return;
+  UserModel signInAsGuest() {
+    return const UserModel(id: 'guest', name: 'Invitado', email: '');
   }
 }
 
@@ -136,7 +140,6 @@ class LoginState with _$LoginState {
     @Default(false) bool isLoading,
     @Default(false) bool isVisible,
     @Default(true) bool isLogin,
-    @Default(false) bool isLoggedIn,
     @Default('') String email,
     @Default('') String password,
     @Default(AuthenticationMethod.emailAndPassword) AuthenticationMethod authenticationMethod,
