@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../services/authentication_service.dart';
+import 'db_controller.dart';
 
 part 'login_controller.freezed.dart';
 part 'login_controller.g.dart';
@@ -35,7 +36,8 @@ class LoginController extends _$LoginController {
       }
       await Future.delayed(const Duration(milliseconds: 500), () {});
       user = await getAccount();
-      state = state.copyWith(isLoggedIn: true);
+      final loginBox = ref.read(dbLoginProvider);
+      loginBox.put(userKey, user);
     } on AppwriteException catch (e) {
       state = state.copyWith(isLoggedIn: false);
       switch (e.type) {
@@ -74,6 +76,7 @@ class LoginController extends _$LoginController {
         await createEmailAndPasswordAccount();
         break;
       default:
+        throw UnimplementedError();
     }
   }
 
@@ -84,7 +87,11 @@ class LoginController extends _$LoginController {
       case AuthenticationMethod.google:
         await signInWithGoogle();
         break;
+      case AuthenticationMethod.guest:
+        await signInAsGuest();
+        break;
       default:
+        throw UnimplementedError();
     }
   }
 
@@ -102,6 +109,17 @@ class LoginController extends _$LoginController {
 
   Future<({String id, String email, String name})> getAccount() async {
     return await ref.read(authenticationServiceProvider.notifier).getAccount();
+  }
+
+  Future<void> logOut() async {
+    await ref.read(authenticationServiceProvider.notifier).logOut();
+    final loginBox = ref.read(dbLoginProvider);
+    loginBox.deleteAll([userKey]);
+    state = const LoginState();
+  }
+
+  signInAsGuest() {
+    return;
   }
 }
 

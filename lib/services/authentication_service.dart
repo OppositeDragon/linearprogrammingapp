@@ -51,8 +51,14 @@ class AuthenticationService extends _$AuthenticationService {
   }
 
   String? _successCallback() {
+    if (kIsWeb) {
+      final Uri? location = href == null ? null : Uri.parse(href!);
+      return '${location?.origin}/auth.html';
+    }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
+        return null;
+      case TargetPlatform.fuchsia:
         return null;
       case TargetPlatform.iOS:
         return null;
@@ -61,8 +67,7 @@ class AuthenticationService extends _$AuthenticationService {
       case TargetPlatform.linux || TargetPlatform.windows:
         return 'http://localhost:1001/auth/oauth2/success';
       default:
-        final Uri? location = href == null ? null : Uri.parse(href!);
-        return kIsWeb ? '${location?.origin}/auth.html' : null;
+        throw UnsupportedError('Unsupported platform');
     }
   }
 
