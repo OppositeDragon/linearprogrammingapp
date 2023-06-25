@@ -1,5 +1,4 @@
 import 'package:appwrite/appwrite.dart';
-import 'package:appwrite/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:window_location_href/window_location_href.dart';
@@ -37,19 +36,20 @@ class AuthenticationService extends _$AuthenticationService {
   }
 
   Future<void> signInWithGoogle() async {
-      
-      final account = ref.read(accountProvider);
-      await account.createOAuth2Session(
-        provider: 'google',
+    final account = ref.read(accountProvider);
+    await account.createOAuth2Session(
+      provider: 'google',
       success: _successCallback(),
+      failure: _failureCallback(),
     );
   }
 
-  Future<User> getAccount() async {
+  Future<({String id, String email, String name})> getAccount() async {
     final account = ref.read(accountProvider);
-    return await account.get();
+    final userAccount = await account.get();
+    return (id: userAccount.$id, email: userAccount.email, name: userAccount.name);
   }
-	
+
   String? _successCallback() {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -59,10 +59,17 @@ class AuthenticationService extends _$AuthenticationService {
       case TargetPlatform.macOS:
         return null;
       case TargetPlatform.linux || TargetPlatform.windows:
-        return 'http://localhost:9999/auth/oauth2/success';
+        return 'http://localhost:1001/auth/oauth2/success';
       default:
         final Uri? location = href == null ? null : Uri.parse(href!);
         return kIsWeb ? '${location?.origin}/auth.html' : null;
+    }
+  }
+
+  String? _failureCallback() {
+    switch (defaultTargetPlatform) {
+      default:
+        return '';
     }
   }
 }
