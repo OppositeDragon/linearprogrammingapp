@@ -37,10 +37,9 @@ class AuthenticationService extends _$AuthenticationService {
   }
 
   Future<void> signInWithGoogle() async {
-      
-      final account = ref.read(accountProvider);
-      await account.createOAuth2Session(
-        provider: 'google',
+    final account = ref.read(accountProvider);
+    await account.createOAuth2Session(
+      provider: 'google',
       success: _successCallback(),
     );
   }
@@ -49,20 +48,25 @@ class AuthenticationService extends _$AuthenticationService {
     final account = ref.read(accountProvider);
     return await account.get();
   }
-	
+
   String? _successCallback() {
+    if (kIsWeb) {
+      final Uri? location = href == null ? null : Uri.parse(href!);
+      return '${location?.origin}/auth.html';
+    }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
+        return null;
+      case TargetPlatform.fuchsia:
         return null;
       case TargetPlatform.iOS:
         return null;
       case TargetPlatform.macOS:
         return null;
       case TargetPlatform.linux || TargetPlatform.windows:
-        return 'http://localhost:9999/auth/oauth2/success';
+        return 'http://localhost:1001/auth/oauth2/success';
       default:
-        final Uri? location = href == null ? null : Uri.parse(href!);
-        return kIsWeb ? '${location?.origin}/auth.html' : null;
+        throw UnsupportedError('Unsupported platform');
     }
   }
 }

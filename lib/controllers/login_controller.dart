@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../services/authentication_service.dart';
+import 'db_controller.dart';
 
 part 'login_controller.freezed.dart';
 part 'login_controller.g.dart';
@@ -34,7 +35,9 @@ class LoginController extends _$LoginController {
         await createAccount();
       }
       state = state.copyWith(isLoggedIn: true);
-      user =  await getAccount();
+      user = await getAccount();
+      final loginBox = ref.read(dbLoginProvider);
+      loginBox.put(userKey, user.toMap());
     } on AppwriteException catch (e) {
       state = state.copyWith(isLoggedIn: false);
       switch (e.type) {
@@ -46,7 +49,8 @@ class LoginController extends _$LoginController {
         case 'general_argument_invalid':
           debugPrint('catched: $e');
           state = state.copyWith(
-              exception: const LoginException('Asegurese de proveer una direccion de correo electronico valido, y una clave valida de por lo menos 8 caracteres. Intente de nuevo.'));
+              exception: const LoginException(
+                  'Asegurese de proveer una direccion de correo electronico valido, y una clave valida de por lo menos 8 caracteres. Intente de nuevo.'));
           break;
         case 'user_invalid_credentials':
           debugPrint('catched: $e');
@@ -63,7 +67,7 @@ class LoginController extends _$LoginController {
     } finally {
       state = state.copyWith(isLoading: false, exception: null);
     }
-		return user;
+    return user;
   }
 
   Future<void> createAccount() async {
@@ -72,6 +76,7 @@ class LoginController extends _$LoginController {
         await createEmailAndPasswordAccount();
         break;
       default:
+        throw UnimplementedError();
     }
   }
 
@@ -82,7 +87,11 @@ class LoginController extends _$LoginController {
       case AuthenticationMethod.google:
         await signInWithGoogle();
         break;
+      case AuthenticationMethod.guest:
+        await signInAsGuest();
+        break;
       default:
+        throw UnimplementedError();
     }
   }
 
@@ -100,6 +109,17 @@ class LoginController extends _$LoginController {
 
   Future<User> getAccount() async {
     return await ref.read(authenticationServiceProvider.notifier).getAccount();
+  }
+
+  Future<void> logOut() async {
+    await ref.read(authenticationServiceProvider.notifier).logOut();
+    final loginBox = ref.read(dbLoginProvider);
+    loginBox.deleteAll([userKey]);
+    state = const LoginState();
+  }
+
+  signInAsGuest() {
+    return;
   }
 }
 

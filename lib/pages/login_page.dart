@@ -148,6 +148,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               },
                             ),
                             const SizedBox(height: spaceL),
+                            const Divider(),
+                            const SizedBox(height: spaceL),
+                            TextButton(
+                              onPressed: () async {
+                                await authenticate(AuthenticationMethod.guest);
+                              },
+                              child: const Text('Ingresar como invitado'),
+                            ),
                           ],
                         ),
                       ),
@@ -163,8 +171,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   Future<void> authenticate(AuthenticationMethod method, [String? email, String? password]) async {
-    final user = await ref.read(loginControllerProvider.notifier).authenticate(method, email,password);
+    final user = await ref.read(loginControllerProvider.notifier).authenticate(method, email, password);
     debugPrint('user: ${user?.email}');
-    if (user != null) ref.read(goRouterProvider).goNamed('home');
+    //  if (user != null) ref.read(goRouterProvider).goNamed('home');
   }
 }
