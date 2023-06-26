@@ -99,7 +99,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               action: loginState.isLogin ? TextInputAction.done : TextInputAction.next,
                               onEditingComplete: () {},
                               suffixIcon: IconButton(
-                                onPressed: () => ref.read(loginControllerProvider.notifier).toggleVisibility(),
+                                onPressed: loginState.isLoading
+                                    ? null
+                                    : () => ref.read(loginControllerProvider.notifier).toggleVisibility(),
                                 icon: loginState.isVisible
                                     ? const Icon(Icons.visibility_off)
                                     : const Icon(Icons.visibility),
@@ -153,29 +155,32 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                             passEditingController.text,
                                           );
                                         }
-																				
                                       },
                               ),
                             const SizedBox(height: spaceXXXL),
                             loginState.isLoading
                                 ? const Center(child: CircularProgressIndicator())
                                 : FilledButton(
-                                    onPressed: () async {
-                                      if (_loginFormKey.currentState!.validate()) {
-                                        authenticate(
-                                          AuthenticationMethod.emailAndPassword,
-                                          nameEditingController.text,
-                                          emailEditingController.text,
-                                          passEditingController.text,
-                                        );
-                                      }
-                                    },
+                                    onPressed: loginState.isLoading
+                                        ? null
+                                        : () async {
+                                            if (_loginFormKey.currentState!.validate()) {
+                                              authenticate(
+                                                AuthenticationMethod.emailAndPassword,
+                                                nameEditingController.text,
+                                                emailEditingController.text,
+                                                passEditingController.text,
+                                              );
+                                            }
+                                          },
                                     child:
                                         loginState.isLogin ? const Text('Iniciar sesión') : const Text('Crear cuenta'),
                                   ),
                             const SizedBox(height: spaceXL),
                             TextButton(
-                              onPressed: () => ref.read(loginControllerProvider.notifier).toggleLogin(),
+                              onPressed: loginState.isLoading
+                                  ? null
+                                  : () => ref.read(loginControllerProvider.notifier).toggleLogin(),
                               child: loginState.isLogin ? const Text('Crear cuenta') : const Text('Iniciar sesión'),
                             ),
                             if (loginState.isLogin) const SizedBox(height: spaceL),
@@ -183,14 +188,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             if (loginState.isLogin) const SizedBox(height: spaceL),
                             if (loginState.isLogin)
                               GoogleSignInButton(
-                                onPressed: () async => await authenticate(AuthenticationMethod.google),
+                                onPressed: loginState.isLoading
+                                    ? null
+                                    : () async => await authenticate(AuthenticationMethod.google),
                               ),
                             if (loginState.isLogin) const SizedBox(height: spaceL),
                             if (loginState.isLogin) const Divider(),
                             if (loginState.isLogin) const SizedBox(height: spaceL),
                             if (loginState.isLogin)
                               TextButton(
-                                onPressed: () async => await authenticate(AuthenticationMethod.guest),
+                                onPressed: loginState.isLoading
+                                    ? null
+                                    : () async => await authenticate(AuthenticationMethod.guest),
                                 child: const Text('Ingresar como invitado'),
                               ),
                           ],

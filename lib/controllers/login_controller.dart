@@ -1,5 +1,6 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:linearprogrammingapp/models/user_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -59,6 +60,17 @@ class LoginController extends _$LoginController {
         default:
           debugPrint('default: $e');
           state = state.copyWith(exception: const LoginException('Error de backend.'));
+          break;
+      }
+    } on PlatformException catch (e) {
+      switch (e.code) {
+        case 'CANCELED':
+          debugPrint('catched: $e');
+          state = state.copyWith(exception: const LoginException('Ha cancelado el proceso de inicio de sesion.'));
+          break;
+        default:
+          debugPrint('platform exception default: $e');
+          state = state.copyWith(exception: const LoginException('Error de plataforma. '));
           break;
       }
     } catch (e) {
