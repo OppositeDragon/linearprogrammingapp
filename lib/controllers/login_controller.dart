@@ -25,19 +25,20 @@ class LoginController extends _$LoginController {
     state = state.copyWith(isLogin: !state.isLogin);
   }
 
-  Future<UserModel?> authenticate(AuthenticationMethod method, [String? email, String? password]) async {
-    UserModel? user;
-    state = state.copyWith(isLoading: true, authenticationMethod: method, email: email ?? '', password: password ?? '');
+  Future<void> authenticate(AuthenticationMethod method, [String? name, String? email, String? password]) async {
+    state = state.copyWith(
+      isLoading: true,
+      authenticationMethod: method,
+      name: name ?? '',
+      email: email ?? '',
+      password: password ?? '',
+    );
     try {
       if (state.isLogin) {
         await logIn();
       } else {
         await createAccount();
       }
-      await Future.delayed(const Duration(milliseconds: 500), () {});
-      user = await getAccount();
-      final loginBox = ref.read(dbLoginProvider);
-      loginBox.put(userKey, user.toJson());
     } on AppwriteException catch (e) {
       switch (e.type) {
         case 'user_already_exists':
@@ -66,7 +67,6 @@ class LoginController extends _$LoginController {
     } finally {
       state = state.copyWith(isLoading: false, exception: null);
     }
-    return user;
   }
 
   Future<void> createAccount() async {
@@ -77,6 +77,7 @@ class LoginController extends _$LoginController {
       default:
         throw UnimplementedError();
     }
+    logIn();
   }
 
   Future<void> logIn() async {
@@ -92,6 +93,11 @@ class LoginController extends _$LoginController {
       default:
         throw UnimplementedError();
     }
+    await Future.delayed(const Duration(milliseconds: 500), () {});
+    UserModel user = await getAccount();
+    final loginBox = ref.read(dbLoginProvider);
+    loginBox.put(userKey, user.toJson());
+    debugPrint('user: ${user.toString()}');
   }
 
   Future<void> signInWithGoogle() async {
@@ -99,11 +105,16 @@ class LoginController extends _$LoginController {
   }
 
   Future<void> createEmailAndPasswordAccount() async {
-    await ref.read(authenticationServiceProvider.notifier).createEmailAndPasswordAccount(state.email, state.password);
+    await ref
+        .read(authenticationServiceProvider.notifier)
+        .createEmailAndPasswordAccount(state.name, state.email, state.password);
   }
 
   Future<void> logInEmailAndPassword() async {
-    await ref.read(authenticationServiceProvider.notifier).logInEmailAndPassword(state.email, state.password);
+    await ref.read(authenticationServiceProvider.notifier).logInEmailAndPassword(
+          state.email,
+          state.password,
+        );
   }
 
   Future<UserModel> getAccount() async {
@@ -118,8 +129,8 @@ class LoginController extends _$LoginController {
       await ref.read(authenticationServiceProvider.notifier).logOut();
       state = const LoginState();
     } on AppwriteException catch (e) {
-			 debugPrint('logout: $e');
-		}
+      debugPrint('logout: $e');
+    }
   }
 
   UserModel signInAsGuest() {
@@ -140,6 +151,7 @@ class LoginState with _$LoginState {
     @Default(false) bool isLoading,
     @Default(false) bool isVisible,
     @Default(true) bool isLogin,
+    @Default('') String name,
     @Default('') String email,
     @Default('') String password,
     @Default(AuthenticationMethod.emailAndPassword) AuthenticationMethod authenticationMethod,

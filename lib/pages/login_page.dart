@@ -15,12 +15,14 @@ class LoginPage extends ConsumerStatefulWidget {
 
 class _LoginPageState extends ConsumerState<LoginPage> {
   final _loginFormKey = GlobalKey<FormState>();
+  late final TextEditingController nameEditingController;
   late final TextEditingController emailEditingController;
   late final TextEditingController passEditingController;
   late final TextEditingController pass2EditingController;
   @override
   void initState() {
     super.initState();
+    nameEditingController = TextEditingController();
     emailEditingController = TextEditingController();
     passEditingController = TextEditingController();
     pass2EditingController = TextEditingController();
@@ -28,6 +30,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   void dispose() {
+    nameEditingController.dispose();
     emailEditingController.dispose();
     passEditingController.dispose();
     pass2EditingController.dispose();
@@ -65,14 +68,27 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               style: textTheme.headlineSmall!.copyWith(color: colorScheme.primary),
                               textAlign: TextAlign.center,
                             ),
-                            const SizedBox(height: spaceXXXL),
+                            const SizedBox(height: spaceXXL),
+                            if (!loginState.isLogin)
+                              TextFieldWidget(
+                                controller: nameEditingController,
+                                action: TextInputAction.next,
+                                label: 'Nombre a mostrar',
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Debe proveer un nombre de usuario';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            if (!loginState.isLogin) const SizedBox(height: spaceL),
                             TextFieldWidget(
                               controller: emailEditingController,
                               action: TextInputAction.next,
                               label: 'Correo electrónico',
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Debe proveer la identificacion del usuario a conectarse';
+                                  return 'Correo electronico es obligatorio';
                                 }
                                 return null;
                               },
@@ -80,7 +96,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             const SizedBox(height: spaceL),
                             TextFieldWidget(
                               controller: passEditingController,
-                              action: TextInputAction.done,
+                              action: loginState.isLogin ? TextInputAction.done : TextInputAction.next,
                               onEditingComplete: () {},
                               suffixIcon: IconButton(
                                 onPressed: () => ref.read(loginControllerProvider.notifier).toggleVisibility(),
@@ -96,6 +112,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 }
                                 return null;
                               },
+                              onFieldSubmitted: loginState.isLogin
+                                  ? (String value) {
+                                      if (_loginFormKey.currentState!.validate()) {
+                                        authenticate(
+                                          AuthenticationMethod.emailAndPassword,
+                                          nameEditingController.text,
+                                          emailEditingController.text,
+                                          passEditingController.text,
+                                        );
+                                      }
+                                    }
+                                  : null,
                             ),
                             const SizedBox(height: spaceL),
                             if (!loginState.isLogin)
@@ -110,10 +138,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                     return 'Este campo no puede estar vacio';
                                   }
                                   if (value != passEditingController.text) {
-                                    return 'La clave coincide';
+                                    return 'La clave no coincide';
                                   }
                                   return null;
                                 },
+                                onFieldSubmitted: loginState.isLogin
+                                    ? null
+                                    : (String value) {
+                                        if (_loginFormKey.currentState!.validate()) {
+                                          authenticate(
+                                            AuthenticationMethod.emailAndPassword,
+                                            nameEditingController.text,
+                                            emailEditingController.text,
+                                            passEditingController.text,
+                                          );
+                                        }
+																				
+                                      },
                               ),
                             const SizedBox(height: spaceXXXL),
                             loginState.isLoading
@@ -123,6 +164,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                       if (_loginFormKey.currentState!.validate()) {
                                         authenticate(
                                           AuthenticationMethod.emailAndPassword,
+                                          nameEditingController.text,
                                           emailEditingController.text,
                                           passEditingController.text,
                                         );
@@ -133,28 +175,24 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   ),
                             const SizedBox(height: spaceXL),
                             TextButton(
-                              onPressed: () {
-                                ref.read(loginControllerProvider.notifier).toggleLogin();
-                              },
+                              onPressed: () => ref.read(loginControllerProvider.notifier).toggleLogin(),
                               child: loginState.isLogin ? const Text('Crear cuenta') : const Text('Iniciar sesión'),
                             ),
-                            const SizedBox(height: spaceL),
-                            const Divider(),
-                            const SizedBox(height: spaceL),
-                            GoogleSignInButton(
-                              onPressed: () async {
-                                await authenticate(AuthenticationMethod.google);
-                              },
-                            ),
-                            const SizedBox(height: spaceL),
-                            const Divider(),
-                            const SizedBox(height: spaceL),
-                            TextButton(
-                              onPressed: () async {
-                                await authenticate(AuthenticationMethod.guest);
-                              },
-                              child: const Text('Ingresar como invitado'),
-                            ),
+                            if (loginState.isLogin) const SizedBox(height: spaceL),
+                            if (loginState.isLogin) const Divider(),
+                            if (loginState.isLogin) const SizedBox(height: spaceL),
+                            if (loginState.isLogin)
+                              GoogleSignInButton(
+                                onPressed: () async => await authenticate(AuthenticationMethod.google),
+                              ),
+                            if (loginState.isLogin) const SizedBox(height: spaceL),
+                            if (loginState.isLogin) const Divider(),
+                            if (loginState.isLogin) const SizedBox(height: spaceL),
+                            if (loginState.isLogin)
+                              TextButton(
+                                onPressed: () async => await authenticate(AuthenticationMethod.guest),
+                                child: const Text('Ingresar como invitado'),
+                              ),
                           ],
                         ),
                       ),
@@ -169,9 +207,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
-  Future<void> authenticate(AuthenticationMethod method, [String? email, String? password]) async {
-    final user = await ref.read(loginControllerProvider.notifier).authenticate(method, email, password);
-    debugPrint('user: ${user.toString()}');
-    //  if (user != null) ref.read(goRouterProvider).goNamed('home');
+  Future<void> authenticate(AuthenticationMethod method, [String? name, String? email, String? password]) async {
+    await ref.read(loginControllerProvider.notifier).authenticate(method, name, email, password);
   }
 }

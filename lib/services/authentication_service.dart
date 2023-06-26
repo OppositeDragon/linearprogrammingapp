@@ -22,8 +22,13 @@ class AuthenticationService extends _$AuthenticationService {
   @override
   void build() async {}
 
-  Future<void> createEmailAndPasswordAccount(String email, String password) async {
-    final user = await ref.read(accountProvider).create(userId: ID.unique(), email: email, password: password);
+  Future<void> createEmailAndPasswordAccount(String name, String email, String password) async {
+    final user = await ref.read(accountProvider).create(
+          userId: ID.unique(),
+          name: name,
+          email: email,
+          password: password,
+        );
     debugPrint('user: ${user.email}');
   }
 
