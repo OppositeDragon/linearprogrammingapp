@@ -7,11 +7,11 @@ part of 'data_entry_controller.dart';
 // **************************************************************************
 
 String _$dataEntrySizeControllerHash() =>
-    r'b772beda70aa4a81b01ff8885ff8e67b7e94de5d';
+    r'd57777cc42ca2ab711a7eaf477fed2f9612e8ea4';
 
 /// See also [DataEntrySizeController].
 @ProviderFor(DataEntrySizeController)
-final dataEntrySizeControllerProvider = AutoDisposeNotifierProvider<
+final dataEntrySizeControllerProvider = NotifierProvider<
     DataEntrySizeController, ({int constraints, int variables})>.internal(
   DataEntrySizeController.new,
   name: r'dataEntrySizeControllerProvider',
@@ -23,5 +23,38 @@ final dataEntrySizeControllerProvider = AutoDisposeNotifierProvider<
 );
 
 typedef _$DataEntrySizeController
-    = AutoDisposeNotifier<({int constraints, int variables})>;
+    = Notifier<({int constraints, int variables})>;
+String _$processControllerHash() => r'eed574c72011cce3200d442c05d2ef6ba708386a';
+
+/// See also [ProcessController].
+@ProviderFor(ProcessController)
+final processControllerProvider =
+    NotifierProvider<ProcessController, ProcessTypes>.internal(
+  ProcessController.new,
+  name: r'processControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$processControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ProcessController = Notifier<ProcessTypes>;
+String _$dataEntryControllerHash() =>
+    r'9273f58fb69e926ef8f5696af250c488cd13ce76';
+
+/// See also [DataEntryController].
+@ProviderFor(DataEntryController)
+final dataEntryControllerProvider =
+    NotifierProvider<DataEntryController, DataEntryModel>.internal(
+  DataEntryController.new,
+  name: r'dataEntryControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$dataEntryControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$DataEntryController = Notifier<DataEntryModel>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

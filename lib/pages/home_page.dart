@@ -20,6 +20,7 @@ class HomePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Linear Programming App'),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),

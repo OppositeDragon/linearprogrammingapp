@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:linearprogrammingapp/constants/enums.dart';
 import 'package:linearprogrammingapp/constants/numeric.dart';
 import 'package:linearprogrammingapp/controllers/data_entry_controller.dart';
+import 'package:linearprogrammingapp/controllers/router_controller.dart';
 
+import 'dropdown_button_widget.dart';
 import 'textfield_widget.dart';
 
 class DataSizeEntryWidget extends ConsumerStatefulWidget {
@@ -37,7 +40,22 @@ class _DataSizeEntryWidgetState extends ConsumerState<DataSizeEntryWidget> {
             int.parse(variablesController.text),
             int.parse(constraintsController.text),
           );
+      ref.read(goRouterProvider).pop();
+      ref.read(goRouterProvider).goNamed('data-entry');
     }
+  }
+
+  bool isVariablesValid() {
+    if (variablesController.text.isEmpty) {
+      return false;
+    }
+    if (int.tryParse(variablesController.text) == null) {
+      return false;
+    }
+    if (int.parse(variablesController.text) == 2) {
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -78,6 +96,7 @@ class _DataSizeEntryWidgetState extends ConsumerState<DataSizeEntryWidget> {
                     }
                     return null;
                   },
+                  onChanged: (_) => setState(() {}),
                 ),
                 const SizedBox(height: spaceL),
                 TextFieldWidget(
@@ -95,6 +114,23 @@ class _DataSizeEntryWidgetState extends ConsumerState<DataSizeEntryWidget> {
                     return null;
                   },
                 ),
+                if (isVariablesValid()) const SizedBox(height: spaceL),
+                if (isVariablesValid())
+                  DropdownButtonWidget<ProcessTypes>(
+                    label: 'Algoritmo a utilizar',
+                    value: ref.watch(processControllerProvider),
+                    onChanged: (value) {
+                      if (value == null) return;
+                      ref.read(processControllerProvider.notifier).updateProcess(value);
+                    },
+                    items: [
+                      for (final process in ProcessTypes.values)
+                        DropdownMenuItem(
+                          value: process,
+                          child: Text(process.label),
+                        )
+                    ],
+                  ),
                 const SizedBox(height: spaceXXXL),
                 FilledButton(onPressed: updateValues, child: const Text('Continuar'))
               ],
