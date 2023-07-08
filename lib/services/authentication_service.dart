@@ -23,17 +23,25 @@ class AuthenticationService extends _$AuthenticationService {
   void build() async {}
 
   Future<void> createEmailAndPasswordAccount(String name, String email, String password) async {
-    final user = await ref.read(accountProvider).create(
-          userId: ID.unique(),
-          name: name,
-          email: email,
-          password: password,
-        );
+    final account = ref.read(accountProvider);
+    final user = await account.create(
+      userId: ID.unique(),
+      name: name,
+      email: email,
+      password: password,
+    );
     debugPrint('user: ${user.email}');
   }
 
-  Future<void> logInEmailAndPassword(String email, String password) async {
-    final session = await ref.read(accountProvider).createEmailSession(email: email, password: password);
+  Future<void> logInEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    final account = ref.read(accountProvider);
+    final session = await account.createEmailSession(
+      email: email,
+      password: password,
+    );
     debugPrint('session: ${session.userId}');
   }
 
@@ -43,11 +51,12 @@ class AuthenticationService extends _$AuthenticationService {
 
   Future<void> signInWithGoogle() async {
     final account = ref.read(accountProvider);
-    await account.createOAuth2Session(
+    final result = await account.createOAuth2Session(
       provider: 'google',
       success: _successCallback(),
       failure: _failureCallback(),
     );
+    debugPrint('google siginresult: $result');
   }
 
   Future<UserModel> getAccount() async {
