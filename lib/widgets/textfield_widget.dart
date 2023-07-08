@@ -31,6 +31,7 @@ class TextFieldWidget extends StatefulWidget {
     this.controller,
     this.prefixIcon,
     this.suffixIcon,
+    this.keyboardType,
     super.key,
   });
   final TextInputAction action;
@@ -59,6 +60,7 @@ class TextFieldWidget extends StatefulWidget {
   final TextEditingController? controller;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final TextInputType? keyboardType;
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -69,6 +71,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
+      keyboardType: widget.keyboardType,
       textInputAction: widget.action,
       style: widget.style,
       readOnly: widget.readOnly,
