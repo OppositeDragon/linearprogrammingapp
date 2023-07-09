@@ -20,10 +20,10 @@ DataEntryModel _$DataEntryModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DataEntryModel {
-  List<double> get objectiveFunction => throw _privateConstructorUsedError;
-  List<List<double>> get constraints => throw _privateConstructorUsedError;
-  List<Operators> get operators => throw _privateConstructorUsedError;
   Objectives get objective => throw _privateConstructorUsedError;
+  List<double> get objectiveFunction => throw _privateConstructorUsedError;
+  List<Operators> get operators => throw _privateConstructorUsedError;
+  List<List<double>> get constraints => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,10 +38,10 @@ abstract class $DataEntryModelCopyWith<$Res> {
       _$DataEntryModelCopyWithImpl<$Res, DataEntryModel>;
   @useResult
   $Res call(
-      {List<double> objectiveFunction,
-      List<List<double>> constraints,
+      {Objectives objective,
+      List<double> objectiveFunction,
       List<Operators> operators,
-      Objectives objective});
+      List<List<double>> constraints});
 }
 
 /// @nodoc
@@ -57,28 +57,28 @@ class _$DataEntryModelCopyWithImpl<$Res, $Val extends DataEntryModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? objectiveFunction = null,
-    Object? constraints = null,
-    Object? operators = null,
     Object? objective = null,
+    Object? objectiveFunction = null,
+    Object? operators = null,
+    Object? constraints = null,
   }) {
     return _then(_value.copyWith(
-      objectiveFunction: null == objectiveFunction
-          ? _value.objectiveFunction
-          : objectiveFunction // ignore: cast_nullable_to_non_nullable
-              as List<double>,
-      constraints: null == constraints
-          ? _value.constraints
-          : constraints // ignore: cast_nullable_to_non_nullable
-              as List<List<double>>,
-      operators: null == operators
-          ? _value.operators
-          : operators // ignore: cast_nullable_to_non_nullable
-              as List<Operators>,
       objective: null == objective
           ? _value.objective
           : objective // ignore: cast_nullable_to_non_nullable
               as Objectives,
+      objectiveFunction: null == objectiveFunction
+          ? _value.objectiveFunction
+          : objectiveFunction // ignore: cast_nullable_to_non_nullable
+              as List<double>,
+      operators: null == operators
+          ? _value.operators
+          : operators // ignore: cast_nullable_to_non_nullable
+              as List<Operators>,
+      constraints: null == constraints
+          ? _value.constraints
+          : constraints // ignore: cast_nullable_to_non_nullable
+              as List<List<double>>,
     ) as $Val);
   }
 }
@@ -92,10 +92,10 @@ abstract class _$$_DataEntryModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<double> objectiveFunction,
-      List<List<double>> constraints,
+      {Objectives objective,
+      List<double> objectiveFunction,
       List<Operators> operators,
-      Objectives objective});
+      List<List<double>> constraints});
 }
 
 /// @nodoc
@@ -109,28 +109,28 @@ class __$$_DataEntryModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? objectiveFunction = null,
-    Object? constraints = null,
-    Object? operators = null,
     Object? objective = null,
+    Object? objectiveFunction = null,
+    Object? operators = null,
+    Object? constraints = null,
   }) {
     return _then(_$_DataEntryModel(
-      objectiveFunction: null == objectiveFunction
-          ? _value._objectiveFunction
-          : objectiveFunction // ignore: cast_nullable_to_non_nullable
-              as List<double>,
-      constraints: null == constraints
-          ? _value._constraints
-          : constraints // ignore: cast_nullable_to_non_nullable
-              as List<List<double>>,
-      operators: null == operators
-          ? _value._operators
-          : operators // ignore: cast_nullable_to_non_nullable
-              as List<Operators>,
       objective: null == objective
           ? _value.objective
           : objective // ignore: cast_nullable_to_non_nullable
               as Objectives,
+      objectiveFunction: null == objectiveFunction
+          ? _value._objectiveFunction
+          : objectiveFunction // ignore: cast_nullable_to_non_nullable
+              as List<double>,
+      operators: null == operators
+          ? _value._operators
+          : operators // ignore: cast_nullable_to_non_nullable
+              as List<Operators>,
+      constraints: null == constraints
+          ? _value._constraints
+          : constraints // ignore: cast_nullable_to_non_nullable
+              as List<List<double>>,
     ));
   }
 }
@@ -139,17 +139,19 @@ class __$$_DataEntryModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_DataEntryModel implements _DataEntryModel {
   const _$_DataEntryModel(
-      {required final List<double> objectiveFunction,
-      required final List<List<double>> constraints,
+      {required this.objective,
+      required final List<double> objectiveFunction,
       required final List<Operators> operators,
-      required this.objective})
+      required final List<List<double>> constraints})
       : _objectiveFunction = objectiveFunction,
-        _constraints = constraints,
-        _operators = operators;
+        _operators = operators,
+        _constraints = constraints;
 
   factory _$_DataEntryModel.fromJson(Map<String, dynamic> json) =>
       _$$_DataEntryModelFromJson(json);
 
+  @override
+  final Objectives objective;
   final List<double> _objectiveFunction;
   @override
   List<double> get objectiveFunction {
@@ -157,14 +159,6 @@ class _$_DataEntryModel implements _DataEntryModel {
       return _objectiveFunction;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_objectiveFunction);
-  }
-
-  final List<List<double>> _constraints;
-  @override
-  List<List<double>> get constraints {
-    if (_constraints is EqualUnmodifiableListView) return _constraints;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_constraints);
   }
 
   final List<Operators> _operators;
@@ -175,12 +169,17 @@ class _$_DataEntryModel implements _DataEntryModel {
     return EqualUnmodifiableListView(_operators);
   }
 
+  final List<List<double>> _constraints;
   @override
-  final Objectives objective;
+  List<List<double>> get constraints {
+    if (_constraints is EqualUnmodifiableListView) return _constraints;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_constraints);
+  }
 
   @override
   String toString() {
-    return 'DataEntryModel(objectiveFunction: $objectiveFunction, constraints: $constraints, operators: $operators, objective: $objective)';
+    return 'DataEntryModel(objective: $objective, objectiveFunction: $objectiveFunction, operators: $operators, constraints: $constraints)';
   }
 
   @override
@@ -188,24 +187,24 @@ class _$_DataEntryModel implements _DataEntryModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DataEntryModel &&
+            (identical(other.objective, objective) ||
+                other.objective == objective) &&
             const DeepCollectionEquality()
                 .equals(other._objectiveFunction, _objectiveFunction) &&
             const DeepCollectionEquality()
-                .equals(other._constraints, _constraints) &&
-            const DeepCollectionEquality()
                 .equals(other._operators, _operators) &&
-            (identical(other.objective, objective) ||
-                other.objective == objective));
+            const DeepCollectionEquality()
+                .equals(other._constraints, _constraints));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      objective,
       const DeepCollectionEquality().hash(_objectiveFunction),
-      const DeepCollectionEquality().hash(_constraints),
       const DeepCollectionEquality().hash(_operators),
-      objective);
+      const DeepCollectionEquality().hash(_constraints));
 
   @JsonKey(ignore: true)
   @override
@@ -223,22 +222,22 @@ class _$_DataEntryModel implements _DataEntryModel {
 
 abstract class _DataEntryModel implements DataEntryModel {
   const factory _DataEntryModel(
-      {required final List<double> objectiveFunction,
-      required final List<List<double>> constraints,
+      {required final Objectives objective,
+      required final List<double> objectiveFunction,
       required final List<Operators> operators,
-      required final Objectives objective}) = _$_DataEntryModel;
+      required final List<List<double>> constraints}) = _$_DataEntryModel;
 
   factory _DataEntryModel.fromJson(Map<String, dynamic> json) =
       _$_DataEntryModel.fromJson;
 
   @override
-  List<double> get objectiveFunction;
+  Objectives get objective;
   @override
-  List<List<double>> get constraints;
+  List<double> get objectiveFunction;
   @override
   List<Operators> get operators;
   @override
-  Objectives get objective;
+  List<List<double>> get constraints;
   @override
   @JsonKey(ignore: true)
   _$$_DataEntryModelCopyWith<_$_DataEntryModel> get copyWith =>

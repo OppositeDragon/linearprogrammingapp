@@ -41,7 +41,7 @@ final processControllerProvider =
 
 typedef _$ProcessController = Notifier<ProcessTypes>;
 String _$dataEntryControllerHash() =>
-    r'9273f58fb69e926ef8f5696af250c488cd13ce76';
+    r'186883734c29be12435f31b3a20f27fe381d21a2';
 
 /// See also [DataEntryController].
 @ProviderFor(DataEntryController)

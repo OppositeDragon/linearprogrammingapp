@@ -38,10 +38,9 @@ class DataEntryController extends _$DataEntryController {
   DataEntryModel build() {
     final dataSize = ref.watch(dataEntrySizeControllerProvider);
     return DataEntryModel(
-      objectiveFunction: List.generate(dataSize.variables, (index) => 0.0),
-      constraints:
-          List.generate(dataSize.constraints, (index) => List.generate(dataSize.variables + 1, (index) => 0.0)),
-      operators: List.generate(dataSize.constraints, (index) => Operators.leq),
+      objectiveFunction: List.generate(dataSize.variables, (i) => 0.0),
+      constraints: List.generate(dataSize.constraints, (i) => List.generate(dataSize.variables + 1, (j) => 0.0)),
+      operators: List.generate(dataSize.constraints, (i) => Operators.leq),
       objective: Objectives.max,
     );
   }
@@ -58,7 +57,11 @@ class DataEntryController extends _$DataEntryController {
     state = state.copyWith(constraints: List.from(state.constraints)..[index][index2] = value);
   }
 
-  void updateOperator(int index, Operators sign) {
-    state = state.copyWith(operators: List.from(state.operators)..[index] = sign);
+  void updateOperator(int index, Operators op) {
+    state = state.copyWith(operators: List.from(state.operators)..[index] = op);
+  }
+
+  void updateConstraintsRS(int index, double value) {
+    state = state.copyWith(constraints: List.from(state.constraints)..[index].last = value);
   }
 }

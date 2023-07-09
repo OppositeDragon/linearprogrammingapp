@@ -17,6 +17,7 @@ dependencies:
   riverpod_annotation: ^2.1.1
   window_location_href: ^1.0.1+2
   hive_flutter: ^1.1.0
+  flutter_math_fork: ^0.7.1
 
 dev_dependencies:
   flutter_test:

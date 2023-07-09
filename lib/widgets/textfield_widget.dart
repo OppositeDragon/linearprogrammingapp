@@ -5,8 +5,8 @@ import '../constants/numeric.dart';
 
 class TextFieldWidget extends StatefulWidget {
   const TextFieldWidget({
-    this.action = TextInputAction.none,
-    required this.label,
+    this.action,
+    this.label,
     this.style,
     this.focusNode,
     this.hint,
@@ -27,16 +27,16 @@ class TextFieldWidget extends StatefulWidget {
     this.onEditingComplete,
     this.onFieldSubmitted,
     this.validator,
-    this.formatters = const [],
+    this.formatters,
     this.controller,
     this.prefixIcon,
     this.suffixIcon,
     this.keyboardType,
     super.key,
   });
-  final TextInputAction action;
+  final TextInputAction? action;
   final FocusNode? focusNode;
-  final String label;
+  final String? label;
   final TextStyle? style;
   final String? hint;
   final String? initialValue;
@@ -56,7 +56,7 @@ class TextFieldWidget extends StatefulWidget {
   final void Function()? onEditingComplete;
   final void Function(String)? onFieldSubmitted;
   final String? Function(String?)? validator;
-  final List<TextInputFormatter> formatters;
+  final List<TextInputFormatter>? formatters;
   final TextEditingController? controller;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -85,6 +85,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       maxLength: widget.maxLength,
       maxLines: widget.maxLines,
       obscureText: widget.obscureText,
+      validator: widget.validator,
+      onSaved: widget.onSave,
+      onChanged: widget.onChanged,
       decoration: InputDecoration(
         labelText: widget.label,
         contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -116,9 +119,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           borderRadius: BorderRadius.circular(spaceL),
         ),
       ),
-      validator: widget.validator,
-      onSaved: widget.onSave,
-      onChanged: widget.onChanged,
     );
   }
 }
