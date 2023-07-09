@@ -68,72 +68,74 @@ class _DataSizeEntryWidgetState extends ConsumerState<DataSizeEntryWidget> {
         maxHeight: 300,
       ),
       child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(spaceL),
-          child: Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Descripción del problema',
-                  style: textTheme.titleLarge,
-                  textAlign: TextAlign.start,
-                ),
-                const SizedBox(height: spaceXXL),
-                TextFieldWidget(
-                  controller: variablesController,
-                  onEditingComplete: () => FocusScope.of(context).nextFocus(),
-                  label: "Cantidad de variables de decision",
-                  keyboardType: TextInputType.number,
-                  formatters: [FilteringTextInputFormatter.digitsOnly],
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un valor';
-                    }
-                    if (int.tryParse(value) == null) {
-                      return 'Debe ingresar un numero entero.';
-                    }
-                    return null;
-                  },
-                  onChanged: (_) => setState(() {}),
-                ),
-                const SizedBox(height: spaceL),
-                TextFieldWidget(
-                  controller: constraintsController,
-                  label: "Cantidad de restricciones",
-                  keyboardType: TextInputType.number,
-                  formatters: [FilteringTextInputFormatter.digitsOnly],
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un valor';
-                    }
-                    if (int.tryParse(value) == null) {
-                      return 'Debe ingresar un numero entero.';
-                    }
-                    return null;
-                  },
-                ),
-                if (isVariablesValid()) const SizedBox(height: spaceL),
-                if (isVariablesValid())
-                  DropdownButtonWidget<ProcessTypes>(
-                    label: 'Algoritmo a utilizar',
-                    value: ref.watch(processControllerProvider),
-                    onChanged: (value) {
-                      if (value == null) return;
-                      ref.read(processControllerProvider.notifier).updateProcess(value);
-                    },
-                    items: [
-                      for (final process in ProcessTypes.values)
-                        DropdownMenuItem(
-                          value: process,
-                          child: Text(process.label),
-                        )
-                    ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(spaceL),
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Descripción del problema',
+                    style: textTheme.titleLarge,
+                    textAlign: TextAlign.start,
                   ),
-                const SizedBox(height: spaceXXXL),
-                FilledButton(onPressed: updateValues, child: const Text('Continuar'))
-              ],
+                  const SizedBox(height: spaceXXL),
+                  TextFieldWidget(
+                    controller: variablesController,
+                    onEditingComplete: () => FocusScope.of(context).nextFocus(),
+                    label: "Cantidad de variables de decision",
+                    keyboardType: TextInputType.number,
+                    formatters: [FilteringTextInputFormatter.digitsOnly],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese un valor';
+                      }
+                      if (int.tryParse(value) == null) {
+                        return 'Debe ingresar un numero entero.';
+                      }
+                      return null;
+                    },
+                    onChanged: (_) => setState(() {}),
+                  ),
+                  const SizedBox(height: spaceL),
+                  TextFieldWidget(
+                    controller: constraintsController,
+                    label: "Cantidad de restricciones",
+                    keyboardType: TextInputType.number,
+                    formatters: [FilteringTextInputFormatter.digitsOnly],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese un valor';
+                      }
+                      if (int.tryParse(value) == null) {
+                        return 'Debe ingresar un numero entero.';
+                      }
+                      return null;
+                    },
+                  ),
+                  if (isVariablesValid()) const SizedBox(height: spaceL),
+                  if (isVariablesValid())
+                    DropdownButtonWidget<ProcessTypes>(
+                      label: 'Algoritmo a utilizar',
+                      value: ref.watch(processControllerProvider),
+                      onChanged: (value) {
+                        if (value == null) return;
+                        ref.read(processControllerProvider.notifier).updateProcess(value);
+                      },
+                      items: [
+                        for (final process in ProcessTypes.values)
+                          DropdownMenuItem(
+                            value: process,
+                            child: Text(process.label),
+                          )
+                      ],
+                    ),
+                  const SizedBox(height: spaceXXXL),
+                  FilledButton(onPressed: updateValues, child: const Text('Continuar'))
+                ],
+              ),
             ),
           ),
         ),

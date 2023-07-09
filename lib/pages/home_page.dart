@@ -13,6 +13,7 @@ class HomePage extends ConsumerWidget {
     showDataEntryDialog() => showDialog(
           context: context,
           builder: (context) => const Dialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(spaceXL))),
             child: DataSizeEntryWidget(),
           ),
         );

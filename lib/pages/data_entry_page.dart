@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:linearprogrammingapp/constants/numeric.dart';
 import 'package:linearprogrammingapp/widgets/textfield_widget.dart';
 
 import '../constants/enums.dart';
 import '../controllers/data_entry_controller.dart';
 import '../widgets/dropdown_button_widget.dart';
+
 class DataEntryPage extends ConsumerStatefulWidget {
   const DataEntryPage({super.key});
 
@@ -64,7 +66,7 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
                   ],
                 ),
               ),
-              const SliverToBoxAdapter(child: Divider(height: spaceXL, thickness: 2)),
+              const SliverToBoxAdapter(child: Divider(height: spaceXXXL, thickness: 2)),
               SliverToBoxAdapter(
                 child: Column(
                   children: [
@@ -116,7 +118,7 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
                   ],
                 ),
               ),
-              const SliverToBoxAdapter(child: Divider(height: spaceXL, thickness: 2)),
+              const SliverToBoxAdapter(child: Divider(height: spaceXXXL, thickness: 2)),
               SliverToBoxAdapter(
                 child: Column(
                   children: [
@@ -171,8 +173,6 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
                                               ],
                                             ),
                                           ),
-																					
-                                         
                                           const SizedBox(width: spaceS),
                                           Math.tex(' x_{${j + 1}} ',
                                               textStyle: textTheme.bodySmall?.copyWith(fontSize: 25)),
@@ -239,19 +239,33 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
                   ],
                 ),
               ),
-              const SliverToBoxAdapter(child: Divider(height: spaceXL, thickness: 2)),
+              const SliverToBoxAdapter(child: Divider(height: spaceXXXL, thickness: 2)),
               SliverToBoxAdapter(
                 child: Center(
                   child: FilledButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         formKey.currentState!.save();
+                        switch (ref.read(processControllerProvider)) {
+                          case ProcessTypes.algebraic:
+                            context.goNamed('algebraic-process');
+                            break;
+                          case ProcessTypes.graphic:
+                            context.goNamed('graphic-process');
+                            break;
+                          case ProcessTypes.simplex:
+                            context.goNamed('simplex-process');
+                            break;
+                          default:
+                            throw UnsupportedError('Process type not supported');
+                        }
                       }
                     },
                     child: const Text('Continuar'),
                   ),
                 ),
               ),
+              const SliverToBoxAdapter(child: SizedBox(height: spaceL)),
             ],
           ),
         ),
