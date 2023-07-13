@@ -35,3 +35,7 @@ flutter:
   
   assets:
     - assets/img/
+  fonts:
+    - family: Computer Modern
+      fonts:
+        - asset: assets/fonts/cmunci.ttf

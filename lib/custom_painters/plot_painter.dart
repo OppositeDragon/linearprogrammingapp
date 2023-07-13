@@ -1,5 +1,3 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
 
 class PlotPainter extends CustomPainter {
@@ -9,23 +7,24 @@ class PlotPainter extends CustomPainter {
   final double limitY;
   @override
   void paint(Canvas canvas, Size size) {
+    final numerationLimitX = (limitX / 10).ceil() * 10;
+    final numerationLimitY = (limitY / 10).ceil() * 10;
+    final textStyle = theme.textTheme.bodyMedium!.copyWith(fontFamily: 'Computer Modern');
+
+    final textPainterX = TextPainter(
+        text: TextSpan(style: textStyle, text: numerationLimitX.toString()), textDirection: TextDirection.ltr)
+      ..layout();
     const leftMargin = 30.0;
-    const rightMargin = 30.0;
+    final rightMargin = 25.0 + textPainterX.width / 2;
     const topMargin = 30.0;
     const bottomMargin = 30.0;
     final ceilX = (limitX / 10).ceil();
-    final numerationLimitX = (limitX / 10).ceil() * 10;
-    final numerationLimitY = (limitY / 10).ceil() * 10;
+
     const segmentsX = 5;
     const segmentsY = 5;
     //calculate offsets
     final hOffset = (size.width - leftMargin - rightMargin) / segmentsX;
 
-    final paragraphStyle = ui.ParagraphStyle(textDirection: TextDirection.ltr, textAlign: TextAlign.center);
-    final bodyMedTextStyle = theme.textTheme.bodyMedium!;
-    final textStyleBig = ui.TextStyle(color: bodyMedTextStyle.color, fontSize: bodyMedTextStyle.fontSize!);
-    final textStyleSmall = theme.textTheme.bodySmall;
-    const paragraphContraints = ui.ParagraphConstraints(width: 85);
     final paint = Paint()
       ..color = Colors.black
       ..strokeWidth = 1
@@ -44,13 +43,21 @@ class PlotPainter extends CustomPainter {
 
     canvas.drawPath(pathX, paint);
     final stepX = numerationLimitX ~/ 5;
-    for (var i = 0; i <= numerationLimitX; i += stepX) {
-      final paragraphBuilder = ui.ParagraphBuilder(paragraphStyle)
-        ..pushStyle(textStyleBig)
-        ..addText((i).toString());
-      final paragraph = paragraphBuilder.build()..layout(paragraphContraints);
-      final double dx = ((i) * hOffset / stepX);
-      canvas.drawParagraph(paragraph, Offset(dx, size.height - leftMargin));
+
+    for (int i = stepX; i <= numerationLimitX; i += stepX) {
+      TextSpan span = TextSpan(style: textStyle, text: i.toString());
+      final textPainter = TextPainter(
+        text: span,
+        textDirection: TextDirection.ltr,
+      )..layout();
+      final double dx = ((i) * hOffset / stepX) + leftMargin - textPainter.width / 2;
+
+      textPainter.paint(canvas, Offset(dx, size.height - bottomMargin));
+    }
+    paint.color = Colors.blue;
+    for (int i = 0; i <= numerationLimitX; i += stepX) {
+      final double dx = ((i) * hOffset / stepX) + leftMargin;
+      canvas.drawLine(Offset(dx, size.height - bottomMargin - 5), Offset(dx, size.height - bottomMargin + 5), paint);
     }
   }
 
