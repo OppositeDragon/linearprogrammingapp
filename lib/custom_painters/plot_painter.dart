@@ -2,84 +2,147 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-extension Num on num {
-  int length() => toString().length;
-}
-
 class PlotPainter extends CustomPainter {
   PlotPainter({required this.theme, required this.limitX, required this.limitY});
   final ThemeData theme;
   final double limitX;
   final double limitY;
 
-  double getRoundedMaxValue(double maximum) {
-    double magnitude = (log(maximum) / log(10)).floor().toDouble();
+  double roundToNextMagnitude(double number) {
+    int magnitude;
+    if (number.abs() > 1) {
+      magnitude = (log(number.abs()) / ln10 - 1).floor();
+    } else {
+      magnitude = (log(number.abs()) / ln10).floor();
+    }
     double roundingFactor = pow(10, magnitude).toDouble();
-    double roundedRange = (maximum / roundingFactor).ceil().toDouble();
-    double roundedMaximum = roundedRange * roundingFactor;
-    print('desiredMaximum: $roundedMaximum');
-    return roundedMaximum;
+    double roundedNumber = (number / roundingFactor).ceilToDouble();
+    double result = roundedNumber * roundingFactor;
+    return result;
+  }
+
+  int countLeadingZeros(double value) {
+    String valueString = value.toString();
+    int decimalIndex = valueString.indexOf('.');
+    String decimalPart = valueString.substring(decimalIndex + 1);
+    RegExp regex = RegExp('^0+');
+    final match = regex.firstMatch(decimalPart);
+    int count = match?.group(0)?.length ?? 0;
+    return count;
+  }
+
+  String deleteLastZero(String str) {
+    while (str.endsWith('0')) {
+      str = str.substring(0, str.length - 1);
+    }
+    return str;
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    double numerationLimitX = getRoundedMaxValue(301); //(limitX / 100).ceil() * 10;
-    final numerationLimitY = (limitY / 10).ceil() * 10;
+    double numerationLimitX = roundToNextMagnitude(limitX); //(limitX / 100).ceil() * 10;
+    final numerationLimitY = roundToNextMagnitude(limitY);
 
-    final textStyle = theme.textTheme.bodyMedium!.copyWith(fontFamily: 'Computer Modern');
+    const int segmentsX = 5;
+    const int segmentsY = 5;
+
+    var stepX = numerationLimitX / segmentsX;
+    final stepY = numerationLimitY / segmentsY;
+    final marksNumX = List.generate(segmentsX, (index) => stepX * (index + 1));
+    final marksStrX = List.generate(
+        marksNumX.length,
+        (index) => marksNumX[index] % 1 == 0
+            ? marksNumX[index].toInt().toString()
+            : deleteLastZero(marksNumX[index].toStringAsFixed(countLeadingZeros(marksNumX[index]) + 2)));
+    final marksNumY = List.generate(segmentsY, (index) => stepY * (index + 1));
+    final marksStrY = List.generate(
+        marksNumY.length,
+        (index) => marksNumY[index] % 1 == 0
+            ? marksNumY[index].toInt().toString()
+            : deleteLastZero(marksNumY[index].toStringAsFixed(countLeadingZeros(marksNumY[index]) + 2)));
+    final longestNumberY = marksStrY.reduce((value, element) => value.length > element.length ? value : element);
+    final textStyle = theme.textTheme.bodyLarge!.copyWith(fontFamily: 'Computer Modern');
 
     final textPainterX = TextPainter(
-        text: TextSpan(style: textStyle, text: numerationLimitX.toString()), textDirection: TextDirection.ltr)
-      ..layout();
-    const leftMargin = 30.0;
+      text: TextSpan(style: textStyle, text: numerationLimitX.toString()),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    final textPainterY = TextPainter(
+      text: TextSpan(style: textStyle, text: longestNumberY),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    //calculate margins
+    final leftMargin = 15.0 + textPainterY.width;
     final rightMargin = 25.0 + textPainterX.width / 2;
     const topMargin = 30.0;
     const bottomMargin = 30.0;
 
-    const segmentsX = 5;
-    const segmentsY = 5;
-    //calculate offsets
-    final offsetX = (size.width - leftMargin - rightMargin) / segmentsX;
+    //calculate avalable space and offsets
+    final availableX = (size.width - leftMargin - rightMargin);
+    final availableY = (size.height - topMargin - bottomMargin);
+    final offsetX = availableX / segmentsX;
+    final offsetY = availableY / segmentsY;
 
     final paint = Paint()
-      ..color = Colors.purple
+      ..color = theme.colorScheme.onBackground
       ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 
     final rectagle = Rect.fromPoints(Offset.zero, Offset(size.width, size.height));
     canvas.drawRect(rectagle, paint);
-    //y-axis
+    //y-axis line
     canvas.drawLine(
-      const Offset(leftMargin, topMargin),
-      Offset(leftMargin, size.height - bottomMargin / 1.5),
-      paint..color = Colors.yellow,
+      Offset(leftMargin, topMargin / 2),
+      Offset(leftMargin, size.height - bottomMargin + 12),
+      paint,
     );
-    //x-axis
+    //y-axis arrow
+    final Path arrowPathY = Path()
+      ..moveTo(leftMargin, topMargin / 2)
+      ..lineTo(leftMargin - 5, topMargin / 2 + 4)
+      ..lineTo(leftMargin, topMargin / 2 - 8)
+      ..lineTo(leftMargin + 5, topMargin / 2 + 4)
+      ..lineTo(leftMargin, topMargin / 2);
+    canvas.drawPath(arrowPathY, paint..style = PaintingStyle.fill);
+    //x-axis line
     canvas.drawLine(
-      Offset(leftMargin / 1.5, size.height - bottomMargin),
+      Offset(leftMargin - 12, size.height - bottomMargin),
       Offset(size.width - rightMargin / 2, size.height - bottomMargin),
-      paint..color = Colors.red,
+      paint,
     );
-
-    // var stepX = (numerationLimitX * 1.1 / 10).toDouble();
-    // numerationLimitX = (stepX * 10);
-    var stepX = numerationLimitX / segmentsX;
-    //numerationLimitX = (stepX * 5).ceil().toDouble();
-    print('stepX: $stepX, numerationLimitX: $numerationLimitX');
-    for (int i = stepX.toInt(); i <= numerationLimitX; i += stepX.toInt()) {
-      TextSpan span = TextSpan(style: textStyle, text: i.toString());
+    //x-axis arrow
+    final arrowPosition = size.width - rightMargin / 2;
+    final Path arrowPathX = Path()
+      ..moveTo(arrowPosition, size.height - bottomMargin)
+      ..lineTo(arrowPosition - 4, size.height - bottomMargin - 5)
+      ..lineTo(arrowPosition + 8, size.height - bottomMargin)
+      ..lineTo(arrowPosition - 4, size.height - bottomMargin + 5)
+      ..lineTo(arrowPosition, size.height - bottomMargin);
+    canvas.drawPath(arrowPathX, paint);
+    //numbers and marks on x-axis
+    double dx = leftMargin;
+    for (int i = 0; i < marksStrX.length; i++) {
+      dx += offsetX;
+      final TextSpan span = TextSpan(style: textStyle, text: marksStrX[i]);
       final textPainter = TextPainter(
         text: span,
         textDirection: TextDirection.ltr,
       )..layout();
-      final double dx = ((i) * offsetX / stepX) + leftMargin - textPainter.width / 2;
-
-      textPainter.paint(canvas, Offset(dx, size.height - bottomMargin));
+      textPainter.paint(canvas, Offset(dx - (textPainter.width / 2), size.height - bottomMargin + 4));
+      canvas.drawLine(Offset(dx, size.height - bottomMargin - 1), Offset(dx, size.height - bottomMargin + 4), paint);
     }
-    paint.color = Colors.blue;
-    for (int i = 0; i <= numerationLimitX; i += stepX.toInt()) {
-      final double dx = ((i) * offsetX / stepX) + leftMargin;
-      canvas.drawLine(Offset(dx, size.height - bottomMargin - 5), Offset(dx, size.height - bottomMargin + 5), paint);
+    //numbers and marks on y-axis
+    double dy = size.height - bottomMargin;
+    for (int i = 0; i < marksStrY.length; i++) {
+      dy -= offsetY;
+      final TextSpan span = TextSpan(style: textStyle, text: marksStrY[i]);
+      final textPainter = TextPainter(
+        text: span,
+        textDirection: TextDirection.ltr,
+      )..layout();
+      textPainter.paint(canvas, Offset(leftMargin - textPainter.width - 5, dy - textPainterY.height / 2));
+      canvas.drawLine(Offset(leftMargin - 1, dy), Offset(leftMargin + 4, dy), paint);
     }
   }
 
