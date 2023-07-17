@@ -61,7 +61,7 @@ class PlotPainter extends CustomPainter {
             ? marksNumY[index].toInt().toString()
             : deleteLastZero(marksNumY[index].toStringAsFixed(countLeadingZeros(marksNumY[index]) + 2)));
     final longestNumberY = marksStrY.reduce((value, element) => value.length > element.length ? value : element);
-    final textStyle = theme.textTheme.bodyLarge!.copyWith(fontFamily: 'Computer Modern');
+    final textStyle = theme.textTheme.bodyLarge!.copyWith(fontFamily: 'CMRomanSerif', fontWeight: FontWeight.bold);
 
     final textPainterX = TextPainter(
       text: TextSpan(style: textStyle, text: numerationLimitX.toString()),

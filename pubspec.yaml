@@ -36,6 +36,9 @@ flutter:
   assets:
     - assets/img/
   fonts:
-    - family: Computer Modern
+    - family: CMClassic
       fonts:
         - asset: assets/fonts/cmunci.ttf
+    - family: CMRomanSerif
+      fonts:
+        - asset: assets/fonts/cmunrm.ttf
