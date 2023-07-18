@@ -16,3 +16,12 @@ class DataEntryModel with _$DataEntryModel {
 
   factory DataEntryModel.fromJson(Map<String, dynamic> json) => _$DataEntryModelFromJson(json);
 }
+
+@freezed
+class DataModelForGraphic with _$DataModelForGraphic {
+  const factory DataModelForGraphic({
+    required List<({double x, double y})> intersections,
+    required double maxX,
+    required double maxY,
+  }) = _DataModelForGraphic;
+}

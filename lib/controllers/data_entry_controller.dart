@@ -65,3 +65,27 @@ class DataEntryController extends _$DataEntryController {
     state = state.copyWith(constraints: List.from(state.constraints)..[index].last = value);
   }
 }
+
+@Riverpod(keepAlive: true)
+class DataControllerForGraphic extends _$DataControllerForGraphic {
+  @override
+  void build() {}
+
+  DataModelForGraphic interceptions() {
+    final data = ref.read(dataEntryControllerProvider);
+    List<({double x, double y})> interceptions = [];
+    for (final eq in data.constraints) {
+      final [first, second, ..., last] = eq;
+      final double intX = first == 0 ? 0 : last / first;
+      final double intY = second == 0 ? 0 : last / second;
+      interceptions.add((x: intX, y: intY));
+    }
+    double maxX = 0;
+    double maxY = 0;
+    for (var inter in interceptions) {
+      if (inter.x > maxX) maxX = inter.x;
+      if (inter.y > maxY) maxY = inter.y;
+    }
+    return DataModelForGraphic(intersections: interceptions, maxX: maxX, maxY: maxY);
+  }
+}

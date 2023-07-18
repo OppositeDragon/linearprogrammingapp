@@ -57,4 +57,21 @@ final dataEntryControllerProvider =
 );
 
 typedef _$DataEntryController = Notifier<DataEntryModel>;
+String _$dataControllerForGraphicHash() =>
+    r'b721c2a636f883bdb4d8ea14aa21e7d4fb71fd40';
+
+/// See also [DataControllerForGraphic].
+@ProviderFor(DataControllerForGraphic)
+final dataControllerForGraphicProvider =
+    NotifierProvider<DataControllerForGraphic, void>.internal(
+  DataControllerForGraphic.new,
+  name: r'dataControllerForGraphicProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$dataControllerForGraphicHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$DataControllerForGraphic = Notifier<void>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

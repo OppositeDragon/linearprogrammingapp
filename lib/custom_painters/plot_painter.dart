@@ -3,10 +3,16 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class PlotPainter extends CustomPainter {
-  PlotPainter({required this.theme, required this.limitX, required this.limitY});
+  PlotPainter({
+    required this.theme,
+    required this.limitX,
+    required this.limitY,
+    required this.intersections,
+  });
   final ThemeData theme;
   final double limitX;
   final double limitY;
+  final List<({double x, double y})> intersections;
 
   double roundToNextMagnitude(double number) {
     int magnitude;
@@ -36,6 +42,16 @@ class PlotPainter extends CustomPainter {
       str = str.substring(0, str.length - 1);
     }
     return str;
+  }
+
+  Color getColorFromHSL(int index, int length) {
+    final double value = theme.brightness == Brightness.dark ? 0.75 : 0.45;
+    return HSLColor.fromAHSL(
+      1,
+      index * 0.95 * 360 / length,
+      1,
+      ((index % 4 == 3 ? 1 : 0) / -4) + value,
+    ).toColor();
   }
 
   @override
@@ -143,6 +159,44 @@ class PlotPainter extends CustomPainter {
       )..layout();
       textPainter.paint(canvas, Offset(leftMargin - textPainter.width - 5, dy - textPainterY.height / 2));
       canvas.drawLine(Offset(leftMargin - 1, dy), Offset(leftMargin + 4, dy), paint);
+    }
+
+    final unitX = availableX / numerationLimitX;
+    final unitY = availableY / numerationLimitY;
+
+    for (int i = 0; i < intersections.length; i++) {
+      final inter = intersections[i];
+      final color = getColorFromHSL(i, intersections.length);
+
+      if (inter.x == 0) {
+        final paint1 = Paint()
+          ..color = color
+          ..strokeWidth = 2
+          ..style = PaintingStyle.stroke;
+        canvas.drawLine(
+          Offset(leftMargin, topMargin + availableY - (unitY * inter.y)),
+          Offset(leftMargin + availableX, topMargin + availableY - (unitY * inter.y)),
+          paint1,
+        );
+        continue;
+      } else if (inter.y == 0) {
+        final paint2 = Paint()
+          ..color = color
+          ..strokeWidth = 2
+          ..style = PaintingStyle.stroke;
+        canvas.drawLine(
+          Offset(leftMargin + unitX * inter.x, topMargin),
+          Offset(leftMargin + unitX * inter.x, topMargin + availableY),
+          paint2,
+        );
+        continue;
+      } else {
+        canvas.drawLine(
+          Offset(leftMargin, topMargin + availableY - (unitY * inter.y)),
+          Offset(leftMargin + unitX * inter.x, topMargin + availableY),
+          paint..color = color,
+        );
+      }
     }
   }
 
