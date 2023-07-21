@@ -5,14 +5,26 @@ import 'package:flutter/material.dart';
 class PlotPainter extends CustomPainter {
   PlotPainter({
     required this.theme,
-    required this.limitX,
-    required this.limitY,
-    required this.intersections,
+    required this.constraints,
   });
   final ThemeData theme;
-  final double limitX;
-  final double limitY;
-  final List<({double x, double y})> intersections;
+  final List<List<double>> constraints;
+  double limitX = 0;
+  double limitY = 0;
+  late List<({double x, double y})> intersections = [];
+
+  void interceptions() {
+    for (final eq in constraints) {
+      final [first, second, ..., last] = eq;
+      final double intX = first == 0 ? 0 : last / first;
+      final double intY = second == 0 ? 0 : last / second;
+      intersections.add((x: intX, y: intY));
+    }
+    for (var inter in intersections) {
+      if (inter.x > limitX) limitX = inter.x;
+      if (inter.y > limitY) limitY = inter.y;
+    }
+  }
 
   double roundToNextMagnitude(double number) {
     int magnitude;
@@ -54,8 +66,32 @@ class PlotPainter extends CustomPainter {
     ).toColor();
   }
 
+  List<Offset> findFeasibleRegionVertices() {
+    // Find intersection points of the constraints
+    List<Offset> vertices = [];
+
+    for (int i = 0; i < constraints.length - 1; i++) {
+      for (int j = i + 1; j < constraints.length; j++) {
+        final [a1, b1, ..., c1] = constraints[i];
+        final [a2, b2, ..., c2] = constraints[j];
+
+        double determinant = a1 * b2 - a2 * b1;
+
+        if (determinant != 0) {
+          double x = (c1 * b2 - c2 * b1) / determinant;
+          double y = (a1 * c2 - a2 * c1) / determinant;
+          if (x >= 0 && y >= 0) {
+            vertices.add(Offset(x, y));
+          }
+        }
+      }
+    }
+    return vertices;
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
+    interceptions();
     double numerationLimitX = roundToNextMagnitude(limitX); //(limitX / 100).ceil() * 10;
     final numerationLimitY = roundToNextMagnitude(limitY);
 
@@ -178,7 +214,6 @@ class PlotPainter extends CustomPainter {
           Offset(leftMargin + availableX, topMargin + availableY - (unitY * inter.y)),
           paint1,
         );
-        continue;
       } else if (inter.y == 0) {
         final paint2 = Paint()
           ..color = color
@@ -189,7 +224,6 @@ class PlotPainter extends CustomPainter {
           Offset(leftMargin + unitX * inter.x, topMargin + availableY),
           paint2,
         );
-        continue;
       } else {
         canvas.drawLine(
           Offset(leftMargin, topMargin + availableY - (unitY * inter.y)),
@@ -198,6 +232,27 @@ class PlotPainter extends CustomPainter {
         );
       }
     }
+//draw feaseable region
+    final paint3 = Paint()
+      ..color = theme.colorScheme.primary.withOpacity(0.1)
+      ..strokeWidth = 10
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.fill;
+
+    final points = [
+      for (final point in findFeasibleRegionVertices())
+        Offset(leftMargin + point.dx * unitX, size.height - topMargin - point.dy * unitY)
+    ];
+    Path feasibleRegion = Path()..moveTo(points[0].dx, points[0].dy);
+    for (int i = 1; i < points.length; i++) {
+      feasibleRegion.lineTo(points[i].dx, points[i].dy);
+    }
+    canvas.drawPath(feasibleRegion, paint3);
+    final centerOfREgion = feasibleRegion.getBounds().center;
+    final TextSpan span = TextSpan(style: textStyle.copyWith(fontFamily: 'CMRomanSerif'), text: 'feasible region');
+    TextPainter(text: span, textDirection: TextDirection.ltr, textAlign: TextAlign.center)
+      ..layout()
+      ..paint(canvas, centerOfREgion);
   }
 
   @override
