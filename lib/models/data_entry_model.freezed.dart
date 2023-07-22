@@ -243,3 +243,270 @@ abstract class _DataEntryModel implements DataEntryModel {
   _$$_DataEntryModelCopyWith<_$_DataEntryModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$DataModelForAlgebraic {
+  List<List<double>> get standardForm => throw _privateConstructorUsedError;
+  List<List<String>> get constraintsString =>
+      throw _privateConstructorUsedError;
+  List<String> get rightHandString => throw _privateConstructorUsedError;
+  List<String> get slack => throw _privateConstructorUsedError;
+  String get greaterThanZeroCondition => throw _privateConstructorUsedError;
+  ({int constraints, int f, int variables}) get vrr =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $DataModelForAlgebraicCopyWith<DataModelForAlgebraic> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DataModelForAlgebraicCopyWith<$Res> {
+  factory $DataModelForAlgebraicCopyWith(DataModelForAlgebraic value,
+          $Res Function(DataModelForAlgebraic) then) =
+      _$DataModelForAlgebraicCopyWithImpl<$Res, DataModelForAlgebraic>;
+  @useResult
+  $Res call(
+      {List<List<double>> standardForm,
+      List<List<String>> constraintsString,
+      List<String> rightHandString,
+      List<String> slack,
+      String greaterThanZeroCondition,
+      ({int constraints, int f, int variables}) vrr});
+}
+
+/// @nodoc
+class _$DataModelForAlgebraicCopyWithImpl<$Res,
+        $Val extends DataModelForAlgebraic>
+    implements $DataModelForAlgebraicCopyWith<$Res> {
+  _$DataModelForAlgebraicCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? standardForm = null,
+    Object? constraintsString = null,
+    Object? rightHandString = null,
+    Object? slack = null,
+    Object? greaterThanZeroCondition = null,
+    Object? vrr = null,
+  }) {
+    return _then(_value.copyWith(
+      standardForm: null == standardForm
+          ? _value.standardForm
+          : standardForm // ignore: cast_nullable_to_non_nullable
+              as List<List<double>>,
+      constraintsString: null == constraintsString
+          ? _value.constraintsString
+          : constraintsString // ignore: cast_nullable_to_non_nullable
+              as List<List<String>>,
+      rightHandString: null == rightHandString
+          ? _value.rightHandString
+          : rightHandString // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      slack: null == slack
+          ? _value.slack
+          : slack // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      greaterThanZeroCondition: null == greaterThanZeroCondition
+          ? _value.greaterThanZeroCondition
+          : greaterThanZeroCondition // ignore: cast_nullable_to_non_nullable
+              as String,
+      vrr: null == vrr
+          ? _value.vrr
+          : vrr // ignore: cast_nullable_to_non_nullable
+              as ({int constraints, int f, int variables}),
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_DataModelForAlgebraicCopyWith<$Res>
+    implements $DataModelForAlgebraicCopyWith<$Res> {
+  factory _$$_DataModelForAlgebraicCopyWith(_$_DataModelForAlgebraic value,
+          $Res Function(_$_DataModelForAlgebraic) then) =
+      __$$_DataModelForAlgebraicCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<List<double>> standardForm,
+      List<List<String>> constraintsString,
+      List<String> rightHandString,
+      List<String> slack,
+      String greaterThanZeroCondition,
+      ({int constraints, int f, int variables}) vrr});
+}
+
+/// @nodoc
+class __$$_DataModelForAlgebraicCopyWithImpl<$Res>
+    extends _$DataModelForAlgebraicCopyWithImpl<$Res, _$_DataModelForAlgebraic>
+    implements _$$_DataModelForAlgebraicCopyWith<$Res> {
+  __$$_DataModelForAlgebraicCopyWithImpl(_$_DataModelForAlgebraic _value,
+      $Res Function(_$_DataModelForAlgebraic) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? standardForm = null,
+    Object? constraintsString = null,
+    Object? rightHandString = null,
+    Object? slack = null,
+    Object? greaterThanZeroCondition = null,
+    Object? vrr = null,
+  }) {
+    return _then(_$_DataModelForAlgebraic(
+      standardForm: null == standardForm
+          ? _value._standardForm
+          : standardForm // ignore: cast_nullable_to_non_nullable
+              as List<List<double>>,
+      constraintsString: null == constraintsString
+          ? _value._constraintsString
+          : constraintsString // ignore: cast_nullable_to_non_nullable
+              as List<List<String>>,
+      rightHandString: null == rightHandString
+          ? _value._rightHandString
+          : rightHandString // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      slack: null == slack
+          ? _value._slack
+          : slack // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      greaterThanZeroCondition: null == greaterThanZeroCondition
+          ? _value.greaterThanZeroCondition
+          : greaterThanZeroCondition // ignore: cast_nullable_to_non_nullable
+              as String,
+      vrr: null == vrr
+          ? _value.vrr
+          : vrr // ignore: cast_nullable_to_non_nullable
+              as ({int constraints, int f, int variables}),
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_DataModelForAlgebraic implements _DataModelForAlgebraic {
+  const _$_DataModelForAlgebraic(
+      {required final List<List<double>> standardForm,
+      required final List<List<String>> constraintsString,
+      required final List<String> rightHandString,
+      required final List<String> slack,
+      required this.greaterThanZeroCondition,
+      required this.vrr})
+      : _standardForm = standardForm,
+        _constraintsString = constraintsString,
+        _rightHandString = rightHandString,
+        _slack = slack;
+
+  final List<List<double>> _standardForm;
+  @override
+  List<List<double>> get standardForm {
+    if (_standardForm is EqualUnmodifiableListView) return _standardForm;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_standardForm);
+  }
+
+  final List<List<String>> _constraintsString;
+  @override
+  List<List<String>> get constraintsString {
+    if (_constraintsString is EqualUnmodifiableListView)
+      return _constraintsString;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_constraintsString);
+  }
+
+  final List<String> _rightHandString;
+  @override
+  List<String> get rightHandString {
+    if (_rightHandString is EqualUnmodifiableListView) return _rightHandString;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_rightHandString);
+  }
+
+  final List<String> _slack;
+  @override
+  List<String> get slack {
+    if (_slack is EqualUnmodifiableListView) return _slack;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_slack);
+  }
+
+  @override
+  final String greaterThanZeroCondition;
+  @override
+  final ({int constraints, int f, int variables}) vrr;
+
+  @override
+  String toString() {
+    return 'DataModelForAlgebraic(standardForm: $standardForm, constraintsString: $constraintsString, rightHandString: $rightHandString, slack: $slack, greaterThanZeroCondition: $greaterThanZeroCondition, vrr: $vrr)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DataModelForAlgebraic &&
+            const DeepCollectionEquality()
+                .equals(other._standardForm, _standardForm) &&
+            const DeepCollectionEquality()
+                .equals(other._constraintsString, _constraintsString) &&
+            const DeepCollectionEquality()
+                .equals(other._rightHandString, _rightHandString) &&
+            const DeepCollectionEquality().equals(other._slack, _slack) &&
+            (identical(
+                    other.greaterThanZeroCondition, greaterThanZeroCondition) ||
+                other.greaterThanZeroCondition == greaterThanZeroCondition) &&
+            (identical(other.vrr, vrr) || other.vrr == vrr));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_standardForm),
+      const DeepCollectionEquality().hash(_constraintsString),
+      const DeepCollectionEquality().hash(_rightHandString),
+      const DeepCollectionEquality().hash(_slack),
+      greaterThanZeroCondition,
+      vrr);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DataModelForAlgebraicCopyWith<_$_DataModelForAlgebraic> get copyWith =>
+      __$$_DataModelForAlgebraicCopyWithImpl<_$_DataModelForAlgebraic>(
+          this, _$identity);
+}
+
+abstract class _DataModelForAlgebraic implements DataModelForAlgebraic {
+  const factory _DataModelForAlgebraic(
+          {required final List<List<double>> standardForm,
+          required final List<List<String>> constraintsString,
+          required final List<String> rightHandString,
+          required final List<String> slack,
+          required final String greaterThanZeroCondition,
+          required final ({int constraints, int f, int variables}) vrr}) =
+      _$_DataModelForAlgebraic;
+
+  @override
+  List<List<double>> get standardForm;
+  @override
+  List<List<String>> get constraintsString;
+  @override
+  List<String> get rightHandString;
+  @override
+  List<String> get slack;
+  @override
+  String get greaterThanZeroCondition;
+  @override
+  ({int constraints, int f, int variables}) get vrr;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DataModelForAlgebraicCopyWith<_$_DataModelForAlgebraic> get copyWith =>
+      throw _privateConstructorUsedError;
+}

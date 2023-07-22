@@ -1,3 +1,6 @@
+///const space of 2
+const double spaceXS = 2;
+
 ///const space of 4
 const double spaceS = 4;
 

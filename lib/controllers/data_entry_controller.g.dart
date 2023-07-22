@@ -57,4 +57,21 @@ final dataEntryControllerProvider =
 );
 
 typedef _$DataEntryController = Notifier<DataEntryModel>;
+String _$dataControllerForAlgebraicHash() =>
+    r'7f1ae0a5c8d32d0c35ba388dd681dd5165d1ed7a';
+
+/// See also [DataControllerForAlgebraic].
+@ProviderFor(DataControllerForAlgebraic)
+final dataControllerForAlgebraicProvider =
+    NotifierProvider<DataControllerForAlgebraic, void>.internal(
+  DataControllerForAlgebraic.new,
+  name: r'dataControllerForAlgebraicProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$dataControllerForAlgebraicHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$DataControllerForAlgebraic = Notifier<void>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
