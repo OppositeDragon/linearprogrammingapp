@@ -74,55 +74,74 @@ class DataControllerForAlgebraic extends _$DataControllerForAlgebraic {
   DataModelForAlgebraic toStandardForm() {
     final dataSize = ref.watch(dataEntrySizeControllerProvider);
     final data = ref.watch(dataEntryControllerProvider);
-    List<List<double>> constraintsPlusH = List.generate(data.constraints.length, (index) => []);
-    List<List<String>> constraintsPlusHString = [];
+    List<List<double>> constraintWithSlackAndRightSide = List.generate(data.constraints.length, (index) => []);
     for (int i = 0; i < data.constraints.length; i++) {
       for (int j = 0; j < data.constraints[i].length; j++) {
         if (j == data.constraints[i].length - 1) {
-          constraintsPlusH[i].add(data.operators[i].value);
+          for (int k = 0; k < data.constraints.length; k++) {
+            if (k == i) {
+              constraintWithSlackAndRightSide[i].add(data.operators[i].value);
+            } else {
+              constraintWithSlackAndRightSide[i].add(0);
+            }
+          }
         }
-        constraintsPlusH[i].add(data.constraints[i][j]);
+        constraintWithSlackAndRightSide[i].add(data.constraints[i][j]);
       }
     }
-    final transposed = transpose<double>(constraintsPlusH);
-    List<List<String>> constraintsString = [];
-    List<String> rightHandString = [];
-    List<String> slack = [];
-    int j = dataSize.variables;
-    for (int i = 0; i < data.constraints.length; i++) {
-      final [first, second, ..., last] = data.constraints[i];
-      final slackAsNumber = data.operators[i].value;
-      constraintsString.add([
-        toStringWithSign(first, 1),
-        toStringWithSign(second, 2),
-      ]);
-      if (data.operators[i] != Operators.equal) j++;
-      slack.add(toStringWithSign(slackAsNumber, j, true));
-      rightHandString.add(toStringWithSign(last, 0, false, true));
+    List<List<String>> constraintsWithSlackString = [];
+    List<List<double>> constraintWithSlack = [];
+    List<String> rightSideString = [];
+    List<double> rightSide = [];
+    int variablesPlusSlack = dataSize.variables + dataSize.constraints;
+
+    for (int i = 0; i < constraintWithSlackAndRightSide.length; i++) {
+      final List<double> completeConstraintsTemp = [];
+      final List<String> completeConstraintsTempString = [];
+      for (int j = 0; j < constraintWithSlackAndRightSide[i].length; j++) {
+        if (j == constraintWithSlackAndRightSide[i].length - 1) {
+          rightSide.add(constraintWithSlackAndRightSide[i][j]);
+          rightSideString.add(toStringWithSign(constraintWithSlackAndRightSide[i][j], 0, false, true));
+        } else {
+          completeConstraintsTempString.add(toStringWithSign(constraintWithSlackAndRightSide[i][j], j + 1));
+          completeConstraintsTemp.add(constraintWithSlackAndRightSide[i][j]);
+        }
+      }
+      completeConstraintsTempString.add(toStringWithSign(0, 0, true));
+      constraintsWithSlackString.add(completeConstraintsTempString);
+      constraintWithSlack.add(completeConstraintsTemp);
     }
+
     String greaterThanZeroCondition = '';
-    for (var i = 1; i <= j; i++) {
+    for (var i = 1; i <= variablesPlusSlack; i++) {
       greaterThanZeroCondition += 'x_{$i}';
-      if (i < j) {
+      if (i < variablesPlusSlack) {
         greaterThanZeroCondition += ',\\;';
       }
     }
     greaterThanZeroCondition += '\\geq 0';
-
     final dataA = DataModelForAlgebraic(
-        standardForm: transposed,
-        constraintsString: transpose<String>(constraintsString),
-        rightHandString: rightHandString,
-        slack: slack,
-        greaterThanZeroCondition: greaterThanZeroCondition,
-        vrr: (
-          variables: j,
-          constraints: dataSize.constraints,
-          f: factorial(j) ~/ (factorial(j - dataSize.constraints) * (factorial(j - (j - dataSize.constraints))))
-        ));
+      standardForm: constraintWithSlackAndRightSide,
+      constraintsString: transpose<String>(constraintsWithSlackString),
+      constraintWithSlack: constraintWithSlack,
+      rightSide: rightSide,
+      rightSideString: rightSideString,
+      greaterThanZeroCondition: greaterThanZeroCondition,
+      combinationsEquation: combinationsEquation(
+        variablesPlusSlack,
+        dataSize.constraints,
+        factorial(variablesPlusSlack) ~/
+            (factorial(variablesPlusSlack - dataSize.constraints) *
+                (factorial(variablesPlusSlack - (variablesPlusSlack - dataSize.constraints)))),
+      ),
+    );
     debugPrint(dataA.toString());
     return dataA;
   }
+}
+
+String combinationsEquation(int variables, int constraints, int factorial) {
+  return 'C(n,r) = \\frac{$variables!}{${variables - constraints}!($variables-${variables - constraints})!} = $factorial';
 }
 
 String deleteLastZero(String str) {
@@ -144,23 +163,21 @@ List<List<T>> transpose<T>(List<List<T>> list) {
   return transposed;
 }
 
-toStringWithSign(double number, int i, [bool addEquals = false, bool isRightHand = false]) {
+String toStringWithSign(double number, int i, [bool addEquals = false, bool isRightSide = false]) {
   final equal = addEquals ? '=' : '';
   final sign = number < 0
       ? '-'
-      : number == 0 || isRightHand
+      : number == 0 || isRightSide
           ? '\\;'
           : '+';
-  if (isRightHand) {
+  if (isRightSide) {
     return '$sign${deleteLastZero('${number.abs()}')}';
   }
   switch (number) {
     case 0:
       return '\\;$equal';
-      break;
     case 1 || -1:
       return '${sign}x_{$i}$equal';
-      break;
     default:
       return '$sign${deleteLastZero(number.abs().toString())}x_{$i}$equal';
   }

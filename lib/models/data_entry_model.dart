@@ -17,15 +17,15 @@ class DataEntryModel with _$DataEntryModel {
   factory DataEntryModel.fromJson(Map<String, dynamic> json) => _$DataEntryModelFromJson(json);
 }
 
-
 @freezed
 class DataModelForAlgebraic with _$DataModelForAlgebraic {
   const factory DataModelForAlgebraic({
     required List<List<double>> standardForm,
+    required List<List<double>> constraintWithSlack,
     required List<List<String>> constraintsString,
-    required List<String> rightHandString,
-    required List<String> slack,
+    required List<double> rightSide,
+    required List<String> rightSideString,
     required String greaterThanZeroCondition,
-    required ({int variables, int constraints, int f}) vrr,
+    required String combinationsEquation,
   }) = _DataModelForAlgebraic;
 }

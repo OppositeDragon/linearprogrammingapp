@@ -48,14 +48,7 @@ class AlgebraicProcessPage extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        for (final s in dataAlgebraic.slack) MathTexAlgebraic(equation: s, eqStyle: eqStyle),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        for (final r in dataAlgebraic.rightHandString) MathTexAlgebraic(equation: r, eqStyle: eqStyle),
+                        for (final r in dataAlgebraic.rightSideString) MathTexAlgebraic(equation: r, eqStyle: eqStyle),
                       ],
                     ),
                   ],
@@ -72,10 +65,7 @@ class AlgebraicProcessPage extends ConsumerWidget {
           SliverPadding(
             padding: const EdgeInsets.symmetric(vertical: spaceXXL),
             sliver: SliverToBoxAdapter(
-              child: MathTexAlgebraic(
-                  equation:
-                      'C(n,r) = \\frac{${dataAlgebraic.vrr.variables}!}{${dataAlgebraic.vrr.variables - dataAlgebraic.vrr.constraints}!(${dataAlgebraic.vrr.variables}-${dataAlgebraic.vrr.variables - dataAlgebraic.vrr.constraints})!} = ${dataAlgebraic.vrr.f}',
-                  eqStyle: eqStyle),
+              child: MathTexAlgebraic(equation: dataAlgebraic.combinationsEquation, eqStyle: eqStyle),
             ),
           ),
         ],
