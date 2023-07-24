@@ -541,3 +541,500 @@ abstract class _DataModelForAlgebraic implements DataModelForAlgebraic {
   _$$_DataModelForAlgebraicCopyWith<_$_DataModelForAlgebraic> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$StepsForAlgebraic {
+  String get header => throw _privateConstructorUsedError;
+  int get step => throw _privateConstructorUsedError;
+  List<int> get whereVarEqualsZero => throw _privateConstructorUsedError;
+  List<double> get solutions => throw _privateConstructorUsedError;
+  List<String> get solutionsString => throw _privateConstructorUsedError;
+  List<List<double>> get matrix => throw _privateConstructorUsedError;
+  String? get solutionString => throw _privateConstructorUsedError;
+  double? get objectiveFunctionSolution => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $StepsForAlgebraicCopyWith<StepsForAlgebraic> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StepsForAlgebraicCopyWith<$Res> {
+  factory $StepsForAlgebraicCopyWith(
+          StepsForAlgebraic value, $Res Function(StepsForAlgebraic) then) =
+      _$StepsForAlgebraicCopyWithImpl<$Res, StepsForAlgebraic>;
+  @useResult
+  $Res call(
+      {String header,
+      int step,
+      List<int> whereVarEqualsZero,
+      List<double> solutions,
+      List<String> solutionsString,
+      List<List<double>> matrix,
+      String? solutionString,
+      double? objectiveFunctionSolution});
+}
+
+/// @nodoc
+class _$StepsForAlgebraicCopyWithImpl<$Res, $Val extends StepsForAlgebraic>
+    implements $StepsForAlgebraicCopyWith<$Res> {
+  _$StepsForAlgebraicCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? header = null,
+    Object? step = null,
+    Object? whereVarEqualsZero = null,
+    Object? solutions = null,
+    Object? solutionsString = null,
+    Object? matrix = null,
+    Object? solutionString = freezed,
+    Object? objectiveFunctionSolution = freezed,
+  }) {
+    return _then(_value.copyWith(
+      header: null == header
+          ? _value.header
+          : header // ignore: cast_nullable_to_non_nullable
+              as String,
+      step: null == step
+          ? _value.step
+          : step // ignore: cast_nullable_to_non_nullable
+              as int,
+      whereVarEqualsZero: null == whereVarEqualsZero
+          ? _value.whereVarEqualsZero
+          : whereVarEqualsZero // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      solutions: null == solutions
+          ? _value.solutions
+          : solutions // ignore: cast_nullable_to_non_nullable
+              as List<double>,
+      solutionsString: null == solutionsString
+          ? _value.solutionsString
+          : solutionsString // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      matrix: null == matrix
+          ? _value.matrix
+          : matrix // ignore: cast_nullable_to_non_nullable
+              as List<List<double>>,
+      solutionString: freezed == solutionString
+          ? _value.solutionString
+          : solutionString // ignore: cast_nullable_to_non_nullable
+              as String?,
+      objectiveFunctionSolution: freezed == objectiveFunctionSolution
+          ? _value.objectiveFunctionSolution
+          : objectiveFunctionSolution // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_StepsForAlgebraicCopyWith<$Res>
+    implements $StepsForAlgebraicCopyWith<$Res> {
+  factory _$$_StepsForAlgebraicCopyWith(_$_StepsForAlgebraic value,
+          $Res Function(_$_StepsForAlgebraic) then) =
+      __$$_StepsForAlgebraicCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String header,
+      int step,
+      List<int> whereVarEqualsZero,
+      List<double> solutions,
+      List<String> solutionsString,
+      List<List<double>> matrix,
+      String? solutionString,
+      double? objectiveFunctionSolution});
+}
+
+/// @nodoc
+class __$$_StepsForAlgebraicCopyWithImpl<$Res>
+    extends _$StepsForAlgebraicCopyWithImpl<$Res, _$_StepsForAlgebraic>
+    implements _$$_StepsForAlgebraicCopyWith<$Res> {
+  __$$_StepsForAlgebraicCopyWithImpl(
+      _$_StepsForAlgebraic _value, $Res Function(_$_StepsForAlgebraic) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? header = null,
+    Object? step = null,
+    Object? whereVarEqualsZero = null,
+    Object? solutions = null,
+    Object? solutionsString = null,
+    Object? matrix = null,
+    Object? solutionString = freezed,
+    Object? objectiveFunctionSolution = freezed,
+  }) {
+    return _then(_$_StepsForAlgebraic(
+      header: null == header
+          ? _value.header
+          : header // ignore: cast_nullable_to_non_nullable
+              as String,
+      step: null == step
+          ? _value.step
+          : step // ignore: cast_nullable_to_non_nullable
+              as int,
+      whereVarEqualsZero: null == whereVarEqualsZero
+          ? _value._whereVarEqualsZero
+          : whereVarEqualsZero // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      solutions: null == solutions
+          ? _value._solutions
+          : solutions // ignore: cast_nullable_to_non_nullable
+              as List<double>,
+      solutionsString: null == solutionsString
+          ? _value._solutionsString
+          : solutionsString // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      matrix: null == matrix
+          ? _value._matrix
+          : matrix // ignore: cast_nullable_to_non_nullable
+              as List<List<double>>,
+      solutionString: freezed == solutionString
+          ? _value.solutionString
+          : solutionString // ignore: cast_nullable_to_non_nullable
+              as String?,
+      objectiveFunctionSolution: freezed == objectiveFunctionSolution
+          ? _value.objectiveFunctionSolution
+          : objectiveFunctionSolution // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_StepsForAlgebraic implements _StepsForAlgebraic {
+  const _$_StepsForAlgebraic(
+      {required this.header,
+      required this.step,
+      required final List<int> whereVarEqualsZero,
+      required final List<double> solutions,
+      required final List<String> solutionsString,
+      required final List<List<double>> matrix,
+      required this.solutionString,
+      required this.objectiveFunctionSolution})
+      : _whereVarEqualsZero = whereVarEqualsZero,
+        _solutions = solutions,
+        _solutionsString = solutionsString,
+        _matrix = matrix;
+
+  @override
+  final String header;
+  @override
+  final int step;
+  final List<int> _whereVarEqualsZero;
+  @override
+  List<int> get whereVarEqualsZero {
+    if (_whereVarEqualsZero is EqualUnmodifiableListView)
+      return _whereVarEqualsZero;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_whereVarEqualsZero);
+  }
+
+  final List<double> _solutions;
+  @override
+  List<double> get solutions {
+    if (_solutions is EqualUnmodifiableListView) return _solutions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_solutions);
+  }
+
+  final List<String> _solutionsString;
+  @override
+  List<String> get solutionsString {
+    if (_solutionsString is EqualUnmodifiableListView) return _solutionsString;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_solutionsString);
+  }
+
+  final List<List<double>> _matrix;
+  @override
+  List<List<double>> get matrix {
+    if (_matrix is EqualUnmodifiableListView) return _matrix;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_matrix);
+  }
+
+  @override
+  final String? solutionString;
+  @override
+  final double? objectiveFunctionSolution;
+
+  @override
+  String toString() {
+    return 'StepsForAlgebraic(header: $header, step: $step, whereVarEqualsZero: $whereVarEqualsZero, solutions: $solutions, solutionsString: $solutionsString, matrix: $matrix, solutionString: $solutionString, objectiveFunctionSolution: $objectiveFunctionSolution)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StepsForAlgebraic &&
+            (identical(other.header, header) || other.header == header) &&
+            (identical(other.step, step) || other.step == step) &&
+            const DeepCollectionEquality()
+                .equals(other._whereVarEqualsZero, _whereVarEqualsZero) &&
+            const DeepCollectionEquality()
+                .equals(other._solutions, _solutions) &&
+            const DeepCollectionEquality()
+                .equals(other._solutionsString, _solutionsString) &&
+            const DeepCollectionEquality().equals(other._matrix, _matrix) &&
+            (identical(other.solutionString, solutionString) ||
+                other.solutionString == solutionString) &&
+            (identical(other.objectiveFunctionSolution,
+                    objectiveFunctionSolution) ||
+                other.objectiveFunctionSolution == objectiveFunctionSolution));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      header,
+      step,
+      const DeepCollectionEquality().hash(_whereVarEqualsZero),
+      const DeepCollectionEquality().hash(_solutions),
+      const DeepCollectionEquality().hash(_solutionsString),
+      const DeepCollectionEquality().hash(_matrix),
+      solutionString,
+      objectiveFunctionSolution);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StepsForAlgebraicCopyWith<_$_StepsForAlgebraic> get copyWith =>
+      __$$_StepsForAlgebraicCopyWithImpl<_$_StepsForAlgebraic>(
+          this, _$identity);
+}
+
+abstract class _StepsForAlgebraic implements StepsForAlgebraic {
+  const factory _StepsForAlgebraic(
+      {required final String header,
+      required final int step,
+      required final List<int> whereVarEqualsZero,
+      required final List<double> solutions,
+      required final List<String> solutionsString,
+      required final List<List<double>> matrix,
+      required final String? solutionString,
+      required final double? objectiveFunctionSolution}) = _$_StepsForAlgebraic;
+
+  @override
+  String get header;
+  @override
+  int get step;
+  @override
+  List<int> get whereVarEqualsZero;
+  @override
+  List<double> get solutions;
+  @override
+  List<String> get solutionsString;
+  @override
+  List<List<double>> get matrix;
+  @override
+  String? get solutionString;
+  @override
+  double? get objectiveFunctionSolution;
+  @override
+  @JsonKey(ignore: true)
+  _$$_StepsForAlgebraicCopyWith<_$_StepsForAlgebraic> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$AnswerForAlgebraic {
+  double get definitiveSolution => throw _privateConstructorUsedError;
+  String? get finalSolutionString => throw _privateConstructorUsedError;
+  int get step => throw _privateConstructorUsedError;
+  List<StepsForAlgebraic> get steps => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AnswerForAlgebraicCopyWith<AnswerForAlgebraic> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AnswerForAlgebraicCopyWith<$Res> {
+  factory $AnswerForAlgebraicCopyWith(
+          AnswerForAlgebraic value, $Res Function(AnswerForAlgebraic) then) =
+      _$AnswerForAlgebraicCopyWithImpl<$Res, AnswerForAlgebraic>;
+  @useResult
+  $Res call(
+      {double definitiveSolution,
+      String? finalSolutionString,
+      int step,
+      List<StepsForAlgebraic> steps});
+}
+
+/// @nodoc
+class _$AnswerForAlgebraicCopyWithImpl<$Res, $Val extends AnswerForAlgebraic>
+    implements $AnswerForAlgebraicCopyWith<$Res> {
+  _$AnswerForAlgebraicCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? definitiveSolution = null,
+    Object? finalSolutionString = freezed,
+    Object? step = null,
+    Object? steps = null,
+  }) {
+    return _then(_value.copyWith(
+      definitiveSolution: null == definitiveSolution
+          ? _value.definitiveSolution
+          : definitiveSolution // ignore: cast_nullable_to_non_nullable
+              as double,
+      finalSolutionString: freezed == finalSolutionString
+          ? _value.finalSolutionString
+          : finalSolutionString // ignore: cast_nullable_to_non_nullable
+              as String?,
+      step: null == step
+          ? _value.step
+          : step // ignore: cast_nullable_to_non_nullable
+              as int,
+      steps: null == steps
+          ? _value.steps
+          : steps // ignore: cast_nullable_to_non_nullable
+              as List<StepsForAlgebraic>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_AnswerForAlgebraicCopyWith<$Res>
+    implements $AnswerForAlgebraicCopyWith<$Res> {
+  factory _$$_AnswerForAlgebraicCopyWith(_$_AnswerForAlgebraic value,
+          $Res Function(_$_AnswerForAlgebraic) then) =
+      __$$_AnswerForAlgebraicCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {double definitiveSolution,
+      String? finalSolutionString,
+      int step,
+      List<StepsForAlgebraic> steps});
+}
+
+/// @nodoc
+class __$$_AnswerForAlgebraicCopyWithImpl<$Res>
+    extends _$AnswerForAlgebraicCopyWithImpl<$Res, _$_AnswerForAlgebraic>
+    implements _$$_AnswerForAlgebraicCopyWith<$Res> {
+  __$$_AnswerForAlgebraicCopyWithImpl(
+      _$_AnswerForAlgebraic _value, $Res Function(_$_AnswerForAlgebraic) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? definitiveSolution = null,
+    Object? finalSolutionString = freezed,
+    Object? step = null,
+    Object? steps = null,
+  }) {
+    return _then(_$_AnswerForAlgebraic(
+      definitiveSolution: null == definitiveSolution
+          ? _value.definitiveSolution
+          : definitiveSolution // ignore: cast_nullable_to_non_nullable
+              as double,
+      finalSolutionString: freezed == finalSolutionString
+          ? _value.finalSolutionString
+          : finalSolutionString // ignore: cast_nullable_to_non_nullable
+              as String?,
+      step: null == step
+          ? _value.step
+          : step // ignore: cast_nullable_to_non_nullable
+              as int,
+      steps: null == steps
+          ? _value._steps
+          : steps // ignore: cast_nullable_to_non_nullable
+              as List<StepsForAlgebraic>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AnswerForAlgebraic implements _AnswerForAlgebraic {
+  const _$_AnswerForAlgebraic(
+      {required this.definitiveSolution,
+      required this.finalSolutionString,
+      required this.step,
+      required final List<StepsForAlgebraic> steps})
+      : _steps = steps;
+
+  @override
+  final double definitiveSolution;
+  @override
+  final String? finalSolutionString;
+  @override
+  final int step;
+  final List<StepsForAlgebraic> _steps;
+  @override
+  List<StepsForAlgebraic> get steps {
+    if (_steps is EqualUnmodifiableListView) return _steps;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_steps);
+  }
+
+  @override
+  String toString() {
+    return 'AnswerForAlgebraic(definitiveSolution: $definitiveSolution, finalSolutionString: $finalSolutionString, step: $step, steps: $steps)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AnswerForAlgebraic &&
+            (identical(other.definitiveSolution, definitiveSolution) ||
+                other.definitiveSolution == definitiveSolution) &&
+            (identical(other.finalSolutionString, finalSolutionString) ||
+                other.finalSolutionString == finalSolutionString) &&
+            (identical(other.step, step) || other.step == step) &&
+            const DeepCollectionEquality().equals(other._steps, _steps));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, definitiveSolution,
+      finalSolutionString, step, const DeepCollectionEquality().hash(_steps));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AnswerForAlgebraicCopyWith<_$_AnswerForAlgebraic> get copyWith =>
+      __$$_AnswerForAlgebraicCopyWithImpl<_$_AnswerForAlgebraic>(
+          this, _$identity);
+}
+
+abstract class _AnswerForAlgebraic implements AnswerForAlgebraic {
+  const factory _AnswerForAlgebraic(
+      {required final double definitiveSolution,
+      required final String? finalSolutionString,
+      required final int step,
+      required final List<StepsForAlgebraic> steps}) = _$_AnswerForAlgebraic;
+
+  @override
+  double get definitiveSolution;
+  @override
+  String? get finalSolutionString;
+  @override
+  int get step;
+  @override
+  List<StepsForAlgebraic> get steps;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AnswerForAlgebraicCopyWith<_$_AnswerForAlgebraic> get copyWith =>
+      throw _privateConstructorUsedError;
+}

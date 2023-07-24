@@ -29,3 +29,27 @@ class DataModelForAlgebraic with _$DataModelForAlgebraic {
     required String combinationsEquation,
   }) = _DataModelForAlgebraic;
 }
+
+@freezed
+class StepsForAlgebraic with _$StepsForAlgebraic {
+  const factory StepsForAlgebraic({
+    required String header,
+    required int step,
+    required List<int> whereVarEqualsZero,
+    required List<double> solutions,
+    required List<String> solutionsString,
+    required List<List<double>> matrix,
+    required String? solutionString,
+    required double? objectiveFunctionSolution,
+  }) = _StepsForAlgebraic;
+}
+
+@freezed
+class AnswerForAlgebraic with _$AnswerForAlgebraic {
+  const factory AnswerForAlgebraic({
+    required double definitiveSolution,
+    required String? finalSolutionString,
+    required int step,
+    required List<StepsForAlgebraic> steps,
+  }) = _AnswerForAlgebraic;
+}

@@ -1,3 +1,4 @@
+import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
 import 'package:linearprogrammingapp/constants/enums.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -74,7 +75,10 @@ class DataControllerForAlgebraic extends _$DataControllerForAlgebraic {
   DataModelForAlgebraic toStandardForm() {
     final dataSize = ref.watch(dataEntrySizeControllerProvider);
     final data = ref.watch(dataEntryControllerProvider);
-    List<List<double>> constraintWithSlackAndRightSide = List.generate(data.constraints.length, (index) => []);
+    List<List<double>> constraintWithSlackAndRightSide = List.generate(
+      data.constraints.length,
+      (index) => [],
+    );
     for (int i = 0; i < data.constraints.length; i++) {
       for (int j = 0; j < data.constraints[i].length; j++) {
         if (j == data.constraints[i].length - 1) {
@@ -94,22 +98,23 @@ class DataControllerForAlgebraic extends _$DataControllerForAlgebraic {
     List<String> rightSideString = [];
     List<double> rightSide = [];
     int variablesPlusSlack = dataSize.variables + dataSize.constraints;
-
     for (int i = 0; i < constraintWithSlackAndRightSide.length; i++) {
-      final List<double> completeConstraintsTemp = [];
-      final List<String> completeConstraintsTempString = [];
+      final List<double> completeConstraintsAux = [];
+      final List<String> completeConstraintsAuxString = [];
       for (int j = 0; j < constraintWithSlackAndRightSide[i].length; j++) {
         if (j == constraintWithSlackAndRightSide[i].length - 1) {
           rightSide.add(constraintWithSlackAndRightSide[i][j]);
           rightSideString.add(toStringWithSign(constraintWithSlackAndRightSide[i][j], 0, false, true));
         } else {
-          completeConstraintsTempString.add(toStringWithSign(constraintWithSlackAndRightSide[i][j], j + 1));
-          completeConstraintsTemp.add(constraintWithSlackAndRightSide[i][j]);
+          completeConstraintsAuxString.add(
+            toStringWithSign(constraintWithSlackAndRightSide[i][j], j + 1),
+          );
+          completeConstraintsAux.add(constraintWithSlackAndRightSide[i][j]);
         }
       }
-      completeConstraintsTempString.add(toStringWithSign(0, 0, true));
-      constraintsWithSlackString.add(completeConstraintsTempString);
-      constraintWithSlack.add(completeConstraintsTemp);
+      completeConstraintsAuxString.add(toStringWithSign(0, 0, true));
+      constraintsWithSlackString.add(completeConstraintsAuxString);
+      constraintWithSlack.add(completeConstraintsAux);
     }
 
     String greaterThanZeroCondition = '';
@@ -138,6 +143,100 @@ class DataControllerForAlgebraic extends _$DataControllerForAlgebraic {
     debugPrint(dataA.toString());
     return dataA;
   }
+
+  AnswerForAlgebraic answerAlgebraic(List<List<double>> constraints, List<double> righSide) {
+    final data = ref.read(dataEntryControllerProvider);
+    final objectiveFunction = data.objectiveFunction;
+    final objective = data.objective;
+    List<StepsForAlgebraic> stepsAlgebraic = [];
+    List<List<double>> values = [];
+    double definitiveSolution = objective == Objectives.max ? -1 : double.maxFinite;
+    int i = 0;
+    int solutionInStep = 0;
+    String? finalSolutionString;
+    for (int j = 0; j < constraints[0].length; j++) {
+      for (int k = j + 1; k < constraints[0].length; k++) {
+        List<List<double>> matrix = [];
+        i++;
+        for (int l = 0; l < constraints.length; l++) {
+          List<double> valuesAux = [];
+          for (int m = 0; m < constraints[l].length; m++) {
+            if (m != j && m != k) {
+              valuesAux.add(constraints[l][m]);
+            }
+          }
+          matrix.add(valuesAux);
+        }
+        final whereVarEqualsZero = [j + 1, k + 1];
+        final solutions = LUSolver(
+                matrix: RealMatrix.fromData(
+                  rows: constraints.length,
+                  columns: constraints.length,
+                  data: matrix,
+                ),
+                knownValues: righSide)
+            .solve();
+        List<String> solutionsString = [];
+        final listOfNumbers = List.generate(constraints[0].length, (index) => index + 1);
+        listOfNumbers.removeWhere(
+          (item) => whereVarEqualsZero.any((element) => element == item),
+        );
+        for (var n = 0; n < listOfNumbers.length; n++) {
+          solutionsString.add(
+            'x_{${listOfNumbers[n]}}=${deleteLastZero(solutions[n].toStringAsFixed(3))}',
+          );
+        }
+        final isValid = !solutions.any((element) => element < 0 || element.isNaN);
+        String? solutionString;
+        double? objectiveFunctionSolution;
+
+        if (isValid) {
+          final isOneZero = whereVarEqualsZero.any((element) => element == 1);
+          final isTwoZero = whereVarEqualsZero.any((element) => element == 2);
+          final oneValue = isOneZero ? 0 : solutions[listOfNumbers.indexOf(1)];
+          final twoValue = isTwoZero ? 0 : solutions[listOfNumbers.indexOf(2)];
+
+          objectiveFunctionSolution = objectiveFunction[0] * oneValue + objectiveFunction[1] * twoValue;
+          solutionString =
+              'Z=${deleteLastZero(objectiveFunction[0].toStringAsFixed(3))} (${deleteLastZero(oneValue.toStringAsFixed(3))}) ${getSign(objectiveFunction[1])} ${deleteLastZero(objectiveFunction[1].toStringAsFixed(3))} (${deleteLastZero(twoValue.toStringAsFixed(3))}) = ${deleteLastZero(objectiveFunctionSolution.toStringAsFixed(3))}';
+          if (objective == Objectives.max) {
+            if (definitiveSolution < objectiveFunctionSolution) {
+              definitiveSolution = objectiveFunctionSolution;
+              finalSolutionString = solutionString;
+              solutionInStep = i;
+            }
+          } else {
+            if (definitiveSolution > objectiveFunctionSolution) {
+              definitiveSolution = objectiveFunctionSolution;
+              finalSolutionString = solutionString;
+              solutionInStep = i;
+            }
+          }
+        }
+        final String header = 'x_{${whereVarEqualsZero[0]}} \\; y \\;x_{${whereVarEqualsZero[1]}}=0.';
+        stepsAlgebraic.add(
+          StepsForAlgebraic(
+            header: header,
+            step: i,
+            whereVarEqualsZero: whereVarEqualsZero,
+            solutions: solutions,
+            matrix: matrix,
+            solutionString: solutionString,
+            solutionsString: solutionsString,
+            objectiveFunctionSolution: objectiveFunctionSolution,
+          ),
+        );
+      }
+    }
+    final wrapper = AnswerForAlgebraic(
+      step: solutionInStep,
+      steps: stepsAlgebraic,
+      definitiveSolution: definitiveSolution,
+      finalSolutionString: finalSolutionString,
+    );
+    debugPrint('\ni: $i; \nvalues: $values;\nwrapper: $wrapper;');
+    return wrapper;
+  }
 }
 
 String combinationsEquation(int variables, int constraints, int factorial) {
@@ -145,7 +244,14 @@ String combinationsEquation(int variables, int constraints, int factorial) {
 }
 
 String deleteLastZero(String str) {
+  if (str == 'NaN') {
+    return 'indefinido';
+  }
   while ((str.endsWith('0') || str.endsWith('.')) && str.length > 1) {
+    if (str.endsWith('.')) {
+      str = str.substring(0, str.length - 1);
+      break;
+    }
     str = str.substring(0, str.length - 1);
   }
   return str;
@@ -154,22 +260,21 @@ String deleteLastZero(String str) {
 List<List<T>> transpose<T>(List<List<T>> list) {
   List<List<T>> transposed = [];
   for (var i = 0; i < list[0].length; i++) {
-    List<T> temp = [];
+    List<T> aux = [];
     for (var j = 0; j < list.length; j++) {
-      temp.add(list[j][i]);
+      aux.add(list[j][i]);
     }
-    transposed.add(temp);
+    transposed.add(aux);
   }
   return transposed;
 }
 
 String toStringWithSign(double number, int i, [bool addEquals = false, bool isRightSide = false]) {
   final equal = addEquals ? '=' : '';
-  final sign = number < 0
-      ? '-'
-      : number == 0 || isRightSide
-          ? '\\;'
-          : '+';
+  String sign = getSign(number);
+  if (number == 0 || isRightSide) {
+    sign = '\\;';
+  }
   if (isRightSide) {
     return '$sign${deleteLastZero('${number.abs()}')}';
   }
@@ -181,6 +286,10 @@ String toStringWithSign(double number, int i, [bool addEquals = false, bool isRi
     default:
       return '$sign${deleteLastZero(number.abs().toString())}x_{$i}$equal';
   }
+}
+
+String getSign(num number) {
+  return number < 0 ? '-' : '+';
 }
 
 int factorial(int number) {

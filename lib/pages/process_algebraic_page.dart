@@ -12,7 +12,11 @@ class AlgebraicProcessPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
     final eqStyle = textTheme.bodyMedium!.copyWith(fontSize: 22);
+    final colorSheme = Theme.of(context).colorScheme;
     final dataAlgebraic = ref.watch(dataControllerForAlgebraicProvider.notifier).toStandardForm();
+    final algebraicAnswer = ref
+        .watch(dataControllerForAlgebraicProvider.notifier)
+        .answerAlgebraic(dataAlgebraic.constraintWithSlack, dataAlgebraic.rightSide);
 
     return Scaffold(
       appBar: AppBar(
@@ -63,9 +67,81 @@ class AlgebraicProcessPage extends ConsumerWidget {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(vertical: spaceXXL),
+            padding: const EdgeInsets.symmetric(vertical: spaceXL),
             sliver: SliverToBoxAdapter(
               child: MathTexAlgebraic(equation: dataAlgebraic.combinationsEquation, eqStyle: eqStyle),
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: spaceXXL),
+          ),
+          for (final combination in algebraicAnswer.steps)
+            SliverPadding(
+              padding: const EdgeInsets.all(spaceL),
+              sliver: SliverToBoxAdapter(
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 650),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text('${combination.step}. Combinación ', style: eqStyle),
+                            MathTexAlgebraic(equation: combination.header, eqStyle: eqStyle, center: false),
+                          ],
+                        ),
+                        const SizedBox(height: spaceM),
+                        for (final solString in combination.solutionsString)
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Flexible(flex: 2, fit: FlexFit.tight, child: SizedBox()),
+                              Flexible(
+                                  flex: 7,
+                                  fit: FlexFit.tight,
+                                  child: MathTexAlgebraic(equation: solString, eqStyle: eqStyle, center: false)),
+                            ],
+                          ),
+                        combination.solutionString == null
+                            ? Text(
+                                'Esta combinación no tiene solución',
+                                style: textTheme.labelMedium!.copyWith(color: colorSheme.error),
+                              )
+                            : Card(
+                                color: combination.objectiveFunctionSolution == algebraicAnswer.definitiveSolution
+                                    ? Colors.greenAccent[400]!.withOpacity(0.15)
+                                    : Colors.lightBlue.withOpacity(0.15),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: spaceM, horizontal: spaceS),
+                                  child: MathTexAlgebraic(equation: combination.solutionString ?? '', eqStyle: eqStyle),
+                                )),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          SliverPadding(
+            padding: const EdgeInsets.all(spaceXL),
+            sliver: SliverToBoxAdapter(
+              child: Card(
+                elevation: 6,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: spaceXL, vertical: spaceL),
+                  child: Center(
+                    child: algebraicAnswer.finalSolutionString == null
+                        ? const Text('No existe una solución para este problema de programación lineal.')
+                        : Column(
+                            children: [
+                              Text('La solución óptima se encuentra en la combinacion ${algebraicAnswer.step}, así: ',
+                                  textAlign: TextAlign.center, style: eqStyle),
+                              const SizedBox(height: spaceM),
+                              MathTexAlgebraic(equation: algebraicAnswer.finalSolutionString ?? '', eqStyle: eqStyle),
+                            ],
+                          ),
+                  ),
+                ),
+              ),
             ),
           ),
         ],

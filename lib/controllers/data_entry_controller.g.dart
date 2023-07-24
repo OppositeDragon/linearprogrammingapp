@@ -58,7 +58,7 @@ final dataEntryControllerProvider =
 
 typedef _$DataEntryController = Notifier<DataEntryModel>;
 String _$dataControllerForAlgebraicHash() =>
-    r'451deab77d5b4abb68b8ae7c25328ea3933769a7';
+    r'f70ab58902f5559435e93bdea51bd41fd92adec4';
 
 /// See also [DataControllerForAlgebraic].
 @ProviderFor(DataControllerForAlgebraic)
