@@ -12,7 +12,7 @@ class GraphicProcessPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final textTheme = Theme.of(context).textTheme;
-    final dataEntryModel = ref.watch(dataEntryControllerProvider);
+    final dataEntryModel = ref.read(dataEntryControllerProvider);
     print(dataEntryModel);
     return Scaffold(
       appBar: AppBar(
@@ -29,12 +29,17 @@ class GraphicProcessPage extends ConsumerWidget {
             child: SizedBox.expand(
               child: Padding(
                 padding: const EdgeInsets.all(spaceM),
-                child: CustomPaint(
-                  painter: PlotPainter(
-                    theme: theme,
-                    constraints: dataEntryModel.constraints,
+                child: RepaintBoundary(
+                  child: CustomPaint(
+                    painter: PlotPainter(
+                      theme: theme,
+                      constraints: dataEntryModel.constraints,
+                      objective: dataEntryModel.objective,
+                      objectiveFunction: dataEntryModel.objectiveFunction,
+                    ),
                   ),
                 ),
+                
               ),
             ),
           ),

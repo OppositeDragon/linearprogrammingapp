@@ -1,19 +1,25 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:linearprogrammingapp/constants/enums.dart';
 
 class PlotPainter extends CustomPainter {
   PlotPainter({
     required this.theme,
     required this.constraints,
+    required this.objective,
+    required this.objectiveFunction,
   });
   final ThemeData theme;
   final List<List<double>> constraints;
+  Objectives objective;
+  List<double> objectiveFunction;
   double limitX = 0;
   double limitY = 0;
+  List<({Offset offset1, Offset offset2})> trueintersection = [];
   late List<({double x, double y})> intersections = [];
 
-  void interceptions() {
+  void interceptions2() {
     for (final eq in constraints) {
       final [first, second, ..., last] = eq;
       final double intX = first == 0 ? 0 : last / first;
@@ -24,6 +30,36 @@ class PlotPainter extends CustomPainter {
       if (inter.x > limitX) limitX = inter.x;
       if (inter.y > limitY) limitY = inter.y;
     }
+  }
+
+  void interceptions(double numerationLimitX, double numerationLimitY) {
+    for (final eq in constraints) {
+      final [first, second, ..., last] = eq;
+      // intersections.add(intersection(first, second, last));
+      trueintersection.add(intersection2(first, second, last, numerationLimitX, numerationLimitY));
+    }
+  }
+
+  ({double x, double y}) intersection(double x, double y, double z) {
+    final double intX = x == 0 ? 0 : z / x;
+    final double intY = y == 0 ? 0 : z / y;
+    return (x: intX, y: intY);
+  }
+
+  ({Offset offset1, Offset offset2}) intersection2(double x, double y, double z, double maxX, double maxY) {
+//offset 1
+    double o1x = x == 0 ? 0 : (z - (y * maxY)) / x;
+    if (o1x < 0) {
+      o1x = 0;
+    }
+    double o1y = y == 0 ? 0 : (z - (o1x * x)) / y;
+//offset 2
+    double o2y = y == 0 ? maxY : (z - (x * maxX)) / y;
+    if (o2y < 0) {
+      o2y = 0;
+    }
+    double o2x = x == 0 ? maxX : (z - (o2y * y)) / x;
+    return (offset1: Offset(o1x, o1y), offset2: Offset(o2x, o2y));
   }
 
   double roundToNextMagnitude(double number) {
@@ -66,8 +102,7 @@ class PlotPainter extends CustomPainter {
     ).toColor();
   }
 
-  List<Offset> findFeasibleRegionVertices() {
-    // Find intersection points of the constraints
+  List<Offset> findIntersectionsBetweenCostraints() {
     List<Offset> vertices = [];
 
     for (int i = 0; i < constraints.length - 1; i++) {
@@ -89,15 +124,45 @@ class PlotPainter extends CustomPainter {
     return vertices;
   }
 
+  List<Offset> findIntersectionsBetweenCostraintsAndPath() {
+    List<Offset> vertices = [];
+
+    for (int i = 0; i < constraints.length - 1; i++) {
+      for (int j = i + 1; j < constraints.length; j++) {
+        final [a1, b1, ..., c1] = constraints[i];
+        final [a2, b2, ..., c2] = constraints[j];
+
+        double determinant = a1 * b2 - a2 * b1;
+
+        if (determinant != 0) {
+          double x = (c1 * b2 - c2 * b1) / determinant;
+          double y = (a1 * c2 - a2 * c1) / determinant;
+          if (x >= 0 && y >= 0) {
+            vertices.add(Offset(x, y));
+          }
+        }
+      }
+    }
+    return vertices;
+  }
+
+  Path findIntersectionsOfPaths(List<Path> paths) {
+    Path path = paths[0];
+    for (var i = 1; i < paths.length; i++) {
+      path = Path.combine(PathOperation.intersect, path, paths[i]);
+    }
+    return path;
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
-    interceptions();
+    interceptions2();
     double numerationLimitX = roundToNextMagnitude(limitX); //(limitX / 100).ceil() * 10;
-    final numerationLimitY = roundToNextMagnitude(limitY);
+    double numerationLimitY = roundToNextMagnitude(limitY);
+    interceptions(numerationLimitX, numerationLimitY);
 
     const int segmentsX = 5;
     const int segmentsY = 5;
-
     var stepX = numerationLimitX / segmentsX;
     final stepY = numerationLimitY / segmentsY;
     final marksNumX = List.generate(segmentsX, (index) => stepX * (index + 1));
@@ -135,6 +200,8 @@ class PlotPainter extends CustomPainter {
     final availableY = (size.height - topMargin - bottomMargin);
     final offsetX = availableX / segmentsX;
     final offsetY = availableY / segmentsY;
+    final unitX = availableX / numerationLimitX;
+    final unitY = availableY / numerationLimitY;
 
     final paint = Paint()
       ..color = theme.colorScheme.onBackground
@@ -197,64 +264,97 @@ class PlotPainter extends CustomPainter {
       canvas.drawLine(Offset(leftMargin - 1, dy), Offset(leftMargin + 4, dy), paint);
     }
 
-    final unitX = availableX / numerationLimitX;
-    final unitY = availableY / numerationLimitY;
-
-    for (int i = 0; i < intersections.length; i++) {
-      final inter = intersections[i];
-      final color = getColorFromHSL(i, intersections.length);
-
-      if (inter.x == 0) {
-        final paint1 = Paint()
-          ..color = color
-          ..strokeWidth = 2
-          ..style = PaintingStyle.stroke;
-        canvas.drawLine(
-          Offset(leftMargin, topMargin + availableY - (unitY * inter.y)),
-          Offset(leftMargin + availableX, topMargin + availableY - (unitY * inter.y)),
-          paint1,
-        );
-      } else if (inter.y == 0) {
-        final paint2 = Paint()
-          ..color = color
-          ..strokeWidth = 2
-          ..style = PaintingStyle.stroke;
-        canvas.drawLine(
-          Offset(leftMargin + unitX * inter.x, topMargin),
-          Offset(leftMargin + unitX * inter.x, topMargin + availableY),
-          paint2,
-        );
-      } else {
-        canvas.drawLine(
-          Offset(leftMargin, topMargin + availableY - (unitY * inter.y)),
-          Offset(leftMargin + unitX * inter.x, topMargin + availableY),
-          paint..color = color,
-        );
-      }
+    List<Path> paths = [];
+    for (int i = 0; i < trueintersection.length; i++) {
+      final path = drawFunction2(trueintersection[i], leftMargin, topMargin, availableY, unitY, availableX, canvas,
+          paths, unitX, paint, getColorFromHSL(i, trueintersection.length), offsetX, offsetY);
+      paths.add(path);
     }
 //draw feaseable region
     final paint3 = Paint()
-      ..color = theme.colorScheme.primary.withOpacity(0.1)
+      ..color = theme.colorScheme.primary.withOpacity(0.2)
       ..strokeWidth = 10
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill;
-
+    final intercs = findIntersectionsBetweenCostraints();
     final points = [
-      for (final point in findFeasibleRegionVertices())
-        Offset(leftMargin + point.dx * unitX, size.height - topMargin - point.dy * unitY)
+      for (final point in intercs) Offset(leftMargin + point.dx * unitX, size.height - topMargin - point.dy * unitY)
     ];
-    Path feasibleRegion = Path()..moveTo(points[0].dx, points[0].dy);
-    for (int i = 1; i < points.length; i++) {
-      feasibleRegion.lineTo(points[i].dx, points[i].dy);
-    }
+    final feasibleRegion = findIntersectionsOfPaths(paths);
+    final pointsContained = [
+      for (int i = 0; i < points.length; i++)
+        if (feasibleRegion.contains(points[i])) intercs[i]
+    ];
+    debugPrint('pointsContained: $pointsContained');
+    //  final computed = feasibleRegion.computeMetrics().toList();
     canvas.drawPath(feasibleRegion, paint3);
-    final centerOfREgion = feasibleRegion.getBounds().center;
-    final TextSpan span = TextSpan(style: textStyle.copyWith(fontFamily: 'CMRomanSerif'), text: 'feasible region');
+    final centerOfREgion = feasibleRegion.getBounds().centerLeft + Offset(feasibleRegion.getBounds().center.dx / 2, 0);
+    final TextSpan span = TextSpan(style: textStyle.copyWith(fontFamily: 'CMRomanSerif'), text: 'feasible\nregion');
     TextPainter(text: span, textDirection: TextDirection.ltr, textAlign: TextAlign.center)
       ..layout()
       ..paint(canvas, centerOfREgion);
+    double xAnswer = -1, yAnswer = -1, zAnswer = -1;
+    final [first, seccond, ...] = objectiveFunction;
+    if (objective == Objectives.max) {
+      for (var point in pointsContained) {
+        if (first * point.dx + seccond * point.dy > zAnswer) {
+          xAnswer = point.dx;
+          yAnswer = point.dy;
+          zAnswer = first * point.dx + seccond * point.dy;
+        }
+      }
+    }
+    final objFuncItersection = intersection2(first, seccond, zAnswer, numerationLimitX, numerationLimitY);
+    drawFunction2(objFuncItersection, leftMargin, topMargin, availableY, unitY, availableX, canvas, paths, unitX, paint,
+        getColorFromHSL(trueintersection.length + 1, trueintersection.length + 1), offsetX, offsetY);
+    canvas.drawCircle(Offset(leftMargin + (xAnswer * unitX), topMargin + availableY - (yAnswer * unitY)), 3,
+        paint..color = theme.colorScheme.onSurface);
   }
 
+  Path drawFunction2(
+      ({Offset offset1, Offset offset2}) inter,
+      double leftMargin,
+      double topMargin,
+      double availableY,
+      double unitY,
+      double availableX,
+      Canvas canvas,
+      List<Path> paths,
+      double unitX,
+      Paint paint,
+      Color color,
+      double offsetX,
+      double offsetY) {
+    final x1 = leftMargin + (inter.offset1.dx * unitX);
+    final y1 = topMargin + availableY - (inter.offset1.dy * unitY);
+    final x2 = leftMargin + ((inter.offset2.dx * unitX));
+    final y2 = topMargin + availableY - (inter.offset2.dy * unitY);
+    canvas.drawLine(
+      Offset(x1, y1),
+      Offset(x2, y2),
+      paint..color = color,
+    );
+    if (x1 == x2) {
+      return Path()
+        ..moveTo(x1, y1)
+        ..lineTo(x1, y2)
+        ..lineTo(leftMargin, y2)
+        ..lineTo(leftMargin, y1);
+    } else if (y1 == y2) {
+      return Path()
+        ..moveTo(x1, y1)
+        ..lineTo(x2, y1)
+        ..lineTo(x2, availableY + topMargin)
+        ..lineTo(x1, availableY + topMargin);
+    } else {
+      return Path()
+        ..moveTo(x1, y1)
+        ..lineTo(x2, y2)
+        ..lineTo(leftMargin, y2)
+        ..lineTo(leftMargin, y1);
+    }
+  }
+	
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
