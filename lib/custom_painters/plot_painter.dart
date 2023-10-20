@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:linearprogrammingapp/constants/colors.dart';
 import 'package:linearprogrammingapp/constants/enums.dart';
 
 class PlotPainter extends CustomPainter {
@@ -92,14 +93,12 @@ class PlotPainter extends CustomPainter {
     return str;
   }
 
-  Color getColorFromHSL(int index, int length) {
-    final double value = theme.brightness == Brightness.dark ? 0.75 : 0.45;
-    return HSLColor.fromAHSL(
-      1,
-      index * 0.95 * 360 / length,
-      1,
-      ((index % 4 == 3 ? 1 : 0) / -4) + value,
-    ).toColor();
+  Color getColor(int index) {
+    final bool isDark = theme.brightness == Brightness.dark;
+    if (isDark) {
+      return colorsOnBlack[index];
+    }
+    return colorsOnWhite[index];
   }
 
   List<Offset> findIntersectionsBetweenCostraints() {
@@ -267,7 +266,7 @@ class PlotPainter extends CustomPainter {
     List<Path> paths = [];
     for (int i = 0; i < trueintersection.length; i++) {
       final path = drawFunction2(trueintersection[i], leftMargin, topMargin, availableY, unitY, availableX, canvas,
-          paths, unitX, paint, getColorFromHSL(i, trueintersection.length), offsetX, offsetY);
+          paths, unitX, paint, getColor(i), offsetX, offsetY);
       paths.add(path);
     }
 //draw feaseable region
@@ -306,7 +305,7 @@ class PlotPainter extends CustomPainter {
     }
     final objFuncItersection = intersection2(first, seccond, zAnswer, numerationLimitX, numerationLimitY);
     drawFunction2(objFuncItersection, leftMargin, topMargin, availableY, unitY, availableX, canvas, paths, unitX, paint,
-        getColorFromHSL(trueintersection.length + 1, trueintersection.length + 1), offsetX, offsetY);
+        getColor(trueintersection.length + 1), offsetX, offsetY);
     canvas.drawCircle(Offset(leftMargin + (xAnswer * unitX), topMargin + availableY - (yAnswer * unitY)), 3,
         paint..color = theme.colorScheme.onSurface);
   }
@@ -354,7 +353,7 @@ class PlotPainter extends CustomPainter {
         ..lineTo(leftMargin, y1);
     }
   }
-	
+
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
