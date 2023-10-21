@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../constants/enums.dart';
@@ -20,8 +22,7 @@ class DataEntryModel with _$DataEntryModel {
 @freezed
 class DataModelForGraphic with _$DataModelForGraphic {
   const factory DataModelForGraphic({
-    required List<({double x, double y})> intersections,
-    required double maxX,
-    required double maxY,
+    required List<Point> intersections,
+    required Point max,
   }) = _DataModelForGraphic;
 }

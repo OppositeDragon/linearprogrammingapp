@@ -84,11 +84,11 @@ class _$DataEntryModelCopyWithImpl<$Res, $Val extends DataEntryModel>
 }
 
 /// @nodoc
-abstract class _$$_DataEntryModelCopyWith<$Res>
+abstract class _$$DataEntryModelImplCopyWith<$Res>
     implements $DataEntryModelCopyWith<$Res> {
-  factory _$$_DataEntryModelCopyWith(
-          _$_DataEntryModel value, $Res Function(_$_DataEntryModel) then) =
-      __$$_DataEntryModelCopyWithImpl<$Res>;
+  factory _$$DataEntryModelImplCopyWith(_$DataEntryModelImpl value,
+          $Res Function(_$DataEntryModelImpl) then) =
+      __$$DataEntryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -99,11 +99,11 @@ abstract class _$$_DataEntryModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DataEntryModelCopyWithImpl<$Res>
-    extends _$DataEntryModelCopyWithImpl<$Res, _$_DataEntryModel>
-    implements _$$_DataEntryModelCopyWith<$Res> {
-  __$$_DataEntryModelCopyWithImpl(
-      _$_DataEntryModel _value, $Res Function(_$_DataEntryModel) _then)
+class __$$DataEntryModelImplCopyWithImpl<$Res>
+    extends _$DataEntryModelCopyWithImpl<$Res, _$DataEntryModelImpl>
+    implements _$$DataEntryModelImplCopyWith<$Res> {
+  __$$DataEntryModelImplCopyWithImpl(
+      _$DataEntryModelImpl _value, $Res Function(_$DataEntryModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -114,7 +114,7 @@ class __$$_DataEntryModelCopyWithImpl<$Res>
     Object? operators = null,
     Object? constraints = null,
   }) {
-    return _then(_$_DataEntryModel(
+    return _then(_$DataEntryModelImpl(
       objective: null == objective
           ? _value.objective
           : objective // ignore: cast_nullable_to_non_nullable
@@ -137,8 +137,8 @@ class __$$_DataEntryModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_DataEntryModel implements _DataEntryModel {
-  const _$_DataEntryModel(
+class _$DataEntryModelImpl implements _DataEntryModel {
+  const _$DataEntryModelImpl(
       {required this.objective,
       required final List<double> objectiveFunction,
       required final List<Operators> operators,
@@ -147,8 +147,8 @@ class _$_DataEntryModel implements _DataEntryModel {
         _operators = operators,
         _constraints = constraints;
 
-  factory _$_DataEntryModel.fromJson(Map<String, dynamic> json) =>
-      _$$_DataEntryModelFromJson(json);
+  factory _$DataEntryModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DataEntryModelImplFromJson(json);
 
   @override
   final Objectives objective;
@@ -186,7 +186,7 @@ class _$_DataEntryModel implements _DataEntryModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DataEntryModel &&
+            other is _$DataEntryModelImpl &&
             (identical(other.objective, objective) ||
                 other.objective == objective) &&
             const DeepCollectionEquality()
@@ -209,12 +209,13 @@ class _$_DataEntryModel implements _DataEntryModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DataEntryModelCopyWith<_$_DataEntryModel> get copyWith =>
-      __$$_DataEntryModelCopyWithImpl<_$_DataEntryModel>(this, _$identity);
+  _$$DataEntryModelImplCopyWith<_$DataEntryModelImpl> get copyWith =>
+      __$$DataEntryModelImplCopyWithImpl<_$DataEntryModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DataEntryModelToJson(
+    return _$$DataEntryModelImplToJson(
       this,
     );
   }
@@ -225,10 +226,10 @@ abstract class _DataEntryModel implements DataEntryModel {
       {required final Objectives objective,
       required final List<double> objectiveFunction,
       required final List<Operators> operators,
-      required final List<List<double>> constraints}) = _$_DataEntryModel;
+      required final List<List<double>> constraints}) = _$DataEntryModelImpl;
 
   factory _DataEntryModel.fromJson(Map<String, dynamic> json) =
-      _$_DataEntryModel.fromJson;
+      _$DataEntryModelImpl.fromJson;
 
   @override
   Objectives get objective;
@@ -240,16 +241,14 @@ abstract class _DataEntryModel implements DataEntryModel {
   List<List<double>> get constraints;
   @override
   @JsonKey(ignore: true)
-  _$$_DataEntryModelCopyWith<_$_DataEntryModel> get copyWith =>
+  _$$DataEntryModelImplCopyWith<_$DataEntryModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$DataModelForGraphic {
-  List<({double x, double y})> get intersections =>
-      throw _privateConstructorUsedError;
-  double get maxX => throw _privateConstructorUsedError;
-  double get maxY => throw _privateConstructorUsedError;
+  List<Point<num>> get intersections => throw _privateConstructorUsedError;
+  Point<num> get max => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DataModelForGraphicCopyWith<DataModelForGraphic> get copyWith =>
@@ -262,8 +261,7 @@ abstract class $DataModelForGraphicCopyWith<$Res> {
           DataModelForGraphic value, $Res Function(DataModelForGraphic) then) =
       _$DataModelForGraphicCopyWithImpl<$Res, DataModelForGraphic>;
   @useResult
-  $Res call(
-      {List<({double x, double y})> intersections, double maxX, double maxY});
+  $Res call({List<Point<num>> intersections, Point<num> max});
 }
 
 /// @nodoc
@@ -280,134 +278,115 @@ class _$DataModelForGraphicCopyWithImpl<$Res, $Val extends DataModelForGraphic>
   @override
   $Res call({
     Object? intersections = null,
-    Object? maxX = null,
-    Object? maxY = null,
+    Object? max = null,
   }) {
     return _then(_value.copyWith(
       intersections: null == intersections
           ? _value.intersections
           : intersections // ignore: cast_nullable_to_non_nullable
-              as List<({double x, double y})>,
-      maxX: null == maxX
-          ? _value.maxX
-          : maxX // ignore: cast_nullable_to_non_nullable
-              as double,
-      maxY: null == maxY
-          ? _value.maxY
-          : maxY // ignore: cast_nullable_to_non_nullable
-              as double,
+              as List<Point<num>>,
+      max: null == max
+          ? _value.max
+          : max // ignore: cast_nullable_to_non_nullable
+              as Point<num>,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_DataModelForGraphicCopyWith<$Res>
+abstract class _$$DataModelForGraphicImplCopyWith<$Res>
     implements $DataModelForGraphicCopyWith<$Res> {
-  factory _$$_DataModelForGraphicCopyWith(_$_DataModelForGraphic value,
-          $Res Function(_$_DataModelForGraphic) then) =
-      __$$_DataModelForGraphicCopyWithImpl<$Res>;
+  factory _$$DataModelForGraphicImplCopyWith(_$DataModelForGraphicImpl value,
+          $Res Function(_$DataModelForGraphicImpl) then) =
+      __$$DataModelForGraphicImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {List<({double x, double y})> intersections, double maxX, double maxY});
+  $Res call({List<Point<num>> intersections, Point<num> max});
 }
 
 /// @nodoc
-class __$$_DataModelForGraphicCopyWithImpl<$Res>
-    extends _$DataModelForGraphicCopyWithImpl<$Res, _$_DataModelForGraphic>
-    implements _$$_DataModelForGraphicCopyWith<$Res> {
-  __$$_DataModelForGraphicCopyWithImpl(_$_DataModelForGraphic _value,
-      $Res Function(_$_DataModelForGraphic) _then)
+class __$$DataModelForGraphicImplCopyWithImpl<$Res>
+    extends _$DataModelForGraphicCopyWithImpl<$Res, _$DataModelForGraphicImpl>
+    implements _$$DataModelForGraphicImplCopyWith<$Res> {
+  __$$DataModelForGraphicImplCopyWithImpl(_$DataModelForGraphicImpl _value,
+      $Res Function(_$DataModelForGraphicImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? intersections = null,
-    Object? maxX = null,
-    Object? maxY = null,
+    Object? max = null,
   }) {
-    return _then(_$_DataModelForGraphic(
+    return _then(_$DataModelForGraphicImpl(
       intersections: null == intersections
           ? _value._intersections
           : intersections // ignore: cast_nullable_to_non_nullable
-              as List<({double x, double y})>,
-      maxX: null == maxX
-          ? _value.maxX
-          : maxX // ignore: cast_nullable_to_non_nullable
-              as double,
-      maxY: null == maxY
-          ? _value.maxY
-          : maxY // ignore: cast_nullable_to_non_nullable
-              as double,
+              as List<Point<num>>,
+      max: null == max
+          ? _value.max
+          : max // ignore: cast_nullable_to_non_nullable
+              as Point<num>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_DataModelForGraphic implements _DataModelForGraphic {
-  const _$_DataModelForGraphic(
-      {required final List<({double x, double y})> intersections,
-      required this.maxX,
-      required this.maxY})
+class _$DataModelForGraphicImpl implements _DataModelForGraphic {
+  const _$DataModelForGraphicImpl(
+      {required final List<Point<num>> intersections, required this.max})
       : _intersections = intersections;
 
-  final List<({double x, double y})> _intersections;
+  final List<Point<num>> _intersections;
   @override
-  List<({double x, double y})> get intersections {
+  List<Point<num>> get intersections {
     if (_intersections is EqualUnmodifiableListView) return _intersections;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_intersections);
   }
 
   @override
-  final double maxX;
-  @override
-  final double maxY;
+  final Point<num> max;
 
   @override
   String toString() {
-    return 'DataModelForGraphic(intersections: $intersections, maxX: $maxX, maxY: $maxY)';
+    return 'DataModelForGraphic(intersections: $intersections, max: $max)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DataModelForGraphic &&
+            other is _$DataModelForGraphicImpl &&
             const DeepCollectionEquality()
                 .equals(other._intersections, _intersections) &&
-            (identical(other.maxX, maxX) || other.maxX == maxX) &&
-            (identical(other.maxY, maxY) || other.maxY == maxY));
+            (identical(other.max, max) || other.max == max));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_intersections), maxX, maxY);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_intersections), max);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DataModelForGraphicCopyWith<_$_DataModelForGraphic> get copyWith =>
-      __$$_DataModelForGraphicCopyWithImpl<_$_DataModelForGraphic>(
+  _$$DataModelForGraphicImplCopyWith<_$DataModelForGraphicImpl> get copyWith =>
+      __$$DataModelForGraphicImplCopyWithImpl<_$DataModelForGraphicImpl>(
           this, _$identity);
 }
 
 abstract class _DataModelForGraphic implements DataModelForGraphic {
   const factory _DataModelForGraphic(
-      {required final List<({double x, double y})> intersections,
-      required final double maxX,
-      required final double maxY}) = _$_DataModelForGraphic;
+      {required final List<Point<num>> intersections,
+      required final Point<num> max}) = _$DataModelForGraphicImpl;
 
   @override
-  List<({double x, double y})> get intersections;
+  List<Point<num>> get intersections;
   @override
-  double get maxX;
-  @override
-  double get maxY;
+  Point<num> get max;
   @override
   @JsonKey(ignore: true)
-  _$$_DataModelForGraphicCopyWith<_$_DataModelForGraphic> get copyWith =>
+  _$$DataModelForGraphicImplCopyWith<_$DataModelForGraphicImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

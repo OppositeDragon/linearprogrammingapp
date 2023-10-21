@@ -58,7 +58,7 @@ final dataEntryControllerProvider =
 
 typedef _$DataEntryController = Notifier<DataEntryModel>;
 String _$dataControllerForGraphicHash() =>
-    r'b721c2a636f883bdb4d8ea14aa21e7d4fb71fd40';
+    r'3cf9088adc7f7aec4744b17d21ce4b18b8c8ada2';
 
 /// See also [DataControllerForGraphic].
 @ProviderFor(DataControllerForGraphic)
@@ -74,4 +74,5 @@ final dataControllerForGraphicProvider =
 );
 
 typedef _$DataControllerForGraphic = Notifier<void>;
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
