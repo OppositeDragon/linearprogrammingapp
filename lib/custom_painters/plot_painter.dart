@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:linearprogrammingapp/constants/colors.dart';
 import 'package:linearprogrammingapp/constants/enums.dart';
 
+typedef PointPair = ({Point p1, Point p2});
+
 class PlotPainter extends CustomPainter {
   PlotPainter({
     required this.theme,
@@ -43,9 +45,8 @@ class PlotPainter extends CustomPainter {
     return Point(maxX, maxY);
   }
 
-  List<({Offset offset1, Offset offset2})> findIntersectionsBetweenConstraintsAndLimits(
-      double numerationLimitX, double numerationLimitY) {
-    List<({Offset offset1, Offset offset2})> trueIntersections = [];
+  List<PointPair> findIntersectionsBetweenConstraintsAndLimits(double numerationLimitX, double numerationLimitY) {
+    List<PointPair> trueIntersections = [];
     for (final eq in constraints) {
       final [first, second, ..., last] = eq;
       trueIntersections.add(findIntersectionConstraintLimit(first, second, last, numerationLimitX, numerationLimitY));
@@ -53,21 +54,21 @@ class PlotPainter extends CustomPainter {
     return trueIntersections;
   }
 
-  ({Offset offset1, Offset offset2}) findIntersectionConstraintLimit(
+  PointPair findIntersectionConstraintLimit(
       double x, double y, double z, double numerationLimitX, double numerationLimitY) {
     //offset 1
-    double o1x = x == 0 ? 0 : (z - (y * numerationLimitY)) / x;
-    if (o1x < 0) {
-      o1x = 0;
+    double p1x = x == 0 ? 0 : (z - (y * numerationLimitY)) / x;
+    if (p1x < 0) {
+      p1x = 0;
     }
-    double o1y = y == 0 ? 0 : (z - (o1x * x)) / y;
+    double p1y = y == 0 ? 0 : (z - (p1x * x)) / y;
     //offset 2
-    double o2y = y == 0 ? numerationLimitY : (z - (x * numerationLimitX)) / y;
-    if (o2y < 0) {
-      o2y = 0;
+    double p2y = y == 0 ? numerationLimitY : (z - (x * numerationLimitX)) / y;
+    if (p2y < 0) {
+      p2y = 0;
     }
-    double o2x = x == 0 ? numerationLimitX : (z - (o2y * y)) / x;
-    return (offset1: Offset(o1x, o1y), offset2: Offset(o2x, o2y));
+    double p2x = x == 0 ? numerationLimitX : (z - (p2y * y)) / x;
+    return (p1: Point(p1x, p1y), p2: Point(p2x, p2y));
   }
 
   double roundToNextMagnitude(double number) {
@@ -353,7 +354,7 @@ class PlotPainter extends CustomPainter {
   }
 
   Path drawFunctionLine(
-    ({Offset offset1, Offset offset2}) inter,
+    PointPair inter,
     double leftMargin,
     double topMargin,
     double availableY,
@@ -366,10 +367,10 @@ class PlotPainter extends CustomPainter {
     double offsetX,
     double offsetY,
   ) {
-    final x1 = leftMargin + (inter.offset1.dx * unitX);
-    final y1 = topMargin + availableY - (inter.offset1.dy * unitY);
-    final x2 = leftMargin + ((inter.offset2.dx * unitX));
-    final y2 = topMargin + availableY - (inter.offset2.dy * unitY);
+    final x1 = leftMargin + (inter.p1.x * unitX);
+    final y1 = topMargin + availableY - (inter.p1.y * unitY);
+    final x2 = leftMargin + ((inter.p2.x * unitX));
+    final y2 = topMargin + availableY - (inter.p2.y * unitY);
     canvas.drawLine(
       Offset(x1, y1),
       Offset(x2, y2),
