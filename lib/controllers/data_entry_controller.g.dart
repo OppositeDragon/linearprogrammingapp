@@ -11,8 +11,8 @@ String _$dataEntrySizeControllerHash() =>
 
 /// See also [DataEntrySizeController].
 @ProviderFor(DataEntrySizeController)
-final dataEntrySizeControllerProvider = NotifierProvider<
-    DataEntrySizeController, ({int constraints, int variables})>.internal(
+final dataEntrySizeControllerProvider =
+    NotifierProvider<DataEntrySizeController, DataEntrySize>.internal(
   DataEntrySizeController.new,
   name: r'dataEntrySizeControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,8 +22,7 @@ final dataEntrySizeControllerProvider = NotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$DataEntrySizeController
-    = Notifier<({int constraints, int variables})>;
+typedef _$DataEntrySizeController = Notifier<DataEntrySize>;
 String _$processControllerHash() => r'eed574c72011cce3200d442c05d2ef6ba708386a';
 
 /// See also [ProcessController].
