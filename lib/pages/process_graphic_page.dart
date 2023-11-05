@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:linearprogrammingapp/constants/numeric.dart';
-import 'package:linearprogrammingapp/controllers/data_entry_controller.dart';
 
-import '../custom_painters/plot_painter.dart';
+import '../constants/numeric.dart';
+import '../controllers/graphic_mode_controller.dart';
+import '../custom_painters/graphic_process_painter.dart';
 
 class GraphicProcessPage extends ConsumerWidget {
   const GraphicProcessPage({super.key});
@@ -11,9 +11,8 @@ class GraphicProcessPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final textTheme = Theme.of(context).textTheme;
-    final dataEntryModel = ref.read(dataEntryControllerProvider);
-    print(dataEntryModel);
+    final textTheme = theme.textTheme;
+    final graphicData = ref.watch(graphicControllerProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Linear Programming App'),
@@ -22,24 +21,24 @@ class GraphicProcessPage extends ConsumerWidget {
       body: Column(
         children: [
           Center(
-            child: Text('Metodo Gráfico', textAlign: TextAlign.center, style: textTheme.displaySmall),
+            child: Text(
+              'Metodo Gráfico',
+              textAlign: TextAlign.center,
+              style: textTheme.displaySmall,
+            ),
           ),
           Expanded(
-						
             child: SizedBox.expand(
               child: Padding(
                 padding: const EdgeInsets.all(spaceM),
                 child: RepaintBoundary(
                   child: CustomPaint(
-                    painter: PlotPainter(
+                    painter: GraphicProcessPainter(
                       theme: theme,
-                      constraints: dataEntryModel.constraints,
-                      objective: dataEntryModel.objective,
-                      objectiveFunction: dataEntryModel.objectiveFunction,
+                      answerData: graphicData,
                     ),
                   ),
                 ),
-                
               ),
             ),
           ),
