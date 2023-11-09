@@ -106,8 +106,8 @@ List<Point<double>> getIntersectionsBetweenCostraints(GetIntersectionsBetweenCos
 }
 
 @riverpod
-List<Point<double>> getIntersectionsOnAxesAndBetweenConstraints(
-    GetIntersectionsOnAxesAndBetweenConstraintsRef ref) {
+List<Point<double>> getIntersectionsOnAxesAndConstraints(
+    GetIntersectionsOnAxesAndConstraintsRef ref) {
   final intersectionsBetweenCostraints = ref.watch(getIntersectionsBetweenCostraintsProvider);
   final intersectionsOnAxes = ref.watch(getItersectionsOnAxesProvider);
   final Set<Point<double>> allIntersections = {};
@@ -120,7 +120,7 @@ List<Point<double>> getIntersectionsOnAxesAndBetweenConstraints(
 List<Point<double>> getCompliantIntersections(GetCompliantIntersectionsRef ref) {
   final constraints = ref.watch(dataEntryControllerProvider.select((value) => value.constraints));
   final operators = ref.watch(dataEntryControllerProvider.select((value) => value.operators));
-  final intersections = ref.watch(getIntersectionsOnAxesAndBetweenConstraintsProvider);
+  final intersections = ref.watch(getIntersectionsOnAxesAndConstraintsProvider);
   final limits = ref.watch(getBiggestIntersectionsOnAxesProvider);
   intersections.addAll([const Point(0, 0), Point(limits.x, limits.y)]);
   for (int i = 0; i < constraints.length; i++) {

@@ -445,26 +445,26 @@ final getIntersectionsBetweenCostraintsProvider =
 
 typedef GetIntersectionsBetweenCostraintsRef
     = AutoDisposeProviderRef<List<Point<double>>>;
-String _$getIntersectionsOnAxesAndBetweenConstraintsHash() =>
-    r'93dabb4fe3f9b1cdf36b59bbe02ee8fed6ae49fe';
+String _$getIntersectionsOnAxesAndConstraintsHash() =>
+    r'350c5b285479073c4df7741daa9ea2f3c65f7a8e';
 
-/// See also [getIntersectionsOnAxesAndBetweenConstraints].
-@ProviderFor(getIntersectionsOnAxesAndBetweenConstraints)
-final getIntersectionsOnAxesAndBetweenConstraintsProvider =
+/// See also [getIntersectionsOnAxesAndConstraints].
+@ProviderFor(getIntersectionsOnAxesAndConstraints)
+final getIntersectionsOnAxesAndConstraintsProvider =
     AutoDisposeProvider<List<Point<double>>>.internal(
-  getIntersectionsOnAxesAndBetweenConstraints,
-  name: r'getIntersectionsOnAxesAndBetweenConstraintsProvider',
+  getIntersectionsOnAxesAndConstraints,
+  name: r'getIntersectionsOnAxesAndConstraintsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$getIntersectionsOnAxesAndBetweenConstraintsHash,
+      : _$getIntersectionsOnAxesAndConstraintsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef GetIntersectionsOnAxesAndBetweenConstraintsRef
+typedef GetIntersectionsOnAxesAndConstraintsRef
     = AutoDisposeProviderRef<List<Point<double>>>;
 String _$getCompliantIntersectionsHash() =>
-    r'156f28a109cf66787e53a88bfe461e2e88d0b532';
+    r'202290f3277e1655740b75a83b529a65b4dab83b';
 
 /// See also [getCompliantIntersections].
 @ProviderFor(getCompliantIntersections)
