@@ -265,13 +265,15 @@ class GraphicController extends _$GraphicController {
     final answerLine = ref
         .watch(getIntersectionConstraintLimitProvider(x, y, x * answerPoint.x + y * answerPoint.y));
     final feasibleRegion = ref.watch(getFeasibleMatrixPointsProvider);
+    final compliantIntersections = ref.watch(getCompliantIntersectionsProvider);
     return GraphicDataModel(
       xLimit: roundedLimits.x,
       yLimit: roundedLimits.y,
       answer: answerPoint,
-      answerObjectiveFunction: answerLine,
+      objectiveFunctionIntersections: answerLine,
       restrictions: restrictions,
       feasibleRegionMatrixPoints: feasibleRegion,
+      compliantIntersections: compliantIntersections,
     );
   }
 }
