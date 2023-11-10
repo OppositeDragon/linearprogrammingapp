@@ -7,7 +7,7 @@ part of 'graphic_mode_controller.dart';
 // **************************************************************************
 
 String _$getItersectionsOnAxesHash() =>
-    r'468939b75c7c03f588faa12143fcc119c9c95e7d';
+    r'470bcac0278b582fb1a2a77273c1db4ac1b3aeb0';
 
 /// See also [getItersectionsOnAxes].
 @ProviderFor(getItersectionsOnAxes)
@@ -464,7 +464,7 @@ final getIntersectionsOnAxesAndConstraintsProvider =
 typedef GetIntersectionsOnAxesAndConstraintsRef
     = AutoDisposeProviderRef<List<Point<double>>>;
 String _$getCompliantIntersectionsHash() =>
-    r'202290f3277e1655740b75a83b529a65b4dab83b';
+    r'67f04f64c629d87b284d4397bfd4e016772a0bad';
 
 /// See also [getCompliantIntersections].
 @ProviderFor(getCompliantIntersections)

@@ -20,7 +20,7 @@ void main() {
         overrides: overrides,
         observers: observers,
       );
-      addTearDown(() => container.dispose());
+      addTearDown(container.dispose);
       return container;
     }
 
@@ -46,14 +46,19 @@ void main() {
     });
 
     test('getItersectionsOnAxes', () {
-      final overrides = <Override>[dataEntryControllerProvider.overrideWith(MockDataMax.new)];
+      final overrides = <Override>[dataEntryControllerProvider.overrideWith(MockDataMaximize.new)];
       final container = createProviderContainer(overrides: overrides);
       final getIntersectionsOnAxes = container.read(getItersectionsOnAxesProvider);
       expect(getIntersectionsOnAxes, const [
-        Point<double>(8.0, 0.0),
+        Point<double>(0.0, 3.0),
+        Point<double>(0.0, 8.0),
+        Point<double>(7.0, 0.0),
+        Point<double>(3.0, 0.0),
+        Point<double>(9.0, 0.0),
+        Point<double>(0.0, 9.0),
+        Point<double>(10.0, 0.0),
         Point<double>(0.0, 6.0),
-        Point<double>(6.0, 0.0),
-        Point<double>(0.0, 4.0)
+        Point<double>(0.0, 5.0)
       ]);
     });
 
@@ -61,15 +66,21 @@ void main() {
       final overrides = <Override>[
         getItersectionsOnAxesProvider.overrideWithValue(
           <Point<double>>[
-            const Point<double>(2, 8),
-            const Point<double>(4, 5),
-            const Point<double>(6, 3),
+            const Point<double>(0.0, 3.0),
+            const Point<double>(0.0, 8.0),
+            const Point<double>(7.0, 0.0),
+            const Point<double>(3.0, 0.0),
+            const Point<double>(9.0, 0.0),
+            const Point<double>(0.0, 9.0),
+            const Point<double>(10.0, 0.0),
+            const Point<double>(0.0, 6.0),
+            const Point<double>(0.0, 5.0)
           ],
         ),
       ];
       final container = createProviderContainer(overrides: overrides);
       final getBiggestIntersectionsOnAxes = container.read(getBiggestIntersectionsOnAxesProvider);
-      expect(getBiggestIntersectionsOnAxes, const Point<double>(6, 8));
+      expect(getBiggestIntersectionsOnAxes, const Point<double>(10, 9));
     });
 
     test('getLimitsRoundedOnMagnitude where x=8 and y=6', () {
@@ -94,17 +105,43 @@ void main() {
       expect(getLimitsRoundedOnMagnitude, (x: 0.2, y: 6.7));
     });
 
+    test('getLimitsRoundedOnMagnitude where x=10 and y=9', () {
+      final overrides = <Override>[
+        getBiggestIntersectionsOnAxesProvider.overrideWithValue(
+          const Point(10, 9),
+        ),
+      ];
+      final container = createProviderContainer(overrides: overrides);
+      final getLimitsRoundedOnMagnitude = container.read(getLimitsRoundedOnMagnitudeProvider);
+      expect(getLimitsRoundedOnMagnitude, (x: 10, y: 9));
+    });
+
+    test('getLimitsRoundedOnMagnitude where x=10321.27 and y=8321.451', () {
+      final overrides = <Override>[
+        getBiggestIntersectionsOnAxesProvider.overrideWithValue(
+          const Point(10321.27, 8321.451),
+        ),
+      ];
+      final container = createProviderContainer(overrides: overrides);
+      final getLimitsRoundedOnMagnitude = container.read(getLimitsRoundedOnMagnitudeProvider);
+      expect(getLimitsRoundedOnMagnitude, (x: 11000.0, y: 8400.0));
+    });
+
     test('getIntersectionsOnConstraintsAndLimits', () {
-      final overrides = <Override>[dataEntryControllerProvider.overrideWith(MockDataMax.new)];
+      final overrides = <Override>[dataEntryControllerProvider.overrideWith(MockDataMaximize.new)];
       final container = createProviderContainer(overrides: overrides);
       final getIntersectionsOnConstraintsAndLimits =
           container.read(getIntersectionsOnConstraintsAndLimitsProvider);
       expect(
         getIntersectionsOnConstraintsAndLimits,
         const [
-          (p1: Point(0.0, 6.0), p2: Point(8.0, 0.0)),
-          (p1: Point(6.0, 0.0), p2: Point(6.0, 6.0)),
-          (p1: Point(0.0, 4.0), p2: Point(8.0, 4.0)),
+          (p1: Point<double>(0.0, 3.0), p2: Point<double>(10.0, 3.0)),
+          (p1: Point<double>(0.0, 8.0), p2: Point<double>(10.0, 8.0)),
+          (p1: Point<double>(7.0, 0.0), p2: Point<double>(7.0, 9.0)),
+          (p1: Point<double>(3.0, 0.0), p2: Point<double>(3.0, 9.0)),
+          (p1: Point<double>(0.0, 9.0), p2: Point<double>(9.0, 0.0)),
+          (p1: Point<double>(0.0, 6.0), p2: Point<double>(10.0, 0.0)),
+          (p1: Point<double>(0.0, 5.0), p2: Point<double>(7.0, 0.0)),
         ],
       );
     });
@@ -181,24 +218,46 @@ void main() {
           }.toList());
     });
 
-    test('getCompliantIntersections', () {
+    test('getCompliantIntersections maximize', () {
       final overrides = <Override>[
-        dataEntryControllerProvider.overrideWith(MockDataMax.new),
+        dataEntryControllerProvider.overrideWith(MockDataMaximize.new),
         getBiggestIntersectionsOnAxesProvider.overrideWithValue(
-          const Point<double>(6, 8),
+          const Point<double>(10, 9),
         ),
       ];
       final container = createProviderContainer(overrides: overrides);
       final getCompliantIntersections = container.read(getCompliantIntersectionsProvider);
       expect(getCompliantIntersections, const [
-        Point<double>(8 / 3, 4.0),
-        Point<double>(6.0, 4.0),
+        Point<double>(5.0, 3.0),
+        Point<double>(3.0, 4.2),
       ]);
+    });
+
+
+    test('getCompliantIntersections minimize', () {
+      final overrides = <Override>[
+        dataEntryControllerProvider.overrideWith(MockDataMinimize.new),
+        getBiggestIntersectionsOnAxesProvider.overrideWithValue(
+          const Point<double>(80, 50),
+        ),
+      ];
+      final container = createProviderContainer(overrides: overrides);
+      final getCompliantIntersections = container.read(getCompliantIntersectionsProvider);
+      expect(
+        getCompliantIntersections,
+        const [
+          Point<double>(36.36363636363637, 10.909090909090908),
+          Point<double>(11.538461538461538, 30.76923076923077),
+          Point<double>(80.0, 0.0),
+          Point<double>(0.0, 50.0),
+          Point<double>(80.0, 50.0),
+        ],
+      );
     });
 
     test('getFeasibleMatrixPoints', () {
       final overrides = <Override>[
-        dataEntryControllerProvider.overrideWith(MockDataMax.new),
+        dataEntryControllerProvider.overrideWith(MockDataMaximize.new),
         getBiggestIntersectionsOnAxesProvider.overrideWithValue(
           const Point<double>(6, 8),
         ),
@@ -207,63 +266,112 @@ void main() {
       final getFeasibleMatrixPoints = container.read(getFeasibleMatrixPointsProvider);
       expect(getFeasibleMatrixPoints, const [
         [
-          Point<double>(0.0, 6.0),
-          Point<double>(6.0, 1.5),
+          Point<double>(0.0, 3.0),
+          Point<double>(6.0, 3.0),
           Point<double>(6.0, 8.0),
           Point<double>(0.0, 8.0),
         ],
         [
-          Point<double>(6.0, 0.0),
+          Point<double>(0.0, 8.0),
           Point<double>(6.0, 8.0),
+          Point<double>(6.0, 0.0),
+          Point<double>(0.0, 0.0),
+        ],
+        [
+          Point<double>(7.0, 0.0),
+          Point<double>(7.0, 8.0),
           Point<double>(0.0, 8.0),
           Point<double>(0.0, 0.0),
         ],
         [
-          Point<double>(0.0, 4.0),
-          Point<double>(6.0, 4.0),
+          Point<double>(3.0, 0.0),
+          Point<double>(3.0, 8.0),
+          Point<double>(6.0, 8.0),
+          Point<double>(6.0, 0.0),
         ],
+        [
+          Point<double>(1.0, 8.0),
+          Point<double>(6.0, 3.0),
+          Point<double>(0.0, 3.0),
+          Point<double>(0.0, 8.0),
+        ],
+        [
+          Point<double>(0.0, 6.0),
+          Point<double>(6.0, 2.4),
+        ],
+        [
+          Point<double>(0.0, 5.0),
+          Point<double>(6.0, 0.7142857142857143),
+          Point<double>(6.0, 8.0),
+          Point<double>(0.0, 8.0),
+        ]
       ]);
     });
 
-    test('getOptimalAnswer', () {
+    test('getOptimalAnswer maximize', () {
       final overrides = <Override>[
-        dataEntryControllerProvider.overrideWith(MockDataMax.new),
+        dataEntryControllerProvider.overrideWith(MockDataMaximize.new),
         getBiggestIntersectionsOnAxesProvider.overrideWithValue(
-          const Point<double>(6, 8),
+          const Point<double>(10, 9),
         ),
         getCompliantIntersectionsProvider.overrideWithValue(
           const [
-            Point<double>(8 / 3, 4.0),
-            Point<double>(6.0, 4.0),
+            Point<double>(5.0, 3.0),
+            Point<double>(3.0, 4.2),
           ],
         ),
       ];
       final container = createProviderContainer(overrides: overrides);
       final getOptimalAnswer = container.read(getOptimalAnswerProvider);
-      expect(getOptimalAnswer, const Point<double>(6.0, 4.0));
+      expect(getOptimalAnswer, const Point<double>(5, 3));
+    });
+
+    test('getOptimalAnswer minimize', () {
+      final overrides = <Override>[
+        dataEntryControllerProvider.overrideWith(MockDataMinimize.new),
+        getBiggestIntersectionsOnAxesProvider.overrideWithValue(
+          const Point<double>(80, 50),
+        ),
+        getCompliantIntersectionsProvider.overrideWithValue(
+          const [
+            Point<double>(36.36363636363637, 10.909090909090908),
+            Point<double>(11.538461538461538, 30.76923076923077),
+            Point<double>(80.0, 0.0),
+            Point<double>(0.0, 50.0),
+            Point<double>(80.0, 50.0),
+          ],
+        ),
+      ];
+      final container = createProviderContainer(overrides: overrides);
+      final getOptimalAnswer = container.read(getOptimalAnswerProvider);
+      expect(getOptimalAnswer, const Point<double>(400 / 11, 120 / 11));
     });
 
     test('GraphicController', () {
       final overrides = <Override>[
-        dataEntryControllerProvider.overrideWith(MockDataMax.new),
+        dataEntryControllerProvider.overrideWith(MockDataMaximize.new),
         getBiggestIntersectionsOnAxesProvider.overrideWithValue(
-          const Point<double>(6, 8),
+          const Point<double>(10, 9),
         ),
         getLimitsRoundedOnMagnitudeProvider.overrideWithValue(
-          (x: 6.0, y: 8.0),
+          (x: 10, y: 9),
         ),
         getIntersectionsOnConstraintsAndLimitsProvider.overrideWithValue(const [
-          (p1: Point(0.0, 6.0), p2: Point(8.0, 0.0)),
-          (p1: Point(6.0, 0.0), p2: Point(6.0, 6.0)),
-          (p1: Point(0.0, 4.0), p2: Point(8.0, 4.0)),
+          (p1: Point<double>(0.0, 3.0), p2: Point<double>(10.0, 3.0)),
+          (p1: Point<double>(0.0, 8.0), p2: Point<double>(10.0, 8.0)),
+          (p1: Point<double>(7.0, 0.0), p2: Point<double>(7.0, 9.0)),
+          (p1: Point<double>(3.0, 0.0), p2: Point<double>(3.0, 9.0)),
+          (p1: Point<double>(0.0, 9.0), p2: Point<double>(9.0, 0.0)),
+          (p1: Point<double>(0.0, 6.0), p2: Point<double>(10.0, 0.0)),
+          (p1: Point<double>(0.0, 5.0), p2: Point<double>(7.0, 0.0)),
         ]),
         getOptimalAnswerProvider.overrideWithValue(
-          const Point<double>(6.0, 4.0),
+          const Point<double>(5, 3),
         ),
         getCompliantIntersectionsProvider.overrideWithValue(
           const [
-            Point<double>(8 / 3, 4.0),
-            Point<double>(6.0, 4.0),
+            Point<double>(5.0, 3.0),
+            Point<double>(3.0, 4.2),
           ],
         ),
       ];
@@ -272,35 +380,32 @@ void main() {
       expect(
           graphicController,
           const GraphicDataModel(
-              xLimit: 6.0,
-              yLimit: 8.0,
-              answer: Point(6.0, 4.0),
-              answerObjectiveFunction: (
-                p1: Point(4.0, 8.0),
-                p2: Point(6.0, 4.0),
-              ),
+              xLimit: 10.0,
+              yLimit: 9.0,
+              answer: Point(5.0, 3.0),
+              answerObjectiveFunction: (p1: Point(2.0, 9.0), p2: Point(6.5, 0.0)),
               restrictions: [
-                (p1: Point(0.0, 6.0), p2: Point(8.0, 0.0)),
-                (p1: Point(6.0, 0.0), p2: Point(6.0, 6.0)),
-                (p1: Point(0.0, 4.0), p2: Point(8.0, 4.0)),
+                (p1: Point(0.0, 3.0), p2: Point(10.0, 3.0)),
+                (p1: Point(0.0, 8.0), p2: Point(10.0, 8.0)),
+                (p1: Point(7.0, 0.0), p2: Point(7.0, 9.0)),
+                (p1: Point(3.0, 0.0), p2: Point(3.0, 9.0)),
+                (p1: Point(0.0, 9.0), p2: Point(9.0, 0.0)),
+                (p1: Point(0.0, 6.0), p2: Point(10.0, 0.0)),
+                (p1: Point(0.0, 5.0), p2: Point(7.0, 0.0))
               ],
               feasibleRegionMatrixPoints: [
+                [Point(0.0, 3.0), Point(10.0, 3.0), Point(10.0, 9.0), Point(0.0, 9.0)],
+                [Point(0.0, 8.0), Point(10.0, 8.0), Point(10.0, 0.0), Point(0.0, 0.0)],
+                [Point(7.0, 0.0), Point(7.0, 9.0), Point(0.0, 9.0), Point(0.0, 0.0)],
+                [Point(3.0, 0.0), Point(3.0, 9.0), Point(10.0, 9.0), Point(10.0, 0.0)],
+                [Point(0.0, 9.0), Point(9.0, 0.0), Point(0.0, 0.0)],
+                [Point(0.0, 6.0), Point(10.0, 0.0)],
                 [
-                  Point(0.0, 6.0),
-                  Point(8.0, 0.0),
-                  Point(6.0, 0.0),
-                  Point(6.0, 8.0),
-                  Point(0.0, 8.0),
-                ],
-                [
-                  Point(6.0, 0.0),
-                  Point(6.0, 6.0),
-                  Point(0.0, 6.0),
-                  Point(0.0, 0.0),
-                ],
-                [
-                  Point(0.0, 4.0),
-                  Point(8.0, 4.0),
+                  Point(0.0, 5.0),
+                  Point(7.0, 0.0),
+                  Point(10.0, 0.0),
+                  Point(10.0, 9.0),
+                  Point(0.0, 9.0)
                 ]
               ],
               feasibleRegionText: 'feasible\nregion'));

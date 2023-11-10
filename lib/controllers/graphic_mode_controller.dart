@@ -12,14 +12,14 @@ part 'graphic_mode_controller.g.dart';
 @riverpod
 List<Point<double>> getItersectionsOnAxes(GetItersectionsOnAxesRef ref) {
   final constraints = ref.watch(dataEntryControllerProvider.select((value) => value.constraints));
-  final List<Point<double>> intersections = [];
+  final Set<Point<double>> intersections = {};
   for (int i = 0; i < constraints.length; i++) {
     final [x, y, ..., z] = constraints[i];
     final points = ref.read(getIntersectionOnAxisProvider(x, y, z));
     if (points.p1 != null) intersections.add(points.p1!);
     if (points.p2 != null) intersections.add(points.p2!);
   }
-  return intersections;
+  return intersections.toList();
 }
 
 @riverpod
