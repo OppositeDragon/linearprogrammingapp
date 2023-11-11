@@ -65,7 +65,7 @@ class _DataSizeEntryWidgetState extends ConsumerState<DataSizeEntryWidget> {
     return ConstrainedBox(
       constraints: const BoxConstraints(
         maxWidth: 400,
-        maxHeight: 300,
+        maxHeight: 350,
       ),
       child: Center(
         child: SingleChildScrollView(
