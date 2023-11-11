@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../constants/enums.dart';
@@ -20,9 +18,38 @@ class DataEntryModel with _$DataEntryModel {
 }
 
 @freezed
-class DataModelForGraphic with _$DataModelForGraphic {
-  const factory DataModelForGraphic({
-    required List<Point> intersections,
-    required Point max,
-  }) = _DataModelForGraphic;
+class DataModelForAlgebraic with _$DataModelForAlgebraic {
+  const factory DataModelForAlgebraic({
+    required List<List<double>> standardForm,
+    required List<List<double>> constraintWithSlack,
+    required List<List<String>> constraintsString,
+    required List<double> rightSide,
+    required List<String> rightSideString,
+    required String greaterThanZeroCondition,
+    required String combinationsEquation,
+  }) = _DataModelForAlgebraic;
+}
+
+@freezed
+class StepsForAlgebraic with _$StepsForAlgebraic {
+  const factory StepsForAlgebraic({
+    required String header,
+    required int step,
+    required List<int> whereVarEqualsZero,
+    required List<double> solutions,
+    required List<String> solutionsString,
+    required List<List<double>> matrix,
+    required String? solutionString,
+    required double? objectiveFunctionSolution,
+  }) = _StepsForAlgebraic;
+}
+
+@freezed
+class AnswerForAlgebraic with _$AnswerForAlgebraic {
+  const factory AnswerForAlgebraic({
+    required double definitiveSolution,
+    required String? finalSolutionString,
+    required int step,
+    required List<StepsForAlgebraic> steps,
+  }) = _AnswerForAlgebraic;
 }

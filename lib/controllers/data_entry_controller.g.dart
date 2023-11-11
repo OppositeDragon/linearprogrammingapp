@@ -56,22 +56,22 @@ final dataEntryControllerProvider =
 );
 
 typedef _$DataEntryController = Notifier<DataEntryModel>;
-String _$dataControllerForGraphicHash() =>
-    r'3cf9088adc7f7aec4744b17d21ce4b18b8c8ada2';
+String _$dataControllerForAlgebraicHash() =>
+    r'f70ab58902f5559435e93bdea51bd41fd92adec4';
 
-/// See also [DataControllerForGraphic].
-@ProviderFor(DataControllerForGraphic)
-final dataControllerForGraphicProvider =
-    NotifierProvider<DataControllerForGraphic, void>.internal(
-  DataControllerForGraphic.new,
-  name: r'dataControllerForGraphicProvider',
+/// See also [DataControllerForAlgebraic].
+@ProviderFor(DataControllerForAlgebraic)
+final dataControllerForAlgebraicProvider =
+    NotifierProvider<DataControllerForAlgebraic, void>.internal(
+  DataControllerForAlgebraic.new,
+  name: r'dataControllerForAlgebraicProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$dataControllerForGraphicHash,
+      : _$dataControllerForAlgebraicHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$DataControllerForGraphic = Notifier<void>;
+typedef _$DataControllerForAlgebraic = Notifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
