@@ -19,9 +19,11 @@ mixin _$GraphicDataModel {
   double get xLimit => throw _privateConstructorUsedError;
   double get yLimit => throw _privateConstructorUsedError;
   Point<double> get answer => throw _privateConstructorUsedError;
-  ({Point<double> p1, Point<double> p2}) get answerObjectiveFunction =>
+  ({Point<double> p1, Point<double> p2}) get objectiveFunctionIntersections =>
       throw _privateConstructorUsedError;
   List<({Point<double> p1, Point<double> p2})> get restrictions =>
+      throw _privateConstructorUsedError;
+  List<Point<double>> get compliantIntersections =>
       throw _privateConstructorUsedError;
   List<List<Point<double>>> get feasibleRegionMatrixPoints =>
       throw _privateConstructorUsedError;
@@ -42,8 +44,9 @@ abstract class $GraphicDataModelCopyWith<$Res> {
       {double xLimit,
       double yLimit,
       Point<double> answer,
-      ({Point<double> p1, Point<double> p2}) answerObjectiveFunction,
+      ({Point<double> p1, Point<double> p2}) objectiveFunctionIntersections,
       List<({Point<double> p1, Point<double> p2})> restrictions,
+      List<Point<double>> compliantIntersections,
       List<List<Point<double>>> feasibleRegionMatrixPoints,
       String feasibleRegionText});
 }
@@ -64,8 +67,9 @@ class _$GraphicDataModelCopyWithImpl<$Res, $Val extends GraphicDataModel>
     Object? xLimit = null,
     Object? yLimit = null,
     Object? answer = null,
-    Object? answerObjectiveFunction = null,
+    Object? objectiveFunctionIntersections = null,
     Object? restrictions = null,
+    Object? compliantIntersections = null,
     Object? feasibleRegionMatrixPoints = null,
     Object? feasibleRegionText = null,
   }) {
@@ -82,14 +86,18 @@ class _$GraphicDataModelCopyWithImpl<$Res, $Val extends GraphicDataModel>
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as Point<double>,
-      answerObjectiveFunction: null == answerObjectiveFunction
-          ? _value.answerObjectiveFunction
-          : answerObjectiveFunction // ignore: cast_nullable_to_non_nullable
+      objectiveFunctionIntersections: null == objectiveFunctionIntersections
+          ? _value.objectiveFunctionIntersections
+          : objectiveFunctionIntersections // ignore: cast_nullable_to_non_nullable
               as ({Point<double> p1, Point<double> p2}),
       restrictions: null == restrictions
           ? _value.restrictions
           : restrictions // ignore: cast_nullable_to_non_nullable
               as List<({Point<double> p1, Point<double> p2})>,
+      compliantIntersections: null == compliantIntersections
+          ? _value.compliantIntersections
+          : compliantIntersections // ignore: cast_nullable_to_non_nullable
+              as List<Point<double>>,
       feasibleRegionMatrixPoints: null == feasibleRegionMatrixPoints
           ? _value.feasibleRegionMatrixPoints
           : feasibleRegionMatrixPoints // ignore: cast_nullable_to_non_nullable
@@ -114,8 +122,9 @@ abstract class _$$GraphicDataModelImplCopyWith<$Res>
       {double xLimit,
       double yLimit,
       Point<double> answer,
-      ({Point<double> p1, Point<double> p2}) answerObjectiveFunction,
+      ({Point<double> p1, Point<double> p2}) objectiveFunctionIntersections,
       List<({Point<double> p1, Point<double> p2})> restrictions,
+      List<Point<double>> compliantIntersections,
       List<List<Point<double>>> feasibleRegionMatrixPoints,
       String feasibleRegionText});
 }
@@ -134,8 +143,9 @@ class __$$GraphicDataModelImplCopyWithImpl<$Res>
     Object? xLimit = null,
     Object? yLimit = null,
     Object? answer = null,
-    Object? answerObjectiveFunction = null,
+    Object? objectiveFunctionIntersections = null,
     Object? restrictions = null,
+    Object? compliantIntersections = null,
     Object? feasibleRegionMatrixPoints = null,
     Object? feasibleRegionText = null,
   }) {
@@ -152,14 +162,18 @@ class __$$GraphicDataModelImplCopyWithImpl<$Res>
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as Point<double>,
-      answerObjectiveFunction: null == answerObjectiveFunction
-          ? _value.answerObjectiveFunction
-          : answerObjectiveFunction // ignore: cast_nullable_to_non_nullable
+      objectiveFunctionIntersections: null == objectiveFunctionIntersections
+          ? _value.objectiveFunctionIntersections
+          : objectiveFunctionIntersections // ignore: cast_nullable_to_non_nullable
               as ({Point<double> p1, Point<double> p2}),
       restrictions: null == restrictions
           ? _value._restrictions
           : restrictions // ignore: cast_nullable_to_non_nullable
               as List<({Point<double> p1, Point<double> p2})>,
+      compliantIntersections: null == compliantIntersections
+          ? _value._compliantIntersections
+          : compliantIntersections // ignore: cast_nullable_to_non_nullable
+              as List<Point<double>>,
       feasibleRegionMatrixPoints: null == feasibleRegionMatrixPoints
           ? _value._feasibleRegionMatrixPoints
           : feasibleRegionMatrixPoints // ignore: cast_nullable_to_non_nullable
@@ -179,11 +193,13 @@ class _$GraphicDataModelImpl implements _GraphicDataModel {
       {required this.xLimit,
       required this.yLimit,
       required this.answer,
-      required this.answerObjectiveFunction,
+      required this.objectiveFunctionIntersections,
       required final List<({Point<double> p1, Point<double> p2})> restrictions,
+      required final List<Point<double>> compliantIntersections,
       required final List<List<Point<double>>> feasibleRegionMatrixPoints,
       this.feasibleRegionText = 'feasible\nregion'})
       : _restrictions = restrictions,
+        _compliantIntersections = compliantIntersections,
         _feasibleRegionMatrixPoints = feasibleRegionMatrixPoints;
 
   @override
@@ -193,13 +209,22 @@ class _$GraphicDataModelImpl implements _GraphicDataModel {
   @override
   final Point<double> answer;
   @override
-  final ({Point<double> p1, Point<double> p2}) answerObjectiveFunction;
+  final ({Point<double> p1, Point<double> p2}) objectiveFunctionIntersections;
   final List<({Point<double> p1, Point<double> p2})> _restrictions;
   @override
   List<({Point<double> p1, Point<double> p2})> get restrictions {
     if (_restrictions is EqualUnmodifiableListView) return _restrictions;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_restrictions);
+  }
+
+  final List<Point<double>> _compliantIntersections;
+  @override
+  List<Point<double>> get compliantIntersections {
+    if (_compliantIntersections is EqualUnmodifiableListView)
+      return _compliantIntersections;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_compliantIntersections);
   }
 
   final List<List<Point<double>>> _feasibleRegionMatrixPoints;
@@ -217,7 +242,7 @@ class _$GraphicDataModelImpl implements _GraphicDataModel {
 
   @override
   String toString() {
-    return 'GraphicDataModel(xLimit: $xLimit, yLimit: $yLimit, answer: $answer, answerObjectiveFunction: $answerObjectiveFunction, restrictions: $restrictions, feasibleRegionMatrixPoints: $feasibleRegionMatrixPoints, feasibleRegionText: $feasibleRegionText)';
+    return 'GraphicDataModel(xLimit: $xLimit, yLimit: $yLimit, answer: $answer, objectiveFunctionIntersections: $objectiveFunctionIntersections, restrictions: $restrictions, compliantIntersections: $compliantIntersections, feasibleRegionMatrixPoints: $feasibleRegionMatrixPoints, feasibleRegionText: $feasibleRegionText)';
   }
 
   @override
@@ -228,11 +253,14 @@ class _$GraphicDataModelImpl implements _GraphicDataModel {
             (identical(other.xLimit, xLimit) || other.xLimit == xLimit) &&
             (identical(other.yLimit, yLimit) || other.yLimit == yLimit) &&
             (identical(other.answer, answer) || other.answer == answer) &&
-            (identical(
-                    other.answerObjectiveFunction, answerObjectiveFunction) ||
-                other.answerObjectiveFunction == answerObjectiveFunction) &&
+            (identical(other.objectiveFunctionIntersections,
+                    objectiveFunctionIntersections) ||
+                other.objectiveFunctionIntersections ==
+                    objectiveFunctionIntersections) &&
             const DeepCollectionEquality()
                 .equals(other._restrictions, _restrictions) &&
+            const DeepCollectionEquality().equals(
+                other._compliantIntersections, _compliantIntersections) &&
             const DeepCollectionEquality().equals(
                 other._feasibleRegionMatrixPoints,
                 _feasibleRegionMatrixPoints) &&
@@ -246,8 +274,9 @@ class _$GraphicDataModelImpl implements _GraphicDataModel {
       xLimit,
       yLimit,
       answer,
-      answerObjectiveFunction,
+      objectiveFunctionIntersections,
       const DeepCollectionEquality().hash(_restrictions),
+      const DeepCollectionEquality().hash(_compliantIntersections),
       const DeepCollectionEquality().hash(_feasibleRegionMatrixPoints),
       feasibleRegionText);
 
@@ -267,8 +296,9 @@ abstract class _GraphicDataModel implements GraphicDataModel {
       required final ({
         Point<double> p1,
         Point<double> p2
-      }) answerObjectiveFunction,
+      }) objectiveFunctionIntersections,
       required final List<({Point<double> p1, Point<double> p2})> restrictions,
+      required final List<Point<double>> compliantIntersections,
       required final List<List<Point<double>>> feasibleRegionMatrixPoints,
       final String feasibleRegionText}) = _$GraphicDataModelImpl;
 
@@ -279,9 +309,11 @@ abstract class _GraphicDataModel implements GraphicDataModel {
   @override
   Point<double> get answer;
   @override
-  ({Point<double> p1, Point<double> p2}) get answerObjectiveFunction;
+  ({Point<double> p1, Point<double> p2}) get objectiveFunctionIntersections;
   @override
   List<({Point<double> p1, Point<double> p2})> get restrictions;
+  @override
+  List<Point<double>> get compliantIntersections;
   @override
   List<List<Point<double>>> get feasibleRegionMatrixPoints;
   @override

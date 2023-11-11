@@ -134,16 +134,23 @@ class GraphicProcessPainter extends CustomPainter {
         paint..color = getColor(i),
       );
     }
-    canvas.drawLine(
-      scaleTranslateToCanvas(answerData.answerObjectiveFunction.p1),
-      scaleTranslateToCanvas(answerData.answerObjectiveFunction.p2),
-      paint..color = getColor(-1),
+    //optimal answer line
+    drawLineDashed(
+      canvas,
+      scaleTranslateToCanvas(answerData.objectiveFunctionIntersections.p2),
+      scaleTranslateToCanvas(answerData.objectiveFunctionIntersections.p1),
+      paint
+        ..color = getColor(-1)
+        ..strokeWidth = 2,
+      dashLength: 10,
+      gapLength: 8,
     );
+
     //draw feaseable region
     final paint3 = Paint()
       ..color = theme.colorScheme.primary.withOpacity(0.15)
       ..style = PaintingStyle.fill;
-    final feasibleRegionPath = findPathsIntersection(
+    final Path feasibleRegionPath = findPathsIntersection(
       pointsMatrix: answerData.feasibleRegionMatrixPoints,
       leftMargin: leftMargin,
       topMargin: topMargin,
@@ -153,19 +160,39 @@ class GraphicProcessPainter extends CustomPainter {
       unitY: unitY,
     );
     canvas.drawPath(feasibleRegionPath, paint3);
-
-    final TextSpan span = TextSpan(
-        style: textStyle.copyWith(fontFamily: 'CMRomanSerif', fontWeight: FontWeight.w100),
-        text: 'feasible\nregion');
-    final tPFR =
-        TextPainter(text: span, textDirection: TextDirection.ltr, textAlign: TextAlign.center)
-          ..layout();
-    final centerOfREgion = feasibleRegionPath.getBounds().center;
-    tPFR.paint(canvas,
-        Offset(centerOfREgion.dx - (tPFR.width / 2), centerOfREgion.dy - (tPFR.height / 2)));
+    if (answerData.compliantIntersections.length > 2) {
+      final TextSpan span = TextSpan(
+          style: textStyle.copyWith(fontFamily: 'CMRomanSerif', fontWeight: FontWeight.w100),
+          text: 'feasible\nregion');
+      final TextPainter tPFR =
+          TextPainter(text: span, textDirection: TextDirection.ltr, textAlign: TextAlign.center)
+            ..layout();
+      final Offset centerOfREgion = feasibleRegionPath.getBounds().center;
+      tPFR.paint(canvas,
+          Offset(centerOfREgion.dx - (tPFR.width / 2), centerOfREgion.dy - (tPFR.height / 2)));
+    }
+    //draw points of posssible answers
+    for (final compliantPoint in answerData.compliantIntersections) {
+      canvas.drawCircle(
+        scaleTranslateToCanvas(compliantPoint),
+        2.5,
+        paint
+          ..color = theme.colorScheme.onSurface
+          ..style = PaintingStyle.fill,
+      );
+    }
+    //draw point of optimal answer.
+    final offsetRect = scaleTranslateToCanvas(answerData.answer);
     canvas.drawCircle(
-      scaleTranslateToCanvas(answerData.answer),
-      3,
+      offsetRect,
+      5.5,
+      paint
+        ..color = theme.colorScheme.surface
+        ..style = PaintingStyle.fill,
+    );
+    canvas.drawCircle(
+      offsetRect,
+      4,
       paint
         ..color = theme.colorScheme.onSurface
         ..style = PaintingStyle.fill,
@@ -216,15 +243,15 @@ class GraphicProcessPainter extends CustomPainter {
     List<Path> paths = [];
     for (var i = 0; i < pointsMatrix.length; i++) {
       int j = 0;
-      Path path = Path();
-      final x = leftMargin + (pointsMatrix[i][j].x * unitX);
-      final y = topMargin + availableY - (pointsMatrix[i][j].y * unitY);
+      final Path path = Path();
+      final double x = leftMargin + (pointsMatrix[i][j].x * unitX);
+      final double y = topMargin + availableY - (pointsMatrix[i][j].y * unitY);
       if (pointsMatrix[i].isNotEmpty) {
         path.moveTo(x, y);
       }
       for (j = 1; j < pointsMatrix[i].length; j++) {
-        final x = leftMargin + (pointsMatrix[i][j].x * unitX);
-        final y = topMargin + availableY - (pointsMatrix[i][j].y * unitY);
+        final double x = leftMargin + (pointsMatrix[i][j].x * unitX);
+        final double y = topMargin + availableY - (pointsMatrix[i][j].y * unitY);
         path.lineTo(x, y);
       }
       paths.add(path);
@@ -235,5 +262,25 @@ class GraphicProcessPainter extends CustomPainter {
       feasibleRegionPath = Path.combine(PathOperation.intersect, feasibleRegionPath, paths[i]);
     }
     return feasibleRegionPath;
+  }
+
+  void drawLineDashed(
+    Canvas canvas,
+    Offset start,
+    Offset end,
+    Paint paint, {
+    double dashLength = 5,
+    double gapLength = 5,
+  }) {
+    final double stride = dashLength + gapLength;
+    double distance = (end - start).distance;
+    while (distance > 0) {
+      final remaining = end - start;
+      final direction = remaining / remaining.distance;
+      final next = start + (direction * dashLength);
+      canvas.drawLine(start, next, paint);
+      start += (direction * stride);
+      distance -= stride;
+    }
   }
 }

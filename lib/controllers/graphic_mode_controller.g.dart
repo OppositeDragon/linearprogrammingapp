@@ -514,7 +514,7 @@ final getOptimalAnswerProvider = AutoDisposeProvider<Point<double>>.internal(
 );
 
 typedef GetOptimalAnswerRef = AutoDisposeProviderRef<Point<double>>;
-String _$graphicControllerHash() => r'a799fdfa63bda31af4b3bfd182531fc1658f2015';
+String _$graphicControllerHash() => r'67c04f7a152226a9771ba27f7398f50504bcddff';
 
 /// See also [GraphicController].
 @ProviderFor(GraphicController)

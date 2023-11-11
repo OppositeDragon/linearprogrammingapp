@@ -13,8 +13,9 @@ class GraphicDataModel with _$GraphicDataModel {
     required double xLimit,
     required double yLimit,
     required Point<double> answer,
-    required PointPair answerObjectiveFunction,
+    required PointPair objectiveFunctionIntersections,
     required List<PointPair> restrictions,
+    required List<Point<double>> compliantIntersections,
     required List<List<Point<double>>> feasibleRegionMatrixPoints,
     @Default('feasible\nregion') String feasibleRegionText,
   }) = _GraphicDataModel;
