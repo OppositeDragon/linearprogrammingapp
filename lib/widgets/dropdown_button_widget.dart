@@ -1,96 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../constants/numeric.dart';
 
-class TextFieldWidget extends StatefulWidget {
-  const TextFieldWidget({
-    this.action,
+class DropdownButtonWidget<T> extends StatefulWidget {
+  const DropdownButtonWidget({
+    super.key,
+    this.value,
+    this.onChanged,
+    this.validator,
+    required this.items,
     this.label,
-    this.style,
-    this.focusNode,
     this.hint,
-    this.initialValue,
-    this.maxLength,
-    this.maxLines = 1,
-    this.required = false,
-    this.obscureText = false,
     this.isDense = false,
-    this.enabled = true,
     this.readOnly = false,
     this.enabledBorderColor,
     this.disabledBorderColor,
     this.errorBorderColor,
     this.focusedBorderColor,
-    this.onSave,
-    this.onChanged,
-    this.onEditingComplete,
-    this.onFieldSubmitted,
-    this.validator,
-    this.formatters,
-    this.controller,
     this.prefixIcon,
     this.suffixIcon,
-    this.keyboardType,
-    super.key,
   });
-  final TextInputAction? action;
-  final FocusNode? focusNode;
+  final T? value;
+  final void Function(T?)? onChanged;
+  final String? Function(T?)? validator;
+  final List<DropdownMenuItem<T>> items;
   final String? label;
-  final TextStyle? style;
   final String? hint;
-  final String? initialValue;
-  final int? maxLength;
-  final int? maxLines;
-  final bool required;
-  final bool obscureText;
   final bool isDense;
-  final bool enabled;
   final bool readOnly;
   final Color? enabledBorderColor;
   final Color? disabledBorderColor;
   final Color? errorBorderColor;
   final Color? focusedBorderColor;
-  final void Function(String?)? onSave;
-  final void Function(String)? onChanged;
-  final void Function()? onEditingComplete;
-  final void Function(String)? onFieldSubmitted;
-  final String? Function(String?)? validator;
-  final List<TextInputFormatter>? formatters;
-  final TextEditingController? controller;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final TextInputType? keyboardType;
-
   @override
-  State<TextFieldWidget> createState() => _TextFieldWidgetState();
+  State<DropdownButtonWidget<T>> createState() => _DropdownButtonWidgetState<T>();
 }
 
-class _TextFieldWidgetState extends State<TextFieldWidget> {
+class _DropdownButtonWidgetState<T> extends State<DropdownButtonWidget<T>> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    return TextFormField(
-      keyboardType: widget.keyboardType,
-      textInputAction: widget.action,
-      style: widget.style,
-      readOnly: widget.readOnly,
-      enabled: widget.enabled,
-      onFieldSubmitted: widget.onFieldSubmitted,
-      onEditingComplete: widget.onEditingComplete,
-      focusNode: widget.focusNode,
-      controller: widget.controller,
-      inputFormatters: widget.formatters,
-      initialValue: widget.initialValue,
-      maxLength: widget.maxLength,
-      maxLines: widget.maxLines,
-      obscureText: widget.obscureText,
-      validator: widget.validator,
-      onSaved: widget.onSave,
+    return DropdownButtonFormField<T>(
+      borderRadius: BorderRadius.circular(15),
+      isExpanded: true,
+      value: widget.value,
       onChanged: widget.onChanged,
+      items: widget.items,
+      validator: widget.validator,
       decoration: InputDecoration(
         labelText: widget.label,
-        contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        contentPadding: const EdgeInsets.symmetric(vertical: spaceM, horizontal: spaceXL),
         hintText: widget.hint,
         isDense: widget.isDense,
         prefixIcon: widget.prefixIcon,
