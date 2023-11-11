@@ -233,7 +233,6 @@ void main() {
       ]);
     });
 
-
     test('getCompliantIntersections minimize', () {
       final overrides = <Override>[
         dataEntryControllerProvider.overrideWith(MockDataMinimize.new),
@@ -378,38 +377,37 @@ void main() {
       final container = createProviderContainer(overrides: overrides);
       final graphicController = container.read(graphicControllerProvider);
       expect(
-          graphicController,
-          const GraphicDataModel(
-              xLimit: 10.0,
-              yLimit: 9.0,
-              answer: Point(5.0, 3.0),
-              answerObjectiveFunction: (p1: Point(2.0, 9.0), p2: Point(6.5, 0.0)),
-              restrictions: [
-                (p1: Point(0.0, 3.0), p2: Point(10.0, 3.0)),
-                (p1: Point(0.0, 8.0), p2: Point(10.0, 8.0)),
-                (p1: Point(7.0, 0.0), p2: Point(7.0, 9.0)),
-                (p1: Point(3.0, 0.0), p2: Point(3.0, 9.0)),
-                (p1: Point(0.0, 9.0), p2: Point(9.0, 0.0)),
-                (p1: Point(0.0, 6.0), p2: Point(10.0, 0.0)),
-                (p1: Point(0.0, 5.0), p2: Point(7.0, 0.0))
-              ],
-              feasibleRegionMatrixPoints: [
-                [Point(0.0, 3.0), Point(10.0, 3.0), Point(10.0, 9.0), Point(0.0, 9.0)],
-                [Point(0.0, 8.0), Point(10.0, 8.0), Point(10.0, 0.0), Point(0.0, 0.0)],
-                [Point(7.0, 0.0), Point(7.0, 9.0), Point(0.0, 9.0), Point(0.0, 0.0)],
-                [Point(3.0, 0.0), Point(3.0, 9.0), Point(10.0, 9.0), Point(10.0, 0.0)],
-                [Point(0.0, 9.0), Point(9.0, 0.0), Point(0.0, 0.0)],
-                [Point(0.0, 6.0), Point(10.0, 0.0)],
-                [
-                  Point(0.0, 5.0),
-                  Point(7.0, 0.0),
-                  Point(10.0, 0.0),
-                  Point(10.0, 9.0),
-                  Point(0.0, 9.0)
-                ]
-              ],
-              feasibleRegionText: 'feasible\nregion'));
+        graphicController,
+        const GraphicDataModel(
+          xLimit: 10.0,
+          yLimit: 9.0,
+          answer: Point(5.0, 3.0),
+          objectiveFunctionIntersections: (p1: Point(2.0, 9.0), p2: Point(6.5, 0.0)),
+          restrictions: [
+            (p1: Point(0.0, 3.0), p2: Point(10.0, 3.0)),
+            (p1: Point(0.0, 8.0), p2: Point(10.0, 8.0)),
+            (p1: Point(7.0, 0.0), p2: Point(7.0, 9.0)),
+            (p1: Point(3.0, 0.0), p2: Point(3.0, 9.0)),
+            (p1: Point(0.0, 9.0), p2: Point(9.0, 0.0)),
+            (p1: Point(0.0, 6.0), p2: Point(10.0, 0.0)),
+            (p1: Point(0.0, 5.0), p2: Point(7.0, 0.0)),
+          ],
+          feasibleRegionMatrixPoints: [
+            [Point(0.0, 3.0), Point(10.0, 3.0), Point(10.0, 9.0), Point(0.0, 9.0)],
+            [Point(0.0, 8.0), Point(10.0, 8.0), Point(10.0, 0.0), Point(0.0, 0.0)],
+            [Point(7.0, 0.0), Point(7.0, 9.0), Point(0.0, 9.0), Point(0.0, 0.0)],
+            [Point(3.0, 0.0), Point(3.0, 9.0), Point(10.0, 9.0), Point(10.0, 0.0)],
+            [Point(0.0, 9.0), Point(9.0, 0.0), Point(0.0, 0.0)],
+            [Point(0.0, 6.0), Point(10.0, 0.0)],
+            [Point(0.0, 5.0), Point(7.0, 0.0), Point(10.0, 0.0), Point(10.0, 9.0), Point(0.0, 9.0)]
+          ],
+          compliantIntersections: [
+            Point(5.0, 3.0),
+            Point(3.0, 4.2),
+          ],
+          feasibleRegionText: 'feasible\nregion',
+        ),
+      );
     });
-    //end
   });
 }

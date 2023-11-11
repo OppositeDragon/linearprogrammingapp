@@ -464,7 +464,7 @@ final getIntersectionsOnAxesAndConstraintsProvider =
 typedef GetIntersectionsOnAxesAndConstraintsRef
     = AutoDisposeProviderRef<List<Point<double>>>;
 String _$getCompliantIntersectionsHash() =>
-    r'67f04f64c629d87b284d4397bfd4e016772a0bad';
+    r'202290f3277e1655740b75a83b529a65b4dab83b';
 
 /// See also [getCompliantIntersections].
 @ProviderFor(getCompliantIntersections)
