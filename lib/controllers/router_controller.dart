@@ -21,10 +21,11 @@ GoRouter goRouter(GoRouterRef ref) {
     redirect: (context, state) async {
       final loginBox = ref.read(dbLoginProvider);
       final bool isLoggedIn = loginBox.get(userKey) != null;
-      if (!isLoggedIn && state.location != '/login') {
+      final location = state.uri.toString();
+      if (!isLoggedIn && location != '/login') {
         return '/login';
       }
-      if (isLoggedIn && state.location == '/login') {
+      if (isLoggedIn && location == '/login') {
         return '/';
       }
       return null;
