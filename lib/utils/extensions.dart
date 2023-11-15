@@ -13,3 +13,24 @@ extension DoubleExtension on double {
     return roundedNumber * roundingFactor;
   }
 }
+
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1)}";
+  }
+
+  String deleteLastZero() {
+    String str = this;
+    if (str == 'NaN') {
+      return 'indefinido';
+    }
+    while ((str.endsWith('0') || str.endsWith('.')) && str.length > 1) {
+      if (str.endsWith('.')) {
+        str = str.substring(0, str.length - 1);
+        break;
+      }
+      str = str.substring(0, str.length - 1);
+    }
+    return str;
+  }
+}
