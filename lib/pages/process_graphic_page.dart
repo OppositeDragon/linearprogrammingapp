@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linearprogrammingapp/constants/routes.dart';
 
 import '../constants/numeric.dart';
 import '../controllers/data_entry_controller.dart';
@@ -100,7 +101,7 @@ class GraphicProcessPage extends ConsumerWidget {
                     children: [
                       const Spacer(),
                       OutlinedButton(
-                        onPressed: () => context.goNamed('home'),
+                        onPressed: () => context.goNamed(routeHomeName),
                         child: const Text('Ir a inicio'),
                       ),
                       const SizedBox(width: spaceXL),

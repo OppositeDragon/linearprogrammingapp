@@ -7,43 +7,67 @@ import '../models/data_entry_model.dart';
 
 part 'data_entry_controller.g.dart';
 
-typedef DataEntrySize = ({int variables, int constraints});
-
-@Riverpod(keepAlive: true)
-class DataEntrySizeController extends _$DataEntrySizeController {
+@riverpod
+class EntryPageController extends _$EntryPageController {
   @override
-  DataEntrySize build() => (variables: 0, constraints: 0);
+  int build() => 0;
 
-  void updateValues(int variables, int constraints) {
-    state = (variables: variables, constraints: constraints);
-    debugPrint('DataEntrySizeController: $state');
+  void updatePage(int page) {
+    state = page;
+    debugPrint('PageController: $state');
   }
 }
 
-@Riverpod(keepAlive: true)
-class ProcessController extends _$ProcessController {
+@riverpod
+class EntrySizeController extends _$EntrySizeController {
   @override
-  ProcessTypes build() {
-    return ProcessTypes.simplex;
+  EntrySizeState build() => const EntrySizeState(variables: 0, constraints: 0);
+
+  void setVariables(String source) {
+    if (int.tryParse(source) == null) return;
+    final value = int.parse(source);
+    if (state.variables == value) return;
+    state = state.copyWith(
+      variables: value,
+      showProcess: value == 2,
+    );
+    if (state.variables != 2) {
+      ref.read(processTypeControllerProvider.notifier).setProcess(ProcessTypes.simplex);
+    }
   }
 
-  void updateProcess(ProcessTypes process) {
+  void setConstraints(String source) {
+    if (int.tryParse(source) == null) return;
+    final value = int.parse(source);
+    if (state.constraints == value) return;
+    state = state.copyWith(constraints: value);
+  }
+}
+
+@riverpod
+class ProcessTypeController extends _$ProcessTypeController {
+  @override
+  ProcessTypes build() => ProcessTypes.simplex;
+
+  void setProcess(ProcessTypes process) {
     state = process;
-    debugPrint('ProcessController: $state');
   }
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 class DataEntryController extends _$DataEntryController {
   @override
-  DataEntryModel build() {
-    final dataSize = ref.watch(dataEntrySizeControllerProvider);
-    return DataEntryModel(
-      objectiveFunction: List.generate(dataSize.variables, (i) => 0.0),
-      constraints: List.generate(dataSize.constraints, (i) => List.generate(dataSize.variables + 1, (j) => 0.0)),
-      operators: List.generate(dataSize.constraints, (i) => Operators.leq),
+  DataEntryState build() {
+    final variables = ref.watch(entrySizeControllerProvider.select((value) => value.variables));
+    final constraints = ref.watch(entrySizeControllerProvider.select((value) => value.constraints));
+    final DataEntryState dataEntryState = DataEntryState(
+      objectiveFunction: List.generate(variables, (i) => 0.0),
+      constraints: List.generate(constraints, (i) => List.generate(variables + 1, (j) => 0.0)),
+      operators: List.generate(constraints, (i) => Operators.leq),
       objective: Objectives.max,
     );
+    debugPrint('$dataEntryState');
+    return dataEntryState;
   }
 
   void updateObjective(Objectives objective) {
@@ -67,13 +91,13 @@ class DataEntryController extends _$DataEntryController {
   }
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 class DataControllerForAlgebraic extends _$DataControllerForAlgebraic {
   @override
   void build() {}
 
   DataModelForAlgebraic toStandardForm() {
-    final dataSize = ref.watch(dataEntrySizeControllerProvider);
+    final dataSize = ref.watch(entrySizeControllerProvider);
     final data = ref.watch(dataEntryControllerProvider);
     List<List<double>> constraintWithSlackAndRightSide = List.generate(
       data.constraints.length,
