@@ -85,12 +85,17 @@ class _EntrySizeWidgetState extends ConsumerState<EntrySizeWidget> {
                       if (int.parse(value) < 2) {
                         return 'Digite un numero entero mayor a 1.';
                       }
+                      if (int.parse(value) > 12) {
+                        return 'No pueden haber mas de 12 variables.';
+                      }
                       return null;
                     },
                   ),
                   const SizedBox(height: spaceL),
                   TextFieldWidget(
                     controller: constraintsController,
+                    onEditingComplete: () =>
+                        dataEntrySizeState.showProcess ? FocusScope.of(context).nextFocus() : validate(),
                     label: "Cantidad de restricciones",
                     keyboardType: TextInputType.number,
                     formatters: [FilteringTextInputFormatter.digitsOnly],
@@ -103,6 +108,9 @@ class _EntrySizeWidgetState extends ConsumerState<EntrySizeWidget> {
                       }
                       if (int.parse(value) < 1) {
                         return 'Digite un numero mayor a 0.';
+                      }
+                      if (int.parse(value) > 15) {
+                        return 'No pueden haber mas de 15 restricciones.';
                       }
                       return null;
                     },
@@ -143,11 +151,7 @@ class _EntrySizeWidgetState extends ConsumerState<EntrySizeWidget> {
                       ),
                       const SizedBox(width: spaceXXXL),
                       FilledButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            ref.read(entryPageControllerProvider.notifier).updatePage(1);
-                          }
-                        },
+                        onPressed: validate,
                         child: const Text('Continuar'),
                       ),
                       const Spacer(),
@@ -160,5 +164,11 @@ class _EntrySizeWidgetState extends ConsumerState<EntrySizeWidget> {
         ),
       ),
     );
+  }
+
+  void validate() {
+    if (formKey.currentState!.validate()) {
+      ref.read(entryPageControllerProvider.notifier).updatePage(1);
+    }
   }
 }
