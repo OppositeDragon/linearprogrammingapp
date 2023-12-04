@@ -25,9 +25,11 @@ class _EntrySizeWidgetState extends ConsumerState<EntrySizeWidget> {
     super.initState();
     final dataEntrySizeState = ref.read(entrySizeControllerProvider);
     variablesController = TextEditingController(
-        text: dataEntrySizeState.variables == 0 ? '' : dataEntrySizeState.variables.toString());
+      text: dataEntrySizeState.variables == 0 ? '' : dataEntrySizeState.variables.toString(),
+    );
     constraintsController = TextEditingController(
-        text: dataEntrySizeState.constraints == 0 ? '' : dataEntrySizeState.constraints.toString());
+      text: dataEntrySizeState.constraints == 0 ? '' : dataEntrySizeState.constraints.toString(),
+    );
     variablesController.addListener(() {
       ref.read(entrySizeControllerProvider.notifier).setVariables(variablesController.text);
     });

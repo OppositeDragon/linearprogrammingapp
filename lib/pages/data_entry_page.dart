@@ -33,19 +33,18 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
       pageController.animateToPage(
         next,
         duration: const Duration(milliseconds: 350),
-        curve: Curves.fastEaseInToSlowEaseOut,
+        curve: Curves.easeInOut,
       );
     });
+    final entryPage = ref.watch(entryPageControllerProvider);
     Object? _ = ref.watch(entrySizeControllerProvider);
     _ = ref.watch(processTypeControllerProvider);
     _ = ref.watch(dataEntryControllerProvider);
-    return WillPopScope(
-      onWillPop: () async {
-        if (pageController.page == 0) {
-          return true;
-        }
+    return PopScope(
+      canPop: entryPage == 0,
+      onPopInvoked: (didPop) {
+        if (didPop) return;
         ref.read(entryPageControllerProvider.notifier).updatePage(0);
-        return false;
       },
       child: Scaffold(
         appBar: AppBar(
