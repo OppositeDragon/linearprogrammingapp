@@ -14,12 +14,173 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-DataEntryModel _$DataEntryModelFromJson(Map<String, dynamic> json) {
+/// @nodoc
+mixin _$EntrySizeState {
+  int get variables => throw _privateConstructorUsedError;
+  int get constraints => throw _privateConstructorUsedError;
+  bool get showProcess => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $EntrySizeStateCopyWith<EntrySizeState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EntrySizeStateCopyWith<$Res> {
+  factory $EntrySizeStateCopyWith(
+          EntrySizeState value, $Res Function(EntrySizeState) then) =
+      _$EntrySizeStateCopyWithImpl<$Res, EntrySizeState>;
+  @useResult
+  $Res call({int variables, int constraints, bool showProcess});
+}
+
+/// @nodoc
+class _$EntrySizeStateCopyWithImpl<$Res, $Val extends EntrySizeState>
+    implements $EntrySizeStateCopyWith<$Res> {
+  _$EntrySizeStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? variables = null,
+    Object? constraints = null,
+    Object? showProcess = null,
+  }) {
+    return _then(_value.copyWith(
+      variables: null == variables
+          ? _value.variables
+          : variables // ignore: cast_nullable_to_non_nullable
+              as int,
+      constraints: null == constraints
+          ? _value.constraints
+          : constraints // ignore: cast_nullable_to_non_nullable
+              as int,
+      showProcess: null == showProcess
+          ? _value.showProcess
+          : showProcess // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$EntrySizeStateImplCopyWith<$Res>
+    implements $EntrySizeStateCopyWith<$Res> {
+  factory _$$EntrySizeStateImplCopyWith(_$EntrySizeStateImpl value,
+          $Res Function(_$EntrySizeStateImpl) then) =
+      __$$EntrySizeStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int variables, int constraints, bool showProcess});
+}
+
+/// @nodoc
+class __$$EntrySizeStateImplCopyWithImpl<$Res>
+    extends _$EntrySizeStateCopyWithImpl<$Res, _$EntrySizeStateImpl>
+    implements _$$EntrySizeStateImplCopyWith<$Res> {
+  __$$EntrySizeStateImplCopyWithImpl(
+      _$EntrySizeStateImpl _value, $Res Function(_$EntrySizeStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? variables = null,
+    Object? constraints = null,
+    Object? showProcess = null,
+  }) {
+    return _then(_$EntrySizeStateImpl(
+      variables: null == variables
+          ? _value.variables
+          : variables // ignore: cast_nullable_to_non_nullable
+              as int,
+      constraints: null == constraints
+          ? _value.constraints
+          : constraints // ignore: cast_nullable_to_non_nullable
+              as int,
+      showProcess: null == showProcess
+          ? _value.showProcess
+          : showProcess // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EntrySizeStateImpl implements _EntrySizeState {
+  const _$EntrySizeStateImpl(
+      {required this.variables,
+      required this.constraints,
+      this.showProcess = false});
+
+  @override
+  final int variables;
+  @override
+  final int constraints;
+  @override
+  @JsonKey()
+  final bool showProcess;
+
+  @override
+  String toString() {
+    return 'EntrySizeState(variables: $variables, constraints: $constraints, showProcess: $showProcess)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EntrySizeStateImpl &&
+            (identical(other.variables, variables) ||
+                other.variables == variables) &&
+            (identical(other.constraints, constraints) ||
+                other.constraints == constraints) &&
+            (identical(other.showProcess, showProcess) ||
+                other.showProcess == showProcess));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, variables, constraints, showProcess);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EntrySizeStateImplCopyWith<_$EntrySizeStateImpl> get copyWith =>
+      __$$EntrySizeStateImplCopyWithImpl<_$EntrySizeStateImpl>(
+          this, _$identity);
+}
+
+abstract class _EntrySizeState implements EntrySizeState {
+  const factory _EntrySizeState(
+      {required final int variables,
+      required final int constraints,
+      final bool showProcess}) = _$EntrySizeStateImpl;
+
+  @override
+  int get variables;
+  @override
+  int get constraints;
+  @override
+  bool get showProcess;
+  @override
+  @JsonKey(ignore: true)
+  _$$EntrySizeStateImplCopyWith<_$EntrySizeStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+DataEntryState _$DataEntryStateFromJson(Map<String, dynamic> json) {
   return _DataEntryModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$DataEntryModel {
+mixin _$DataEntryState {
   Objectives get objective => throw _privateConstructorUsedError;
   List<double> get objectiveFunction => throw _privateConstructorUsedError;
   List<Operators> get operators => throw _privateConstructorUsedError;
@@ -27,15 +188,15 @@ mixin _$DataEntryModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $DataEntryModelCopyWith<DataEntryModel> get copyWith =>
+  $DataEntryStateCopyWith<DataEntryState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DataEntryModelCopyWith<$Res> {
-  factory $DataEntryModelCopyWith(
-          DataEntryModel value, $Res Function(DataEntryModel) then) =
-      _$DataEntryModelCopyWithImpl<$Res, DataEntryModel>;
+abstract class $DataEntryStateCopyWith<$Res> {
+  factory $DataEntryStateCopyWith(
+          DataEntryState value, $Res Function(DataEntryState) then) =
+      _$DataEntryStateCopyWithImpl<$Res, DataEntryState>;
   @useResult
   $Res call(
       {Objectives objective,
@@ -45,9 +206,9 @@ abstract class $DataEntryModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DataEntryModelCopyWithImpl<$Res, $Val extends DataEntryModel>
-    implements $DataEntryModelCopyWith<$Res> {
-  _$DataEntryModelCopyWithImpl(this._value, this._then);
+class _$DataEntryStateCopyWithImpl<$Res, $Val extends DataEntryState>
+    implements $DataEntryStateCopyWith<$Res> {
+  _$DataEntryStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -84,11 +245,11 @@ class _$DataEntryModelCopyWithImpl<$Res, $Val extends DataEntryModel>
 }
 
 /// @nodoc
-abstract class _$$_DataEntryModelCopyWith<$Res>
-    implements $DataEntryModelCopyWith<$Res> {
-  factory _$$_DataEntryModelCopyWith(
-          _$_DataEntryModel value, $Res Function(_$_DataEntryModel) then) =
-      __$$_DataEntryModelCopyWithImpl<$Res>;
+abstract class _$$DataEntryModelImplCopyWith<$Res>
+    implements $DataEntryStateCopyWith<$Res> {
+  factory _$$DataEntryModelImplCopyWith(_$DataEntryModelImpl value,
+          $Res Function(_$DataEntryModelImpl) then) =
+      __$$DataEntryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -99,11 +260,11 @@ abstract class _$$_DataEntryModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DataEntryModelCopyWithImpl<$Res>
-    extends _$DataEntryModelCopyWithImpl<$Res, _$_DataEntryModel>
-    implements _$$_DataEntryModelCopyWith<$Res> {
-  __$$_DataEntryModelCopyWithImpl(
-      _$_DataEntryModel _value, $Res Function(_$_DataEntryModel) _then)
+class __$$DataEntryModelImplCopyWithImpl<$Res>
+    extends _$DataEntryStateCopyWithImpl<$Res, _$DataEntryModelImpl>
+    implements _$$DataEntryModelImplCopyWith<$Res> {
+  __$$DataEntryModelImplCopyWithImpl(
+      _$DataEntryModelImpl _value, $Res Function(_$DataEntryModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -114,7 +275,7 @@ class __$$_DataEntryModelCopyWithImpl<$Res>
     Object? operators = null,
     Object? constraints = null,
   }) {
-    return _then(_$_DataEntryModel(
+    return _then(_$DataEntryModelImpl(
       objective: null == objective
           ? _value.objective
           : objective // ignore: cast_nullable_to_non_nullable
@@ -137,8 +298,8 @@ class __$$_DataEntryModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_DataEntryModel implements _DataEntryModel {
-  const _$_DataEntryModel(
+class _$DataEntryModelImpl implements _DataEntryModel {
+  const _$DataEntryModelImpl(
       {required this.objective,
       required final List<double> objectiveFunction,
       required final List<Operators> operators,
@@ -147,8 +308,8 @@ class _$_DataEntryModel implements _DataEntryModel {
         _operators = operators,
         _constraints = constraints;
 
-  factory _$_DataEntryModel.fromJson(Map<String, dynamic> json) =>
-      _$$_DataEntryModelFromJson(json);
+  factory _$DataEntryModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DataEntryModelImplFromJson(json);
 
   @override
   final Objectives objective;
@@ -179,14 +340,14 @@ class _$_DataEntryModel implements _DataEntryModel {
 
   @override
   String toString() {
-    return 'DataEntryModel(objective: $objective, objectiveFunction: $objectiveFunction, operators: $operators, constraints: $constraints)';
+    return 'DataEntryState(objective: $objective, objectiveFunction: $objectiveFunction, operators: $operators, constraints: $constraints)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DataEntryModel &&
+            other is _$DataEntryModelImpl &&
             (identical(other.objective, objective) ||
                 other.objective == objective) &&
             const DeepCollectionEquality()
@@ -209,26 +370,27 @@ class _$_DataEntryModel implements _DataEntryModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DataEntryModelCopyWith<_$_DataEntryModel> get copyWith =>
-      __$$_DataEntryModelCopyWithImpl<_$_DataEntryModel>(this, _$identity);
+  _$$DataEntryModelImplCopyWith<_$DataEntryModelImpl> get copyWith =>
+      __$$DataEntryModelImplCopyWithImpl<_$DataEntryModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DataEntryModelToJson(
+    return _$$DataEntryModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _DataEntryModel implements DataEntryModel {
+abstract class _DataEntryModel implements DataEntryState {
   const factory _DataEntryModel(
       {required final Objectives objective,
       required final List<double> objectiveFunction,
       required final List<Operators> operators,
-      required final List<List<double>> constraints}) = _$_DataEntryModel;
+      required final List<List<double>> constraints}) = _$DataEntryModelImpl;
 
   factory _DataEntryModel.fromJson(Map<String, dynamic> json) =
-      _$_DataEntryModel.fromJson;
+      _$DataEntryModelImpl.fromJson;
 
   @override
   Objectives get objective;
@@ -240,7 +402,7 @@ abstract class _DataEntryModel implements DataEntryModel {
   List<List<double>> get constraints;
   @override
   @JsonKey(ignore: true)
-  _$$_DataEntryModelCopyWith<_$_DataEntryModel> get copyWith =>
+  _$$DataEntryModelImplCopyWith<_$DataEntryModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -333,11 +495,12 @@ class _$DataModelForAlgebraicCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_DataModelForAlgebraicCopyWith<$Res>
+abstract class _$$DataModelForAlgebraicImplCopyWith<$Res>
     implements $DataModelForAlgebraicCopyWith<$Res> {
-  factory _$$_DataModelForAlgebraicCopyWith(_$_DataModelForAlgebraic value,
-          $Res Function(_$_DataModelForAlgebraic) then) =
-      __$$_DataModelForAlgebraicCopyWithImpl<$Res>;
+  factory _$$DataModelForAlgebraicImplCopyWith(
+          _$DataModelForAlgebraicImpl value,
+          $Res Function(_$DataModelForAlgebraicImpl) then) =
+      __$$DataModelForAlgebraicImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -351,11 +514,12 @@ abstract class _$$_DataModelForAlgebraicCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DataModelForAlgebraicCopyWithImpl<$Res>
-    extends _$DataModelForAlgebraicCopyWithImpl<$Res, _$_DataModelForAlgebraic>
-    implements _$$_DataModelForAlgebraicCopyWith<$Res> {
-  __$$_DataModelForAlgebraicCopyWithImpl(_$_DataModelForAlgebraic _value,
-      $Res Function(_$_DataModelForAlgebraic) _then)
+class __$$DataModelForAlgebraicImplCopyWithImpl<$Res>
+    extends _$DataModelForAlgebraicCopyWithImpl<$Res,
+        _$DataModelForAlgebraicImpl>
+    implements _$$DataModelForAlgebraicImplCopyWith<$Res> {
+  __$$DataModelForAlgebraicImplCopyWithImpl(_$DataModelForAlgebraicImpl _value,
+      $Res Function(_$DataModelForAlgebraicImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -369,7 +533,7 @@ class __$$_DataModelForAlgebraicCopyWithImpl<$Res>
     Object? greaterThanZeroCondition = null,
     Object? combinationsEquation = null,
   }) {
-    return _then(_$_DataModelForAlgebraic(
+    return _then(_$DataModelForAlgebraicImpl(
       standardForm: null == standardForm
           ? _value._standardForm
           : standardForm // ignore: cast_nullable_to_non_nullable
@@ -404,8 +568,8 @@ class __$$_DataModelForAlgebraicCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_DataModelForAlgebraic implements _DataModelForAlgebraic {
-  const _$_DataModelForAlgebraic(
+class _$DataModelForAlgebraicImpl implements _DataModelForAlgebraic {
+  const _$DataModelForAlgebraicImpl(
       {required final List<List<double>> standardForm,
       required final List<List<double>> constraintWithSlack,
       required final List<List<String>> constraintsString,
@@ -475,7 +639,7 @@ class _$_DataModelForAlgebraic implements _DataModelForAlgebraic {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DataModelForAlgebraic &&
+            other is _$DataModelForAlgebraicImpl &&
             const DeepCollectionEquality()
                 .equals(other._standardForm, _standardForm) &&
             const DeepCollectionEquality()
@@ -507,20 +671,21 @@ class _$_DataModelForAlgebraic implements _DataModelForAlgebraic {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DataModelForAlgebraicCopyWith<_$_DataModelForAlgebraic> get copyWith =>
-      __$$_DataModelForAlgebraicCopyWithImpl<_$_DataModelForAlgebraic>(
-          this, _$identity);
+  _$$DataModelForAlgebraicImplCopyWith<_$DataModelForAlgebraicImpl>
+      get copyWith => __$$DataModelForAlgebraicImplCopyWithImpl<
+          _$DataModelForAlgebraicImpl>(this, _$identity);
 }
 
 abstract class _DataModelForAlgebraic implements DataModelForAlgebraic {
   const factory _DataModelForAlgebraic(
-      {required final List<List<double>> standardForm,
-      required final List<List<double>> constraintWithSlack,
-      required final List<List<String>> constraintsString,
-      required final List<double> rightSide,
-      required final List<String> rightSideString,
-      required final String greaterThanZeroCondition,
-      required final String combinationsEquation}) = _$_DataModelForAlgebraic;
+          {required final List<List<double>> standardForm,
+          required final List<List<double>> constraintWithSlack,
+          required final List<List<String>> constraintsString,
+          required final List<double> rightSide,
+          required final List<String> rightSideString,
+          required final String greaterThanZeroCondition,
+          required final String combinationsEquation}) =
+      _$DataModelForAlgebraicImpl;
 
   @override
   List<List<double>> get standardForm;
@@ -538,8 +703,8 @@ abstract class _DataModelForAlgebraic implements DataModelForAlgebraic {
   String get combinationsEquation;
   @override
   @JsonKey(ignore: true)
-  _$$_DataModelForAlgebraicCopyWith<_$_DataModelForAlgebraic> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$DataModelForAlgebraicImplCopyWith<_$DataModelForAlgebraicImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -635,11 +800,11 @@ class _$StepsForAlgebraicCopyWithImpl<$Res, $Val extends StepsForAlgebraic>
 }
 
 /// @nodoc
-abstract class _$$_StepsForAlgebraicCopyWith<$Res>
+abstract class _$$StepsForAlgebraicImplCopyWith<$Res>
     implements $StepsForAlgebraicCopyWith<$Res> {
-  factory _$$_StepsForAlgebraicCopyWith(_$_StepsForAlgebraic value,
-          $Res Function(_$_StepsForAlgebraic) then) =
-      __$$_StepsForAlgebraicCopyWithImpl<$Res>;
+  factory _$$StepsForAlgebraicImplCopyWith(_$StepsForAlgebraicImpl value,
+          $Res Function(_$StepsForAlgebraicImpl) then) =
+      __$$StepsForAlgebraicImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -654,11 +819,11 @@ abstract class _$$_StepsForAlgebraicCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_StepsForAlgebraicCopyWithImpl<$Res>
-    extends _$StepsForAlgebraicCopyWithImpl<$Res, _$_StepsForAlgebraic>
-    implements _$$_StepsForAlgebraicCopyWith<$Res> {
-  __$$_StepsForAlgebraicCopyWithImpl(
-      _$_StepsForAlgebraic _value, $Res Function(_$_StepsForAlgebraic) _then)
+class __$$StepsForAlgebraicImplCopyWithImpl<$Res>
+    extends _$StepsForAlgebraicCopyWithImpl<$Res, _$StepsForAlgebraicImpl>
+    implements _$$StepsForAlgebraicImplCopyWith<$Res> {
+  __$$StepsForAlgebraicImplCopyWithImpl(_$StepsForAlgebraicImpl _value,
+      $Res Function(_$StepsForAlgebraicImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -673,7 +838,7 @@ class __$$_StepsForAlgebraicCopyWithImpl<$Res>
     Object? solutionString = freezed,
     Object? objectiveFunctionSolution = freezed,
   }) {
-    return _then(_$_StepsForAlgebraic(
+    return _then(_$StepsForAlgebraicImpl(
       header: null == header
           ? _value.header
           : header // ignore: cast_nullable_to_non_nullable
@@ -712,8 +877,8 @@ class __$$_StepsForAlgebraicCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StepsForAlgebraic implements _StepsForAlgebraic {
-  const _$_StepsForAlgebraic(
+class _$StepsForAlgebraicImpl implements _StepsForAlgebraic {
+  const _$StepsForAlgebraicImpl(
       {required this.header,
       required this.step,
       required final List<int> whereVarEqualsZero,
@@ -778,7 +943,7 @@ class _$_StepsForAlgebraic implements _StepsForAlgebraic {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StepsForAlgebraic &&
+            other is _$StepsForAlgebraicImpl &&
             (identical(other.header, header) || other.header == header) &&
             (identical(other.step, step) || other.step == step) &&
             const DeepCollectionEquality()
@@ -810,21 +975,22 @@ class _$_StepsForAlgebraic implements _StepsForAlgebraic {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StepsForAlgebraicCopyWith<_$_StepsForAlgebraic> get copyWith =>
-      __$$_StepsForAlgebraicCopyWithImpl<_$_StepsForAlgebraic>(
+  _$$StepsForAlgebraicImplCopyWith<_$StepsForAlgebraicImpl> get copyWith =>
+      __$$StepsForAlgebraicImplCopyWithImpl<_$StepsForAlgebraicImpl>(
           this, _$identity);
 }
 
 abstract class _StepsForAlgebraic implements StepsForAlgebraic {
   const factory _StepsForAlgebraic(
-      {required final String header,
-      required final int step,
-      required final List<int> whereVarEqualsZero,
-      required final List<double> solutions,
-      required final List<String> solutionsString,
-      required final List<List<double>> matrix,
-      required final String? solutionString,
-      required final double? objectiveFunctionSolution}) = _$_StepsForAlgebraic;
+          {required final String header,
+          required final int step,
+          required final List<int> whereVarEqualsZero,
+          required final List<double> solutions,
+          required final List<String> solutionsString,
+          required final List<List<double>> matrix,
+          required final String? solutionString,
+          required final double? objectiveFunctionSolution}) =
+      _$StepsForAlgebraicImpl;
 
   @override
   String get header;
@@ -844,7 +1010,7 @@ abstract class _StepsForAlgebraic implements StepsForAlgebraic {
   double? get objectiveFunctionSolution;
   @override
   @JsonKey(ignore: true)
-  _$$_StepsForAlgebraicCopyWith<_$_StepsForAlgebraic> get copyWith =>
+  _$$StepsForAlgebraicImplCopyWith<_$StepsForAlgebraicImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -913,11 +1079,11 @@ class _$AnswerForAlgebraicCopyWithImpl<$Res, $Val extends AnswerForAlgebraic>
 }
 
 /// @nodoc
-abstract class _$$_AnswerForAlgebraicCopyWith<$Res>
+abstract class _$$AnswerForAlgebraicImplCopyWith<$Res>
     implements $AnswerForAlgebraicCopyWith<$Res> {
-  factory _$$_AnswerForAlgebraicCopyWith(_$_AnswerForAlgebraic value,
-          $Res Function(_$_AnswerForAlgebraic) then) =
-      __$$_AnswerForAlgebraicCopyWithImpl<$Res>;
+  factory _$$AnswerForAlgebraicImplCopyWith(_$AnswerForAlgebraicImpl value,
+          $Res Function(_$AnswerForAlgebraicImpl) then) =
+      __$$AnswerForAlgebraicImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -928,11 +1094,11 @@ abstract class _$$_AnswerForAlgebraicCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AnswerForAlgebraicCopyWithImpl<$Res>
-    extends _$AnswerForAlgebraicCopyWithImpl<$Res, _$_AnswerForAlgebraic>
-    implements _$$_AnswerForAlgebraicCopyWith<$Res> {
-  __$$_AnswerForAlgebraicCopyWithImpl(
-      _$_AnswerForAlgebraic _value, $Res Function(_$_AnswerForAlgebraic) _then)
+class __$$AnswerForAlgebraicImplCopyWithImpl<$Res>
+    extends _$AnswerForAlgebraicCopyWithImpl<$Res, _$AnswerForAlgebraicImpl>
+    implements _$$AnswerForAlgebraicImplCopyWith<$Res> {
+  __$$AnswerForAlgebraicImplCopyWithImpl(_$AnswerForAlgebraicImpl _value,
+      $Res Function(_$AnswerForAlgebraicImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -943,7 +1109,7 @@ class __$$_AnswerForAlgebraicCopyWithImpl<$Res>
     Object? step = null,
     Object? steps = null,
   }) {
-    return _then(_$_AnswerForAlgebraic(
+    return _then(_$AnswerForAlgebraicImpl(
       definitiveSolution: null == definitiveSolution
           ? _value.definitiveSolution
           : definitiveSolution // ignore: cast_nullable_to_non_nullable
@@ -966,8 +1132,8 @@ class __$$_AnswerForAlgebraicCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AnswerForAlgebraic implements _AnswerForAlgebraic {
-  const _$_AnswerForAlgebraic(
+class _$AnswerForAlgebraicImpl implements _AnswerForAlgebraic {
+  const _$AnswerForAlgebraicImpl(
       {required this.definitiveSolution,
       required this.finalSolutionString,
       required this.step,
@@ -997,7 +1163,7 @@ class _$_AnswerForAlgebraic implements _AnswerForAlgebraic {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AnswerForAlgebraic &&
+            other is _$AnswerForAlgebraicImpl &&
             (identical(other.definitiveSolution, definitiveSolution) ||
                 other.definitiveSolution == definitiveSolution) &&
             (identical(other.finalSolutionString, finalSolutionString) ||
@@ -1013,8 +1179,8 @@ class _$_AnswerForAlgebraic implements _AnswerForAlgebraic {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AnswerForAlgebraicCopyWith<_$_AnswerForAlgebraic> get copyWith =>
-      __$$_AnswerForAlgebraicCopyWithImpl<_$_AnswerForAlgebraic>(
+  _$$AnswerForAlgebraicImplCopyWith<_$AnswerForAlgebraicImpl> get copyWith =>
+      __$$AnswerForAlgebraicImplCopyWithImpl<_$AnswerForAlgebraicImpl>(
           this, _$identity);
 }
 
@@ -1023,7 +1189,7 @@ abstract class _AnswerForAlgebraic implements AnswerForAlgebraic {
       {required final double definitiveSolution,
       required final String? finalSolutionString,
       required final int step,
-      required final List<StepsForAlgebraic> steps}) = _$_AnswerForAlgebraic;
+      required final List<StepsForAlgebraic> steps}) = _$AnswerForAlgebraicImpl;
 
   @override
   double get definitiveSolution;
@@ -1035,6 +1201,6 @@ abstract class _AnswerForAlgebraic implements AnswerForAlgebraic {
   List<StepsForAlgebraic> get steps;
   @override
   @JsonKey(ignore: true)
-  _$$_AnswerForAlgebraicCopyWith<_$_AnswerForAlgebraic> get copyWith =>
+  _$$AnswerForAlgebraicImplCopyWith<_$AnswerForAlgebraicImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

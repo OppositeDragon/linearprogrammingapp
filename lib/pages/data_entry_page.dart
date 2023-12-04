@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:linearprogrammingapp/constants/numeric.dart';
-import 'package:linearprogrammingapp/widgets/textfield_widget.dart';
+import 'package:linearprogrammingapp/controllers/data_entry_controller.dart';
+import 'package:linearprogrammingapp/widgets/entry_size_widget.dart';
 
-import '../constants/enums.dart';
-import '../controllers/data_entry_controller.dart';
-import '../widgets/dropdown_button_widget.dart';
+import '../constants/numeric.dart';
+import '../widgets/data_entry_widget.dart';
 
 class DataEntryPage extends ConsumerStatefulWidget {
   const DataEntryPage({super.key});
@@ -18,254 +14,59 @@ class DataEntryPage extends ConsumerStatefulWidget {
 }
 
 class _DataEntryPageState extends ConsumerState<DataEntryPage> {
-  final formKey = GlobalKey<FormState>();
+  late final PageController pageController;
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController(keepPage: true);
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final dataEntry = ref.watch(dataEntryControllerProvider);
-    final textTheme = Theme.of(context).textTheme;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Linear Programming App'),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: spaceL),
-        child: Form(
-          key: formKey,
-          child: CustomScrollView(
-            slivers: [
-              const SliverToBoxAdapter(child: SizedBox(height: spaceXL)),
-              SliverToBoxAdapter(
-                child: Text('Ingreso de datos', textAlign: TextAlign.center, style: textTheme.displaySmall),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: spaceXXL)),
-              SliverToBoxAdapter(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      child: Text('Objetivo:', style: textTheme.headlineMedium),
-                    ),
-                    const SizedBox(width: spaceM),
-                    Flexible(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 200),
-                        child: DropdownButtonWidget(
-                          value: dataEntry.objective,
-                          items: [
-                            for (final objective in Objectives.values)
-                              DropdownMenuItem(value: objective, child: Text(objective.label))
-                          ],
-                          onChanged: (objective) {
-                            if (objective == null) return;
-                            ref.read(dataEntryControllerProvider.notifier).updateObjective(objective);
-                          },
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SliverToBoxAdapter(child: Divider(height: spaceXXXL, thickness: 2)),
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    Text(' Funcion objetivo ', textAlign: TextAlign.center, style: textTheme.headlineMedium),
-                    const SizedBox(height: spaceS),
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      alignment: WrapAlignment.start,
-                      spacing: spaceM, //horizontal
-                      runSpacing: spaceM, //vertical
-                      children: [
-                        for (int i = 0; i < dataEntry.objectiveFunction.length; i++)
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 85,
-                                child: TextFieldWidget(
-                                  label: '',
-                                  isDense: true,
-                                  keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return null;
-                                    }
-                                    if (double.tryParse(value) == null) {
-                                      return 'Valor invalido';
-                                    }
-                                    return null;
-                                  },
-                                  onSave: (value) {
-                                    final number = value == null || value.isEmpty ? 0.0 : double.parse(value);
-                                    ref.read(dataEntryControllerProvider.notifier).updateObjectiveFunction(i, number);
-                                  },
-                                  formatters: [
-                                    FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+\.?[0-9]*')),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: spaceS),
-                              Math.tex(' x_{${i + 1}} ', textStyle: textTheme.bodySmall?.copyWith(fontSize: 30)),
-                              if (i < dataEntry.objectiveFunction.length - 1)
-                                Math.tex(' + ', textStyle: textTheme.bodySmall?.copyWith(fontSize: 30)),
-                            ],
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SliverToBoxAdapter(child: Divider(height: spaceXXXL, thickness: 2)),
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    Text('Restricciones', style: textTheme.headlineMedium),
-                    const SizedBox(height: spaceS),
-                    for (int i = 0; i < dataEntry.constraints.length; i++)
-                      Card(
-                        elevation: 4,
-                        child: Padding(
-                          padding: const EdgeInsets.all(spaceM),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Flexible(
-                                child: Wrap(
-                                  crossAxisAlignment: WrapCrossAlignment.start,
-                                  alignment: WrapAlignment.start,
-                                  runAlignment: WrapAlignment.start,
-                                  spacing: spaceM, //horizontal
-                                  runSpacing: spaceM, //vertical
-                                  children: [
-                                    for (int j = 0; j < dataEntry.objectiveFunction.length; j++)
-                                      Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: 85,
-                                            child: TextFieldWidget(
-                                              label: '',
-                                              isDense: true,
-                                              keyboardType:
-                                                  const TextInputType.numberWithOptions(decimal: true, signed: true),
-                                              validator: (value) {
-                                                if (value == null || value.isEmpty) {
-                                                  return null;
-                                                }
-                                                if (double.tryParse(value) == null) {
-                                                  return 'Valor invalido';
-                                                }
-                                                return null;
-                                              },
-                                              onSave: (value) {
-                                                final number =
-                                                    value == null || value.isEmpty ? 0.0 : double.parse(value);
-                                                ref
-                                                    .read(dataEntryControllerProvider.notifier)
-                                                    .updateConstraints(i, j, number);
-                                              },
-                                              formatters: [
-                                                FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+\.?[0-9]*')),
-                                              ],
-                                            ),
-                                          ),
-                                          const SizedBox(width: spaceS),
-                                          Math.tex(' x_{${j + 1}} ',
-                                              textStyle: textTheme.bodySmall?.copyWith(fontSize: 25)),
-                                          if (j < dataEntry.objectiveFunction.length - 1)
-                                            Math.tex(' + ', textStyle: textTheme.bodySmall?.copyWith(fontSize: 25)),
-                                        ],
-                                      ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: spaceM),
-                              SizedBox(
-                                width: 70,
-                                child: DropdownButtonWidget<Operators>(
-                                  isDense: true,
-                                  value: dataEntry.operators[i],
-                                  items: [
-                                    for (final operator in Operators.values)
-                                      DropdownMenuItem(
-                                        value: operator,
-                                        child: Center(
-                                          child: Text(
-                                            operator.label,
-                                            style: const TextStyle(fontSize: 18),
-                                          ),
-                                        ),
-                                      ),
-                                  ],
-                                  onChanged: (constraint) {
-                                    if (constraint == null) return;
-                                    ref.read(dataEntryControllerProvider.notifier).updateOperator(i, constraint);
-                                  },
-                                ),
-                              ),
-                              const SizedBox(width: spaceM),
-                              SizedBox(
-                                width: 85,
-                                child: TextFieldWidget(
-                                  label: '',
-                                  isDense: true,
-                                  keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return null;
-                                    }
-                                    if (double.tryParse(value) == null) {
-                                      return 'Valor invalido';
-                                    }
-                                    return null;
-                                  },
-                                  onSave: (value) {
-                                    final number = value == null || value.isEmpty ? 0.0 : double.parse(value);
-                                    ref.read(dataEntryControllerProvider.notifier).updateConstraintsRS(i, number);
-                                  },
-                                  formatters: [
-                                    FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+\.?[0-9]*')),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              const SliverToBoxAdapter(child: Divider(height: spaceXXXL, thickness: 2)),
-              SliverToBoxAdapter(
-                child: Center(
-                  child: FilledButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        formKey.currentState!.save();
-                        switch (ref.read(processControllerProvider)) {
-                          case ProcessTypes.algebraic:
-                            context.goNamed('algebraic-process');
-                            break;
-                          case ProcessTypes.graphic:
-                            context.goNamed('graphic-process');
-                            break;
-                          case ProcessTypes.simplex:
-                            context.goNamed('simplex-process');
-                            break;
-                          default:
-                            throw UnsupportedError('Process type not supported');
-                        }
-                      }
-                    },
-                    child: const Text('Continuar'),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: spaceL)),
+    ref.listen(entryPageControllerProvider, (previous, next) {
+      pageController.animateToPage(
+        next,
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeInOut,
+      );
+    });
+    final entryPage = ref.watch(entryPageControllerProvider);
+    Object? _ = ref.watch(entrySizeControllerProvider);
+    _ = ref.watch(processTypeControllerProvider);
+    _ = ref.watch(dataEntryControllerProvider);
+    return PopScope(
+      canPop: entryPage == 0,
+      onPopInvoked: (didPop) {
+        if (didPop) return;
+        ref.read(entryPageControllerProvider.notifier).updatePage(0);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Linear Programming App'),
+          centerTitle: true,
+          actions: [
+            if (ref.watch(entryPageControllerProvider) > 0)
+              IconButton(
+                onPressed: () => ref.invalidate(dataEntryControllerProvider),
+                icon: const Icon(Icons.backspace),
+                tooltip: 'Clear all fields',
+              )
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: spaceL),
+          child: PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: pageController,
+            children: const [
+              EntrySizeWidget(),
+              DataEntryWidget(),
             ],
           ),
         ),

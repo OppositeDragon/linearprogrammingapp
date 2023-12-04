@@ -6,8 +6,8 @@ part of 'data_entry_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_DataEntryModel _$$_DataEntryModelFromJson(Map<String, dynamic> json) =>
-    _$_DataEntryModel(
+_$DataEntryModelImpl _$$DataEntryModelImplFromJson(Map<String, dynamic> json) =>
+    _$DataEntryModelImpl(
       objective: $enumDecode(_$ObjectivesEnumMap, json['objective']),
       objectiveFunction: (json['objectiveFunction'] as List<dynamic>)
           .map((e) => (e as num).toDouble())
@@ -21,7 +21,8 @@ _$_DataEntryModel _$$_DataEntryModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_DataEntryModelToJson(_$_DataEntryModel instance) =>
+Map<String, dynamic> _$$DataEntryModelImplToJson(
+        _$DataEntryModelImpl instance) =>
     <String, dynamic>{
       'objective': _$ObjectivesEnumMap[instance.objective]!,
       'objectiveFunction': instance.objectiveFunction,

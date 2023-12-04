@@ -3,7 +3,12 @@ import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:linearprogrammingapp/constants/numeric.dart';
 
 class MathTexAlgebraic extends StatelessWidget {
-  const MathTexAlgebraic({super.key, required this.equation, this.eqStyle = const TextStyle(), this.center = true});
+  const MathTexAlgebraic({
+    super.key,
+    required this.equation,
+    this.eqStyle = const TextStyle(),
+    this.center = true,
+  });
 
   final TextStyle eqStyle;
   final String equation;
