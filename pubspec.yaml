@@ -10,11 +10,11 @@ dependencies:
   flutter:
     sdk: flutter
   appwrite: 8.3.0
-  flutter_riverpod: ^2.4.4
+  flutter_riverpod: ^2.4.9
   freezed_annotation: ^2.4.1
   go_router: ^11.1.4
   json_annotation: ^4.8.1
-  riverpod_annotation: ^2.2.1
+  riverpod_annotation: ^2.3.3
   window_location_href: ^1.0.1+2
   hive_flutter: ^1.1.0
   flutter_math_fork: ^0.7.1
@@ -24,12 +24,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  build_runner: ^2.4.6
-  custom_lint: ^0.5.3
+  build_runner: ^2.4.7
+  custom_lint: ^0.5.7
   freezed: ^2.4.5
   json_serializable: ^6.7.1
-  riverpod_generator: ^2.3.3
-  riverpod_lint: ^2.1.1
+  riverpod_generator: ^2.3.9
+  riverpod_lint: ^2.3.7
 
 flutter:
   uses-material-design: true
