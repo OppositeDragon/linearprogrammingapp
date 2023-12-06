@@ -126,7 +126,7 @@ class AlgebraicController extends _$AlgebraicController {
         );
         for (var n = 0; n < listOfNumbers.length; n++) {
           solutionsString.add(
-            'x_{${listOfNumbers[n]}}=${deleteLastZero(solutions[n].toStringAsFixed(3))}',
+            'x_{${listOfNumbers[n]}}=${solutions[n].toStringAsFixed(3).deleteLastZero()}',
           );
         }
         final isValid = !solutions.any((element) => element < 0 || element.isNaN);
@@ -141,7 +141,7 @@ class AlgebraicController extends _$AlgebraicController {
 
           objectiveFunctionSolution = objectiveFunction[0] * oneValue + objectiveFunction[1] * twoValue;
           solutionString =
-              'Z=${deleteLastZero(objectiveFunction[0].toStringAsFixed(3))} (${deleteLastZero(oneValue.toStringAsFixed(3))}) ${objectiveFunction[1].getSign()} ${deleteLastZero(objectiveFunction[1].toStringAsFixed(3))} (${deleteLastZero(twoValue.toStringAsFixed(3))}) = ${deleteLastZero(objectiveFunctionSolution.toStringAsFixed(3))}';
+              'Z=${objectiveFunction[0].toStringAsFixed(3).deleteLastZero()} (${oneValue.toStringAsFixed(3).deleteLastZero()}) ${objectiveFunction[1].getSign()} ${objectiveFunction[1].toStringAsFixed(3).deleteLastZero()} (${twoValue.toStringAsFixed(3).deleteLastZero()}) = ${objectiveFunctionSolution.toStringAsFixed(3).deleteLastZero()}';
           if (objective == Objectives.max) {
             if (definitiveSolution < objectiveFunctionSolution) {
               definitiveSolution = objectiveFunctionSolution;

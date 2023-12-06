@@ -7,7 +7,7 @@ part of 'algebraic_mode_controller.dart';
 // **************************************************************************
 
 String _$algebraicControllerHash() =>
-    r'faa94aaba9b4509e085f03b40a1115af4bf01ff5';
+    r'9d6c3c85838be97efba29ca1a49581cf1038cf71';
 
 /// See also [AlgebraicController].
 @ProviderFor(AlgebraicController)

@@ -18,3 +18,7 @@ String toStringWithSign(double number, int i, [bool addEquals = false, bool isRi
       return '$sign${number.abs().toString().deleteLastZero()}x_{$i}$equal';
   }
 }
+
+String combinationsEquation(int variables, int constraints, int factorial) {
+  return 'C(n,r) = \\frac{$variables!}{${variables - constraints}!($variables-${variables - constraints})!} = $factorial';
+}

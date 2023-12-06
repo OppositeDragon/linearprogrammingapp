@@ -1,4 +1,3 @@
-import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -89,22 +88,4 @@ class DataEntryController extends _$DataEntryController {
   void updateConstraintsRS(int index, double value) {
     state = state.copyWith(constraints: List.from(state.constraints)..[index].last = value);
   }
-}
-
-String combinationsEquation(int variables, int constraints, int factorial) {
-  return 'C(n,r) = \\frac{$variables!}{${variables - constraints}!($variables-${variables - constraints})!} = $factorial';
-}
-
-String deleteLastZero(String str) {
-  if (str == 'NaN') {
-    return 'indefinido';
-  }
-  while ((str.endsWith('0') || str.endsWith('.')) && str.length > 1) {
-    if (str.endsWith('.')) {
-      str = str.substring(0, str.length - 1);
-      break;
-    }
-    str = str.substring(0, str.length - 1);
-  }
-  return str;
 }
