@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:linearprogrammingapp/constants/colors.dart';
+import 'package:linearprogrammingapp/utils/extensions.dart';
 
 import '../models/graphic_data_model.dart';
 
@@ -21,19 +22,15 @@ class GraphicProcessPainter extends CustomPainter {
         marksNumX.length,
         (index) => marksNumX[index] % 1 == 0
             ? marksNumX[index].toInt().toString()
-            : deleteLastZero(
-                marksNumX[index].toStringAsFixed(countLeadingZeros(marksNumX[index]) + 2)));
+            : marksNumX[index].toStringAsFixed(countLeadingZeros(marksNumX[index]) + 2).deleteLastZero());
     final marksNumY = List.generate(segmentsY, (index) => stepY * (index + 1));
     final marksStrY = List.generate(
         marksNumY.length,
         (index) => marksNumY[index] % 1 == 0
             ? marksNumY[index].toInt().toString()
-            : deleteLastZero(
-                marksNumY[index].toStringAsFixed(countLeadingZeros(marksNumY[index]) + 2)));
-    final longestNumberY =
-        marksStrY.reduce((value, element) => value.length > element.length ? value : element);
-    final textStyle = theme.textTheme.bodyLarge!
-        .copyWith(fontFamily: 'CMRomanSerif', fontWeight: FontWeight.bold);
+            : marksNumY[index].toStringAsFixed(countLeadingZeros(marksNumY[index]) + 2).deleteLastZero());
+    final longestNumberY = marksStrY.reduce((value, element) => value.length > element.length ? value : element);
+    final textStyle = theme.textTheme.bodyLarge!.copyWith(fontFamily: 'CMRomanSerif', fontWeight: FontWeight.bold);
 
     final textPainterX = TextPainter(
       text: TextSpan(style: textStyle, text: answerData.xLimit.toString()),
@@ -109,10 +106,8 @@ class GraphicProcessPainter extends CustomPainter {
         text: span,
         textDirection: TextDirection.ltr,
       )..layout();
-      textPainter.paint(
-          canvas, Offset(dx - (textPainter.width / 2), size.height - bottomMargin + 4));
-      canvas.drawLine(Offset(dx, size.height - bottomMargin - 1),
-          Offset(dx, size.height - bottomMargin + 4), paint);
+      textPainter.paint(canvas, Offset(dx - (textPainter.width / 2), size.height - bottomMargin + 4));
+      canvas.drawLine(Offset(dx, size.height - bottomMargin - 1), Offset(dx, size.height - bottomMargin + 4), paint);
     }
     //numbers and marks on y-axis
     double dy = size.height - bottomMargin;
@@ -123,8 +118,7 @@ class GraphicProcessPainter extends CustomPainter {
         text: span,
         textDirection: TextDirection.ltr,
       )..layout();
-      textPainter.paint(
-          canvas, Offset(leftMargin - textPainter.width - 5, dy - textPainterY.height / 2));
+      textPainter.paint(canvas, Offset(leftMargin - textPainter.width - 5, dy - textPainterY.height / 2));
       canvas.drawLine(Offset(leftMargin - 1, dy), Offset(leftMargin + 4, dy), paint);
     }
     for (var (i, line) in answerData.restrictions.indexed) {
@@ -162,14 +156,11 @@ class GraphicProcessPainter extends CustomPainter {
     canvas.drawPath(feasibleRegionPath, paint3);
     if (answerData.compliantIntersections.length > 2) {
       final TextSpan span = TextSpan(
-          style: textStyle.copyWith(fontFamily: 'CMRomanSerif', fontWeight: FontWeight.w100),
-          text: 'feasible\nregion');
-      final TextPainter tPFR =
-          TextPainter(text: span, textDirection: TextDirection.ltr, textAlign: TextAlign.center)
-            ..layout();
+          style: textStyle.copyWith(fontFamily: 'CMRomanSerif', fontWeight: FontWeight.w100), text: 'feasible\nregion');
+      final TextPainter tPFR = TextPainter(text: span, textDirection: TextDirection.ltr, textAlign: TextAlign.center)
+        ..layout();
       final Offset centerOfREgion = feasibleRegionPath.getBounds().center;
-      tPFR.paint(canvas,
-          Offset(centerOfREgion.dx - (tPFR.width / 2), centerOfREgion.dy - (tPFR.height / 2)));
+      tPFR.paint(canvas, Offset(centerOfREgion.dx - (tPFR.width / 2), centerOfREgion.dy - (tPFR.height / 2)));
     }
     //draw points of posssible answers
     for (final compliantPoint in answerData.compliantIntersections) {
@@ -212,13 +203,6 @@ class GraphicProcessPainter extends CustomPainter {
     final match = regex.firstMatch(decimalPart);
     int count = match?.group(0)?.length ?? 0;
     return count;
-  }
-
-  String deleteLastZero(String str) {
-    while (str.endsWith('0')) {
-      str = str.substring(0, str.length - 1);
-    }
-    return str;
   }
 
   Color getColor(int index) {

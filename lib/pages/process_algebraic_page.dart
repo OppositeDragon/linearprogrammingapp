@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linearprogrammingapp/constants/numeric.dart';
-import 'package:linearprogrammingapp/controllers/data_entry_controller.dart';
+import 'package:linearprogrammingapp/controllers/algebraic_mode_controller.dart';
 
 import '../widgets/math_tex_algebraic.dart';
 
@@ -13,9 +13,9 @@ class AlgebraicProcessPage extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     final eqStyle = textTheme.bodyMedium!.copyWith(fontSize: 22);
     final colorSheme = Theme.of(context).colorScheme;
-    final dataAlgebraic = ref.watch(dataControllerForAlgebraicProvider.notifier).toStandardForm();
+    final dataAlgebraic = ref.watch(algebraicControllerProvider.notifier).toStandardForm();
     final algebraicAnswer = ref
-        .watch(dataControllerForAlgebraicProvider.notifier)
+        .watch(algebraicControllerProvider.notifier)
         .answerAlgebraic(dataAlgebraic.constraintWithSlack, dataAlgebraic.rightSide);
 
     return Scaffold(
