@@ -13,17 +13,19 @@ class TextFieldWidget extends StatefulWidget {
     this.initialValue,
     this.maxLength,
     this.maxLines = 1,
-    this.required = false,
     this.obscureText = false,
     this.isDense = false,
     this.enabled = true,
     this.readOnly = false,
+    this.autoFocus = false,
+    this.selectAllOnGainFocus = false,
     this.enabledBorderColor,
     this.disabledBorderColor,
     this.errorBorderColor,
     this.focusedBorderColor,
     this.onSave,
     this.onChanged,
+    this.onTap,
     this.onEditingComplete,
     this.onFieldSubmitted,
     this.validator,
@@ -42,19 +44,21 @@ class TextFieldWidget extends StatefulWidget {
   final String? initialValue;
   final int? maxLength;
   final int? maxLines;
-  final bool required;
   final bool obscureText;
   final bool isDense;
   final bool enabled;
   final bool readOnly;
+  final bool selectAllOnGainFocus;
+  final bool autoFocus;
   final Color? enabledBorderColor;
   final Color? disabledBorderColor;
   final Color? errorBorderColor;
   final Color? focusedBorderColor;
   final void Function(String?)? onSave;
   final void Function(String)? onChanged;
-  final void Function()? onEditingComplete;
   final void Function(String)? onFieldSubmitted;
+  final void Function()? onTap;
+  final void Function()? onEditingComplete;
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? formatters;
   final TextEditingController? controller;
@@ -67,17 +71,27 @@ class TextFieldWidget extends StatefulWidget {
 }
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
-  late final TextEditingController textController;
+  late TextEditingController textController;
+  late FocusNode focusNode;
   @override
   void initState() {
     super.initState();
     textController = widget.controller ?? TextEditingController();
+    focusNode = widget.focusNode ?? FocusNode();
+    focusNode.addListener(() {
+      if (widget.selectAllOnGainFocus && focusNode.hasFocus) {
+        textController.selection = TextSelection(baseOffset: 0, extentOffset: textController.text.length);
+      }
+    });
   }
 
   @override
-  void dispose() {
+  dispose() {
     if (widget.controller == null) {
       textController.dispose();
+    }
+    if (widget.focusNode == null) {
+      focusNode.dispose();
     }
     super.dispose();
   }
@@ -89,6 +103,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     });
     final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
+      autofocus: widget.autoFocus,
+      focusNode: focusNode,
+      onTap: widget.onTap,
       keyboardType: widget.keyboardType,
       textInputAction: widget.action,
       style: widget.style,
@@ -96,7 +113,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       enabled: widget.enabled,
       onFieldSubmitted: widget.onFieldSubmitted,
       onEditingComplete: widget.onEditingComplete,
-      focusNode: widget.focusNode,
       controller: textController,
       inputFormatters: widget.formatters,
       maxLength: widget.maxLength,
@@ -147,9 +163,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           borderSide: BorderSide(
             width: 3,
             color: widget.disabledBorderColor ??
-                (colorScheme.brightness == Brightness.light
-                    ? Colors.grey.shade300
-                    : Colors.blueGrey.shade700),
+                (colorScheme.brightness == Brightness.light ? Colors.grey.shade300 : Colors.blueGrey.shade700),
           ),
           borderRadius: BorderRadius.circular(spaceL),
         ),
