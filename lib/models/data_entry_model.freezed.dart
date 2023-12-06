@@ -14,12 +14,173 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-DataEntryModel _$DataEntryModelFromJson(Map<String, dynamic> json) {
+/// @nodoc
+mixin _$EntrySizeState {
+  int get variables => throw _privateConstructorUsedError;
+  int get constraints => throw _privateConstructorUsedError;
+  bool get showProcess => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $EntrySizeStateCopyWith<EntrySizeState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EntrySizeStateCopyWith<$Res> {
+  factory $EntrySizeStateCopyWith(
+          EntrySizeState value, $Res Function(EntrySizeState) then) =
+      _$EntrySizeStateCopyWithImpl<$Res, EntrySizeState>;
+  @useResult
+  $Res call({int variables, int constraints, bool showProcess});
+}
+
+/// @nodoc
+class _$EntrySizeStateCopyWithImpl<$Res, $Val extends EntrySizeState>
+    implements $EntrySizeStateCopyWith<$Res> {
+  _$EntrySizeStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? variables = null,
+    Object? constraints = null,
+    Object? showProcess = null,
+  }) {
+    return _then(_value.copyWith(
+      variables: null == variables
+          ? _value.variables
+          : variables // ignore: cast_nullable_to_non_nullable
+              as int,
+      constraints: null == constraints
+          ? _value.constraints
+          : constraints // ignore: cast_nullable_to_non_nullable
+              as int,
+      showProcess: null == showProcess
+          ? _value.showProcess
+          : showProcess // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$EntrySizeStateImplCopyWith<$Res>
+    implements $EntrySizeStateCopyWith<$Res> {
+  factory _$$EntrySizeStateImplCopyWith(_$EntrySizeStateImpl value,
+          $Res Function(_$EntrySizeStateImpl) then) =
+      __$$EntrySizeStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int variables, int constraints, bool showProcess});
+}
+
+/// @nodoc
+class __$$EntrySizeStateImplCopyWithImpl<$Res>
+    extends _$EntrySizeStateCopyWithImpl<$Res, _$EntrySizeStateImpl>
+    implements _$$EntrySizeStateImplCopyWith<$Res> {
+  __$$EntrySizeStateImplCopyWithImpl(
+      _$EntrySizeStateImpl _value, $Res Function(_$EntrySizeStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? variables = null,
+    Object? constraints = null,
+    Object? showProcess = null,
+  }) {
+    return _then(_$EntrySizeStateImpl(
+      variables: null == variables
+          ? _value.variables
+          : variables // ignore: cast_nullable_to_non_nullable
+              as int,
+      constraints: null == constraints
+          ? _value.constraints
+          : constraints // ignore: cast_nullable_to_non_nullable
+              as int,
+      showProcess: null == showProcess
+          ? _value.showProcess
+          : showProcess // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EntrySizeStateImpl implements _EntrySizeState {
+  const _$EntrySizeStateImpl(
+      {required this.variables,
+      required this.constraints,
+      this.showProcess = false});
+
+  @override
+  final int variables;
+  @override
+  final int constraints;
+  @override
+  @JsonKey()
+  final bool showProcess;
+
+  @override
+  String toString() {
+    return 'EntrySizeState(variables: $variables, constraints: $constraints, showProcess: $showProcess)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EntrySizeStateImpl &&
+            (identical(other.variables, variables) ||
+                other.variables == variables) &&
+            (identical(other.constraints, constraints) ||
+                other.constraints == constraints) &&
+            (identical(other.showProcess, showProcess) ||
+                other.showProcess == showProcess));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, variables, constraints, showProcess);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EntrySizeStateImplCopyWith<_$EntrySizeStateImpl> get copyWith =>
+      __$$EntrySizeStateImplCopyWithImpl<_$EntrySizeStateImpl>(
+          this, _$identity);
+}
+
+abstract class _EntrySizeState implements EntrySizeState {
+  const factory _EntrySizeState(
+      {required final int variables,
+      required final int constraints,
+      final bool showProcess}) = _$EntrySizeStateImpl;
+
+  @override
+  int get variables;
+  @override
+  int get constraints;
+  @override
+  bool get showProcess;
+  @override
+  @JsonKey(ignore: true)
+  _$$EntrySizeStateImplCopyWith<_$EntrySizeStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+DataEntryState _$DataEntryStateFromJson(Map<String, dynamic> json) {
   return _DataEntryModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$DataEntryModel {
+mixin _$DataEntryState {
   Objectives get objective => throw _privateConstructorUsedError;
   List<double> get objectiveFunction => throw _privateConstructorUsedError;
   List<Operators> get operators => throw _privateConstructorUsedError;
@@ -27,15 +188,15 @@ mixin _$DataEntryModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $DataEntryModelCopyWith<DataEntryModel> get copyWith =>
+  $DataEntryStateCopyWith<DataEntryState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DataEntryModelCopyWith<$Res> {
-  factory $DataEntryModelCopyWith(
-          DataEntryModel value, $Res Function(DataEntryModel) then) =
-      _$DataEntryModelCopyWithImpl<$Res, DataEntryModel>;
+abstract class $DataEntryStateCopyWith<$Res> {
+  factory $DataEntryStateCopyWith(
+          DataEntryState value, $Res Function(DataEntryState) then) =
+      _$DataEntryStateCopyWithImpl<$Res, DataEntryState>;
   @useResult
   $Res call(
       {Objectives objective,
@@ -45,9 +206,9 @@ abstract class $DataEntryModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DataEntryModelCopyWithImpl<$Res, $Val extends DataEntryModel>
-    implements $DataEntryModelCopyWith<$Res> {
-  _$DataEntryModelCopyWithImpl(this._value, this._then);
+class _$DataEntryStateCopyWithImpl<$Res, $Val extends DataEntryState>
+    implements $DataEntryStateCopyWith<$Res> {
+  _$DataEntryStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -85,7 +246,7 @@ class _$DataEntryModelCopyWithImpl<$Res, $Val extends DataEntryModel>
 
 /// @nodoc
 abstract class _$$DataEntryModelImplCopyWith<$Res>
-    implements $DataEntryModelCopyWith<$Res> {
+    implements $DataEntryStateCopyWith<$Res> {
   factory _$$DataEntryModelImplCopyWith(_$DataEntryModelImpl value,
           $Res Function(_$DataEntryModelImpl) then) =
       __$$DataEntryModelImplCopyWithImpl<$Res>;
@@ -100,7 +261,7 @@ abstract class _$$DataEntryModelImplCopyWith<$Res>
 
 /// @nodoc
 class __$$DataEntryModelImplCopyWithImpl<$Res>
-    extends _$DataEntryModelCopyWithImpl<$Res, _$DataEntryModelImpl>
+    extends _$DataEntryStateCopyWithImpl<$Res, _$DataEntryModelImpl>
     implements _$$DataEntryModelImplCopyWith<$Res> {
   __$$DataEntryModelImplCopyWithImpl(
       _$DataEntryModelImpl _value, $Res Function(_$DataEntryModelImpl) _then)
@@ -179,7 +340,7 @@ class _$DataEntryModelImpl implements _DataEntryModel {
 
   @override
   String toString() {
-    return 'DataEntryModel(objective: $objective, objectiveFunction: $objectiveFunction, operators: $operators, constraints: $constraints)';
+    return 'DataEntryState(objective: $objective, objectiveFunction: $objectiveFunction, operators: $operators, constraints: $constraints)';
   }
 
   @override
@@ -221,7 +382,7 @@ class _$DataEntryModelImpl implements _DataEntryModel {
   }
 }
 
-abstract class _DataEntryModel implements DataEntryModel {
+abstract class _DataEntryModel implements DataEntryState {
   const factory _DataEntryModel(
       {required final Objectives objective,
       required final List<double> objectiveFunction,
@@ -242,151 +403,5 @@ abstract class _DataEntryModel implements DataEntryModel {
   @override
   @JsonKey(ignore: true)
   _$$DataEntryModelImplCopyWith<_$DataEntryModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$DataModelForGraphic {
-  List<Point<num>> get intersections => throw _privateConstructorUsedError;
-  Point<num> get max => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $DataModelForGraphicCopyWith<DataModelForGraphic> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $DataModelForGraphicCopyWith<$Res> {
-  factory $DataModelForGraphicCopyWith(
-          DataModelForGraphic value, $Res Function(DataModelForGraphic) then) =
-      _$DataModelForGraphicCopyWithImpl<$Res, DataModelForGraphic>;
-  @useResult
-  $Res call({List<Point<num>> intersections, Point<num> max});
-}
-
-/// @nodoc
-class _$DataModelForGraphicCopyWithImpl<$Res, $Val extends DataModelForGraphic>
-    implements $DataModelForGraphicCopyWith<$Res> {
-  _$DataModelForGraphicCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? intersections = null,
-    Object? max = null,
-  }) {
-    return _then(_value.copyWith(
-      intersections: null == intersections
-          ? _value.intersections
-          : intersections // ignore: cast_nullable_to_non_nullable
-              as List<Point<num>>,
-      max: null == max
-          ? _value.max
-          : max // ignore: cast_nullable_to_non_nullable
-              as Point<num>,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$DataModelForGraphicImplCopyWith<$Res>
-    implements $DataModelForGraphicCopyWith<$Res> {
-  factory _$$DataModelForGraphicImplCopyWith(_$DataModelForGraphicImpl value,
-          $Res Function(_$DataModelForGraphicImpl) then) =
-      __$$DataModelForGraphicImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<Point<num>> intersections, Point<num> max});
-}
-
-/// @nodoc
-class __$$DataModelForGraphicImplCopyWithImpl<$Res>
-    extends _$DataModelForGraphicCopyWithImpl<$Res, _$DataModelForGraphicImpl>
-    implements _$$DataModelForGraphicImplCopyWith<$Res> {
-  __$$DataModelForGraphicImplCopyWithImpl(_$DataModelForGraphicImpl _value,
-      $Res Function(_$DataModelForGraphicImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? intersections = null,
-    Object? max = null,
-  }) {
-    return _then(_$DataModelForGraphicImpl(
-      intersections: null == intersections
-          ? _value._intersections
-          : intersections // ignore: cast_nullable_to_non_nullable
-              as List<Point<num>>,
-      max: null == max
-          ? _value.max
-          : max // ignore: cast_nullable_to_non_nullable
-              as Point<num>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$DataModelForGraphicImpl implements _DataModelForGraphic {
-  const _$DataModelForGraphicImpl(
-      {required final List<Point<num>> intersections, required this.max})
-      : _intersections = intersections;
-
-  final List<Point<num>> _intersections;
-  @override
-  List<Point<num>> get intersections {
-    if (_intersections is EqualUnmodifiableListView) return _intersections;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_intersections);
-  }
-
-  @override
-  final Point<num> max;
-
-  @override
-  String toString() {
-    return 'DataModelForGraphic(intersections: $intersections, max: $max)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DataModelForGraphicImpl &&
-            const DeepCollectionEquality()
-                .equals(other._intersections, _intersections) &&
-            (identical(other.max, max) || other.max == max));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_intersections), max);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DataModelForGraphicImplCopyWith<_$DataModelForGraphicImpl> get copyWith =>
-      __$$DataModelForGraphicImplCopyWithImpl<_$DataModelForGraphicImpl>(
-          this, _$identity);
-}
-
-abstract class _DataModelForGraphic implements DataModelForGraphic {
-  const factory _DataModelForGraphic(
-      {required final List<Point<num>> intersections,
-      required final Point<num> max}) = _$DataModelForGraphicImpl;
-
-  @override
-  List<Point<num>> get intersections;
-  @override
-  Point<num> get max;
-  @override
-  @JsonKey(ignore: true)
-  _$$DataModelForGraphicImplCopyWith<_$DataModelForGraphicImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

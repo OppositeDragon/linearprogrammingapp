@@ -4,8 +4,8 @@ import 'package:linearprogrammingapp/models/data_entry_model.dart';
 
 class MockDataMaximize extends DataEntryController {
   @override
-  DataEntryModel build() {
-    return const DataEntryModel(
+  DataEntryState build() {
+    return const DataEntryState(
       objective: Objectives.max,
       objectiveFunction: [180, 90],
       operators: [
@@ -32,8 +32,8 @@ class MockDataMaximize extends DataEntryController {
 
 class MockDataMinimize extends DataEntryController {
   @override
-  DataEntryModel build() {
-    return const DataEntryModel(
+  DataEntryState build() {
+    return const DataEntryState(
       objective: Objectives.min,
       objectiveFunction: [300, 500],
       operators: [

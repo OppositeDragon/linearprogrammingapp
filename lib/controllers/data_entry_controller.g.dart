@@ -6,46 +6,64 @@ part of 'data_entry_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dataEntrySizeControllerHash() =>
-    r'd57777cc42ca2ab711a7eaf477fed2f9612e8ea4';
+String _$entryPageControllerHash() =>
+    r'3d8516d1c971b45f9233feeb9e35a5bb061a297e';
 
-/// See also [DataEntrySizeController].
-@ProviderFor(DataEntrySizeController)
-final dataEntrySizeControllerProvider =
-    NotifierProvider<DataEntrySizeController, DataEntrySize>.internal(
-  DataEntrySizeController.new,
-  name: r'dataEntrySizeControllerProvider',
+/// See also [EntryPageController].
+@ProviderFor(EntryPageController)
+final entryPageControllerProvider =
+    AutoDisposeNotifierProvider<EntryPageController, int>.internal(
+  EntryPageController.new,
+  name: r'entryPageControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$dataEntrySizeControllerHash,
+      : _$entryPageControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$DataEntrySizeController = Notifier<DataEntrySize>;
-String _$processControllerHash() => r'eed574c72011cce3200d442c05d2ef6ba708386a';
+typedef _$EntryPageController = AutoDisposeNotifier<int>;
+String _$entrySizeControllerHash() =>
+    r'904a9b19c3dd8787d9397309df63b2f504b289f9';
 
-/// See also [ProcessController].
-@ProviderFor(ProcessController)
-final processControllerProvider =
-    NotifierProvider<ProcessController, ProcessTypes>.internal(
-  ProcessController.new,
-  name: r'processControllerProvider',
+/// See also [EntrySizeController].
+@ProviderFor(EntrySizeController)
+final entrySizeControllerProvider =
+    AutoDisposeNotifierProvider<EntrySizeController, EntrySizeState>.internal(
+  EntrySizeController.new,
+  name: r'entrySizeControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$processControllerHash,
+      : _$entrySizeControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$ProcessController = Notifier<ProcessTypes>;
+typedef _$EntrySizeController = AutoDisposeNotifier<EntrySizeState>;
+String _$processTypeControllerHash() =>
+    r'fbad088aa832f64bbd577d53ff3b448702639387';
+
+/// See also [ProcessTypeController].
+@ProviderFor(ProcessTypeController)
+final processTypeControllerProvider =
+    AutoDisposeNotifierProvider<ProcessTypeController, ProcessTypes>.internal(
+  ProcessTypeController.new,
+  name: r'processTypeControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$processTypeControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ProcessTypeController = AutoDisposeNotifier<ProcessTypes>;
 String _$dataEntryControllerHash() =>
-    r'186883734c29be12435f31b3a20f27fe381d21a2';
+    r'abe8d2dba4f805925d24bc0287391c1a435db7e5';
 
 /// See also [DataEntryController].
 @ProviderFor(DataEntryController)
 final dataEntryControllerProvider =
-    NotifierProvider<DataEntryController, DataEntryModel>.internal(
+    AutoDisposeNotifierProvider<DataEntryController, DataEntryState>.internal(
   DataEntryController.new,
   name: r'dataEntryControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -55,23 +73,6 @@ final dataEntryControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$DataEntryController = Notifier<DataEntryModel>;
-String _$dataControllerForGraphicHash() =>
-    r'3cf9088adc7f7aec4744b17d21ce4b18b8c8ada2';
-
-/// See also [DataControllerForGraphic].
-@ProviderFor(DataControllerForGraphic)
-final dataControllerForGraphicProvider =
-    NotifierProvider<DataControllerForGraphic, void>.internal(
-  DataControllerForGraphic.new,
-  name: r'dataControllerForGraphicProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$dataControllerForGraphicHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$DataControllerForGraphic = Notifier<void>;
+typedef _$DataEntryController = AutoDisposeNotifier<DataEntryState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

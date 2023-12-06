@@ -48,7 +48,7 @@ void main() {
     test('getItersectionsOnAxes', () {
       final overrides = <Override>[dataEntryControllerProvider.overrideWith(MockDataMaximize.new)];
       final container = createProviderContainer(overrides: overrides);
-      final getIntersectionsOnAxes = container.read(getItersectionsOnAxesProvider);
+      final getIntersectionsOnAxes = container.read(getIntersectionsOnAxesProvider);
       expect(getIntersectionsOnAxes, const [
         Point<double>(0.0, 3.0),
         Point<double>(0.0, 8.0),
@@ -64,7 +64,7 @@ void main() {
 
     test('getBiggestIntersectionsOnAxes', () {
       final overrides = <Override>[
-        getItersectionsOnAxesProvider.overrideWithValue(
+        getIntersectionsOnAxesProvider.overrideWithValue(
           <Point<double>>[
             const Point<double>(0.0, 3.0),
             const Point<double>(0.0, 8.0),
@@ -164,7 +164,7 @@ void main() {
         getBiggestIntersectionsOnAxesProvider.overrideWithValue(
           const Point<double>(6, 8),
         ),
-        getItersectionsOnAxesProvider.overrideWithValue(
+        getIntersectionsOnAxesProvider.overrideWithValue(
           const [
             Point<double>(8.0, 0.0),
             Point<double>(0.0, 6.0),
@@ -195,7 +195,7 @@ void main() {
           Point(6, 1.5),
           Point(8 / 3, 4),
         ]),
-        getItersectionsOnAxesProvider.overrideWithValue(const [
+        getIntersectionsOnAxesProvider.overrideWithValue(const [
           Point<double>(8.0, 0.0),
           Point<double>(0.0, 6.0),
           Point<double>(6.0, 0.0),

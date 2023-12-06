@@ -10,7 +10,7 @@ import 'data_entry_controller.dart';
 part 'graphic_mode_controller.g.dart';
 
 @riverpod
-List<Point<double>> getItersectionsOnAxes(GetItersectionsOnAxesRef ref) {
+List<Point<double>> getIntersectionsOnAxes(GetIntersectionsOnAxesRef ref) {
   final constraints = ref.watch(dataEntryControllerProvider.select((value) => value.constraints));
   final Set<Point<double>> intersections = {};
   for (int i = 0; i < constraints.length; i++) {
@@ -31,7 +31,7 @@ NullablePoints getIntersectionOnAxis(GetIntersectionOnAxisRef ref, double x, dou
 
 @riverpod
 Point<double> getBiggestIntersectionsOnAxes(GetBiggestIntersectionsOnAxesRef ref) {
-  final intersections = ref.watch(getItersectionsOnAxesProvider);
+  final intersections = ref.watch(getIntersectionsOnAxesProvider);
   double maxX = 0, maxY = 0;
   for (final intersection in intersections) {
     if (intersection.x > maxX) maxX = intersection.x;
@@ -85,7 +85,7 @@ PointPair getIntersectionConstraintLimit(
 @riverpod
 List<Point<double>> getIntersectionsBetweenCostraints(GetIntersectionsBetweenCostraintsRef ref) {
   final constraints = ref.watch(dataEntryControllerProvider.select((value) => value.constraints));
-  final axesIntersections = ref.watch(getItersectionsOnAxesProvider);
+  final axesIntersections = ref.watch(getIntersectionsOnAxesProvider);
   final List<Point<double>> vertices = [];
   for (int i = 0; i < constraints.length - 1; i++) {
     final [a1, b1, ..., c1] = constraints[i];
@@ -109,7 +109,7 @@ List<Point<double>> getIntersectionsBetweenCostraints(GetIntersectionsBetweenCos
 List<Point<double>> getIntersectionsOnAxesAndConstraints(
     GetIntersectionsOnAxesAndConstraintsRef ref) {
   final intersectionsBetweenCostraints = ref.watch(getIntersectionsBetweenCostraintsProvider);
-  final intersectionsOnAxes = ref.watch(getItersectionsOnAxesProvider);
+  final intersectionsOnAxes = ref.watch(getIntersectionsOnAxesProvider);
   final Set<Point<double>> allIntersections = {};
   allIntersections.addAll(intersectionsBetweenCostraints);
   allIntersections.addAll(intersectionsOnAxes);
