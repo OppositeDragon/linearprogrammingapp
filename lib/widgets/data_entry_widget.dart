@@ -20,19 +20,21 @@ class DataEntryWidget extends ConsumerStatefulWidget {
 
 class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
   final formKey = GlobalKey<FormState>();
+  final regExpSignNum = RegExp(r'(^\-?\d*\.?\d*)');
+  final invalidMessage = 'Inválido';
   @override
   Widget build(BuildContext context) {
     final dataEntry = ref.watch(dataEntryControllerProvider);
-    final processType = ref.read(processTypeControllerProvider);
+
     final textTheme = Theme.of(context).textTheme;
+
     return Form(
       key: formKey,
       child: CustomScrollView(
         slivers: [
           const SliverToBoxAdapter(child: SizedBox(height: spaceXL)),
           SliverToBoxAdapter(
-            child: Text('Ingreso de datos',
-                textAlign: TextAlign.center, style: textTheme.displaySmall),
+            child: Text('Ingreso de datos', textAlign: TextAlign.center, style: textTheme.displaySmall),
           ),
           const SliverToBoxAdapter(child: SizedBox(height: spaceXXL)),
           SliverToBoxAdapter(
@@ -66,8 +68,7 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
           SliverToBoxAdapter(
             child: Column(
               children: [
-                Text(' Funcion objetivo ',
-                    textAlign: TextAlign.center, style: textTheme.headlineMedium),
+                Text(' Funcion objetivo ', textAlign: TextAlign.center, style: textTheme.headlineMedium),
                 const SizedBox(height: spaceS),
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -88,6 +89,9 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                               initialValue: dataEntry.objectiveFunction[i] == 0
                                   ? ''
                                   : '${dataEntry.objectiveFunction[i]}'.deleteLastZero(),
+                              autoFocus: i == 0 ? true : false,
+                              selectAllOnGainFocus: true,
+                              onEditingComplete: FocusScope.of(context).nextFocus,
                               keyboardType: const TextInputType.numberWithOptions(
                                 decimal: true,
                                 signed: true,
@@ -97,29 +101,21 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                                   return null;
                                 }
                                 if (double.tryParse(value) == null) {
-                                  return 'Valor invalido';
+                                  return invalidMessage;
                                 }
                                 return null;
                               },
                               onSave: (value) {
-                                final number =
-                                    value == null || value.isEmpty ? 0.0 : double.parse(value);
-                                ref
-                                    .read(dataEntryControllerProvider.notifier)
-                                    .updateObjectiveFunction(i, number);
+                                final number = value == null || value.isEmpty ? 0.0 : double.parse(value);
+                                ref.read(dataEntryControllerProvider.notifier).updateObjectiveFunction(i, number);
                               },
-                              formatters: [
-                                FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+\.?[0-9]*')),
-                              ],
+                              formatters: [FilteringTextInputFormatter.allow(regExpSignNum)],
                             ),
                           ),
                           const SizedBox(width: spaceS),
-                          if (i < dataEntry.objectiveFunction.length - 1)
-                            Math.tex(' x_{${i + 1}} + ',
-                                textStyle: textTheme.bodySmall?.copyWith(fontSize: 30))
-                          else
-                            Math.tex(' x_{${i + 1}}',
-                                textStyle: textTheme.bodySmall?.copyWith(fontSize: 30)),
+                          i == dataEntry.objectiveFunction.length - 1
+                              ? Math.tex(' x_{${i + 1}}', textStyle: textTheme.bodySmall?.copyWith(fontSize: 30))
+                              : Math.tex(' x_{${i + 1}} + ', textStyle: textTheme.bodySmall?.copyWith(fontSize: 30)),
                         ],
                       ),
                   ],
@@ -170,36 +166,30 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                                         decimal: true,
                                         signed: true,
                                       ),
+                                      selectAllOnGainFocus: true,
+                                      onEditingComplete: FocusScope.of(context).nextFocus,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return null;
                                         }
                                         if (double.tryParse(value) == null) {
-                                          return 'Valor invalido';
+                                          return invalidMessage;
                                         }
                                         return null;
                                       },
                                       onSave: (value) {
-                                        final number = value == null || value.isEmpty
-                                            ? 0.0
-                                            : double.parse(value);
-                                        ref
-                                            .read(dataEntryControllerProvider.notifier)
-                                            .updateConstraints(i, j, number);
+                                        final number = value == null || value.isEmpty ? 0.0 : double.parse(value);
+                                        ref.read(dataEntryControllerProvider.notifier).updateConstraints(i, j, number);
                                       },
-                                      formatters: [
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp(r'^[0-9]+\.?[0-9]*')),
-                                      ],
+                                      formatters: [FilteringTextInputFormatter.allow(regExpSignNum)],
                                     ),
                                   ),
                                   const SizedBox(width: spaceS),
-                                  if (j < dataEntry.objectiveFunction.length - 1)
-                                    Math.tex(' x_{${j + 1}} + ',
-                                        textStyle: textTheme.bodySmall?.copyWith(fontSize: 25))
-                                  else
-                                    Math.tex(' x_{${j + 1}}\\;\\;\\;',
-                                        textStyle: textTheme.bodySmall?.copyWith(fontSize: 25)),
+                                  j == dataEntry.objectiveFunction.length - 1
+                                      ? Math.tex(' x_{${j + 1}}\\;\\;\\;',
+                                          textStyle: textTheme.bodySmall?.copyWith(fontSize: 25))
+                                      : Math.tex(' x_{${j + 1}} + ',
+                                          textStyle: textTheme.bodySmall?.copyWith(fontSize: 25)),
                                 ],
                               ),
                           ],
@@ -225,9 +215,7 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                           ],
                           onChanged: (constraint) {
                             if (constraint == null) return;
-                            ref
-                                .read(dataEntryControllerProvider.notifier)
-                                .updateOperator(i, constraint);
+                            ref.read(dataEntryControllerProvider.notifier).updateOperator(i, constraint);
                           },
                         ),
                       ),
@@ -240,27 +228,24 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                           initialValue: dataEntry.constraints[i].last == 0
                               ? ''
                               : '${dataEntry.constraints[i].last}'.deleteLastZero(),
-                          keyboardType:
-                              const TextInputType.numberWithOptions(decimal: true, signed: true),
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                          selectAllOnGainFocus: true,
+                          onEditingComplete:
+                              i == dataEntry.constraints.length - 1 ? tryContinue : FocusScope.of(context).nextFocus,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return null;
                             }
                             if (double.tryParse(value) == null) {
-                              return 'Valor invalido';
+                              return invalidMessage;
                             }
                             return null;
                           },
                           onSave: (value) {
-                            final number =
-                                value == null || value.isEmpty ? 0.0 : double.parse(value);
-                            ref
-                                .read(dataEntryControllerProvider.notifier)
-                                .updateConstraintsRS(i, number);
+                            final number = value == null || value.isEmpty ? 0.0 : double.parse(value);
+                            ref.read(dataEntryControllerProvider.notifier).updateConstraintsRS(i, number);
                           },
-                          formatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+\.?[0-9]*')),
-                          ],
+                          formatters: [FilteringTextInputFormatter.allow(regExpSignNum)],
                         ),
                       ),
                     ],
@@ -285,60 +270,7 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                 ),
                 const SizedBox(width: spaceXXXL),
                 FilledButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-                      String mensaje = '';
-                      final dE = ref.read(dataEntryControllerProvider);
-                      if (dE.objectiveFunction.any((element) => element == 0)) {
-                        mensaje +=
-                            'Se debe asignar valor a todas las variables de la funcion objetivo\n\n';
-                      }
-
-                      for (final restriction in dE.constraints) {
-                        if (!restriction
-                            .getRange(0, restriction.length - 1)
-                            .any((element) => element != 0)) {
-                          mensaje +=
-                              'Todas las restircciones deben tener al menos un valor en sus variables\n';
-                          break;
-                        }
-                      }
-                      if (mensaje.isNotEmpty) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Inconsistencia'),
-                              content: Text(mensaje),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        return;
-                      }
-                      switch (processType) {
-                        case ProcessTypes.algebraic:
-                          context.goNamed(routeAlgebraicProcessName);
-                          break;
-                        case ProcessTypes.graphic:
-                          context.goNamed(routeGraphicProcessName);
-                          break;
-                        case ProcessTypes.simplex:
-                          context.goNamed(routeSimplexProcessName);
-                          break;
-                        default:
-                          throw UnsupportedError('Process type not supported');
-                      }
-                    }
-                  },
+                  onPressed: tryContinue,
                   child: const Text('Calcular'),
                 ),
                 const Spacer(),
@@ -349,5 +281,57 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
         ],
       ),
     );
+  }
+
+  void tryContinue() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      String mensaje = '';
+      final dE = ref.read(dataEntryControllerProvider);
+      if (dE.objectiveFunction.any((element) => element == 0)) {
+        mensaje += 'Se debe asignar valor a todas las variables de la funcion objetivo\n\n';
+      }
+
+      for (final restriction in dE.constraints) {
+        if (!restriction.getRange(0, restriction.length - 1).any((element) => element != 0)) {
+          mensaje += 'Todas las restircciones deben tener al menos un valor en sus variables\n';
+          break;
+        }
+      }
+      if (mensaje.isNotEmpty) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Inconsistencia'),
+              content: Text(mensaje),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Ok'),
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+      final processType = ref.read(processTypeControllerProvider);
+      switch (processType) {
+        case ProcessTypes.algebraic:
+          context.goNamed(routeAlgebraicProcessName);
+          break;
+        case ProcessTypes.graphic:
+          context.goNamed(routeGraphicProcessName);
+          break;
+        case ProcessTypes.simplex:
+          context.goNamed(routeSimplexProcessName);
+          break;
+        default:
+          throw UnsupportedError('Process type not supported');
+      }
+    }
   }
 }

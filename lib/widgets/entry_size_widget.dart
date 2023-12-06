@@ -75,6 +75,8 @@ class _EntrySizeWidgetState extends ConsumerState<EntrySizeWidget> {
                     label: "Cantidad de variables de decision",
                     keyboardType: TextInputType.number,
                     formatters: [FilteringTextInputFormatter.digitsOnly],
+                    autoFocus: true,
+                    selectAllOnGainFocus: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Por favor ingrese un valor';
@@ -99,6 +101,7 @@ class _EntrySizeWidgetState extends ConsumerState<EntrySizeWidget> {
                     label: "Cantidad de restricciones",
                     keyboardType: TextInputType.number,
                     formatters: [FilteringTextInputFormatter.digitsOnly],
+                    selectAllOnGainFocus: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Por favor ingrese un valor';
