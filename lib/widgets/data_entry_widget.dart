@@ -4,7 +4,6 @@ import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linearprogrammingapp/constants/routes.dart';
-import 'package:linearprogrammingapp/utils/extensions.dart';
 
 import '../constants/enums.dart';
 import '../constants/numeric.dart';
@@ -19,9 +18,63 @@ class DataEntryWidget extends ConsumerStatefulWidget {
 }
 
 class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
+  final List<TextEditingController> objectiveFunctionControllers = [];
+  final List<List<TextEditingController>> constraintsControllers = [];
   final formKey = GlobalKey<FormState>();
   final regExpSignNum = RegExp(r'(^\-?\d*\.?\d*)');
   final invalidMessage = 'Inválido';
+  @override
+  void initState() {
+    super.initState();
+    final dataEntry = ref.read(dataEntryControllerProvider);
+    //initialize text field controllers for objective function
+    for (int i = 0; i < dataEntry.objectiveFunction.length; i++) {
+      objectiveFunctionControllers.add(TextEditingController()
+        ..text = dataEntry.objectiveFunction[i] == 0 ? '' : '${dataEntry.objectiveFunction[i]}');
+    }
+    //initialize text field controllers for constraints
+    for (int i = 0; i < dataEntry.constraints.length; i++) {
+      constraintsControllers.add([]);
+      for (int j = 0; j < dataEntry.constraints[i].length; j++) {
+        constraintsControllers[i].add(
+            TextEditingController()..text = dataEntry.constraints[i][j] == 0 ? '' : '${dataEntry.constraints[i][j]}');
+      }
+    }
+    //add listeners to objective function controllers, if value can be parsed to double, update on provider.
+    for (int i = 0; i < dataEntry.objectiveFunction.length; i++) {
+      objectiveFunctionControllers[i].addListener(() {
+        final value = objectiveFunctionControllers[i].text;
+        if (double.tryParse(value) != null) {
+          ref.read(dataEntryControllerProvider.notifier).updateObjectiveFunction(i, double.parse(value));
+        }
+      });
+    }
+    //add listeners to constraints controllers, if value can be parsed to double, update on provider.
+    for (int i = 0; i < dataEntry.constraints.length; i++) {
+      for (int j = 0; j < dataEntry.constraints[i].length; j++) {
+        constraintsControllers[i][j].addListener(() {
+          final value = constraintsControllers[i][j].text;
+          if (double.tryParse(value) != null) {
+            ref.read(dataEntryControllerProvider.notifier).updateConstraints(i, j, double.parse(value));
+          }
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    for (final controller in objectiveFunctionControllers) {
+      controller.dispose();
+    }
+    for (final controllerList in constraintsControllers) {
+      for (final controller in controllerList) {
+        controller.dispose();
+      }
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final dataEntry = ref.watch(dataEntryControllerProvider);
@@ -86,9 +139,7 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                             child: TextFieldWidget(
                               label: '',
                               isDense: true,
-                              initialValue: dataEntry.objectiveFunction[i] == 0
-                                  ? ''
-                                  : '${dataEntry.objectiveFunction[i]}'.deleteLastZero(),
+                              controller: objectiveFunctionControllers[i],
                               autoFocus: i == 0 ? true : false,
                               selectAllOnGainFocus: true,
                               onEditingComplete: FocusScope.of(context).nextFocus,
@@ -159,9 +210,7 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                                     child: TextFieldWidget(
                                       label: '',
                                       isDense: true,
-                                      initialValue: dataEntry.constraints[i][j] == 0
-                                          ? ''
-                                          : '${dataEntry.constraints[i][j]}'.deleteLastZero(),
+                                      controller: constraintsControllers[i][j],
                                       keyboardType: const TextInputType.numberWithOptions(
                                         decimal: true,
                                         signed: true,
@@ -225,9 +274,7 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                         child: TextFieldWidget(
                           label: '',
                           isDense: true,
-                          initialValue: dataEntry.constraints[i].last == 0
-                              ? ''
-                              : '${dataEntry.constraints[i].last}'.deleteLastZero(),
+                          controller: constraintsControllers[i].last,
                           keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
                           selectAllOnGainFocus: true,
                           onEditingComplete:
@@ -285,7 +332,6 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
 
   void tryContinue() {
     if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
       String mensaje = '';
       final dE = ref.read(dataEntryControllerProvider);
       if (dE.objectiveFunction.any((element) => element == 0)) {
@@ -294,7 +340,7 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
 
       for (final restriction in dE.constraints) {
         if (!restriction.getRange(0, restriction.length - 1).any((element) => element != 0)) {
-          mensaje += 'Todas las restircciones deben tener al menos un valor en sus variables\n';
+          mensaje += 'Todas las restricciones deben tener valor en por lo menos una de sus variables\n';
           break;
         }
       }

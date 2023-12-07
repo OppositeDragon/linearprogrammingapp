@@ -30,7 +30,7 @@ class TextFieldWidget extends StatefulWidget {
     this.onFieldSubmitted,
     this.validator,
     this.formatters,
-    this.controller,
+    required this.controller,
     this.prefixIcon,
     this.suffixIcon,
     this.keyboardType,
@@ -61,7 +61,7 @@ class TextFieldWidget extends StatefulWidget {
   final void Function()? onEditingComplete;
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? formatters;
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
@@ -71,25 +71,20 @@ class TextFieldWidget extends StatefulWidget {
 }
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
-  late TextEditingController textController;
-  late FocusNode focusNode;
+  late final FocusNode focusNode;
   @override
   void initState() {
     super.initState();
-    textController = widget.controller ?? TextEditingController();
     focusNode = widget.focusNode ?? FocusNode();
     focusNode.addListener(() {
       if (widget.selectAllOnGainFocus && focusNode.hasFocus) {
-        textController.selection = TextSelection(baseOffset: 0, extentOffset: textController.text.length);
+        widget.controller.selection = TextSelection(baseOffset: 0, extentOffset: widget.controller.text.length);
       }
     });
   }
 
   @override
   dispose() {
-    if (widget.controller == null) {
-      textController.dispose();
-    }
     if (widget.focusNode == null) {
       focusNode.dispose();
     }
@@ -99,7 +94,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     Future(() {
-      textController.value = textController.value.copyWith(text: widget.initialValue);
+      widget.controller.value = widget.controller.value.copyWith(text: widget.initialValue);
     });
     final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
@@ -113,7 +108,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       enabled: widget.enabled,
       onFieldSubmitted: widget.onFieldSubmitted,
       onEditingComplete: widget.onEditingComplete,
-      controller: textController,
+      controller: widget.controller,
       inputFormatters: widget.formatters,
       maxLength: widget.maxLength,
       maxLines: widget.maxLines,
