@@ -2,6 +2,16 @@ import 'package:linearprogrammingapp/constants/enums.dart';
 import 'package:linearprogrammingapp/controllers/data_entry_controller.dart';
 import 'package:linearprogrammingapp/models/data_entry_model.dart';
 
+class MockSizeEntryNonSimplex extends EntrySizeController {
+  @override
+  EntrySizeState build() => const EntrySizeState(variables: 2, constraints: 3, showProcess: true);
+}
+
+class MockSizeEntrySimplex extends EntrySizeController {
+  @override
+  EntrySizeState build() => const EntrySizeState(variables: 3, constraints: 3, showProcess: false);
+}
+
 class MockDataMaximize extends DataEntryController {
   @override
   DataEntryState build() {
