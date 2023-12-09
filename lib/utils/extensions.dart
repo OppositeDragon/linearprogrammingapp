@@ -1,5 +1,28 @@
 import 'dart:math';
 
+extension IntExtension<T extends num> on num {
+  String getSign() {
+    return this < 0 ? '-' : '+';
+  }
+
+  int factorial() {
+    if (this is int) {
+      int number = this as int;
+      if (number == 0) {
+        return 1;
+      }
+      int result = number;
+      number--;
+      while (number > 1) {
+        result *= number;
+        number--;
+      }
+      return result;
+    }
+    throw Exception('must be int');
+  }
+}
+
 extension DoubleExtension on double {
   double roundToNextMagnitude() {
     int magnitude;
@@ -22,7 +45,7 @@ extension StringExtension on String {
   String deleteLastZero() {
     String str = this;
     if (str == 'NaN') {
-      return 'indefinido';
+      return 'undefined';
     }
     while ((str.endsWith('0') || str.endsWith('.')) && str.length > 1) {
       if (str.endsWith('.')) {
@@ -32,5 +55,19 @@ extension StringExtension on String {
       str = str.substring(0, str.length - 1);
     }
     return str;
+  }
+}
+
+extension ListExtension<T> on List<List<T>> {
+  List<List<T>> transpose() {
+    List<List<T>> transposed = [];
+    for (var i = 0; i < this[0].length; i++) {
+      List<T> aux = [];
+      for (var j = 0; j < length; j++) {
+        aux.add(this[j][i]);
+      }
+      transposed.add(aux);
+    }
+    return transposed;
   }
 }
