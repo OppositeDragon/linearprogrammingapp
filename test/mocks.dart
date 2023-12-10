@@ -6,7 +6,6 @@ class MockSizeEntryNonSimplex extends EntrySizeController {
   @override
   EntrySizeState build() => const EntrySizeState(variables: 2, constraints: 3, showProcess: true);
 }
-
 class MockSizeEntrySimplex extends EntrySizeController {
   @override
   EntrySizeState build() => const EntrySizeState(variables: 3, constraints: 3, showProcess: false);
