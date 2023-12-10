@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
+import 'package:linearprogrammingapp/constants/enums.dart';
 import 'package:linearprogrammingapp/controllers/data_entry_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -40,8 +41,7 @@ List<List<double>> toTabularForm(ToTabularFormRef ref) {
   }
   //fills the slack variables
   for (var i = 0; i < dataEntry.constraints.length; i++) {
-    //TODO: change sign of slack according to operator
-    tableu[i + 1][dataEntry.constraints.first.length + i] = 1;
+    tableu[i + 1][dataEntry.constraints.first.length + i] = dataEntry.operators[i] == Operators.leq ? -1 : 1;
   }
   // debugPrint('tableuSize: $tableuSize');
   // debugPrint('tableu: $tableu');
