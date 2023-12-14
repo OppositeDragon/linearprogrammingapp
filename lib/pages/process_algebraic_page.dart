@@ -20,18 +20,11 @@ class AlgebraicProcessPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Linear Programming App'),
+        title: const Text('Algebraic Method - Linear Programming App'),
         centerTitle: true,
       ),
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(spaceL),
-              child: Text('Método Algebraico',
-                  textAlign: TextAlign.center, style: textTheme.displaySmall),
-            ),
-          ),
           SliverToBoxAdapter(
             child: Center(
               child: SingleChildScrollView(
