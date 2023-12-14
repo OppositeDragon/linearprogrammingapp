@@ -6,7 +6,7 @@ part of 'simplex_mode_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$calculateSizeHash() => r'cc3b4c462250c55d4219093e11f6d54394ca4be9';
+String _$calculateSizeHash() => r'075fb591396d9ef9cfd18824e82777d71e1dd9c6';
 
 /// See also [calculateSize].
 @ProviderFor(calculateSize)
@@ -21,7 +21,7 @@ final calculateSizeProvider = AutoDisposeProvider<Point<int>>.internal(
 );
 
 typedef CalculateSizeRef = AutoDisposeProviderRef<Point<int>>;
-String _$toTabularFormHash() => r'c9296280be18ab4ca144238373d013544606051e';
+String _$toTabularFormHash() => r'f045a23942b82b08d7f168e83a493d65bad62b22';
 
 /// See also [toTabularForm].
 @ProviderFor(toTabularForm)
@@ -36,156 +36,21 @@ final toTabularFormProvider = AutoDisposeProvider<List<List<double>>>.internal(
 );
 
 typedef ToTabularFormRef = AutoDisposeProviderRef<List<List<double>>>;
-String _$findPivotCoordinatesHash() =>
-    r'838cb09bab18004aec2c0a3ab01abd240aa40082';
+String _$simplexControllerHash() => r'8c5bcd554ce0fa7cf37ac0fa55833ad73f416f1d';
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
+/// See also [SimplexController].
+@ProviderFor(SimplexController)
+final simplexControllerProvider =
+    AutoDisposeNotifierProvider<SimplexController, void>.internal(
+  SimplexController.new,
+  name: r'simplexControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$simplexControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [findPivotCoordinates].
-@ProviderFor(findPivotCoordinates)
-const findPivotCoordinatesProvider = FindPivotCoordinatesFamily();
-
-/// See also [findPivotCoordinates].
-class FindPivotCoordinatesFamily extends Family<Point<int>> {
-  /// See also [findPivotCoordinates].
-  const FindPivotCoordinatesFamily();
-
-  /// See also [findPivotCoordinates].
-  FindPivotCoordinatesProvider call(
-    List<List<double>> tableu,
-  ) {
-    return FindPivotCoordinatesProvider(
-      tableu,
-    );
-  }
-
-  @override
-  FindPivotCoordinatesProvider getProviderOverride(
-    covariant FindPivotCoordinatesProvider provider,
-  ) {
-    return call(
-      provider.tableu,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'findPivotCoordinatesProvider';
-}
-
-/// See also [findPivotCoordinates].
-class FindPivotCoordinatesProvider extends AutoDisposeProvider<Point<int>> {
-  /// See also [findPivotCoordinates].
-  FindPivotCoordinatesProvider(
-    List<List<double>> tableu,
-  ) : this._internal(
-          (ref) => findPivotCoordinates(
-            ref as FindPivotCoordinatesRef,
-            tableu,
-          ),
-          from: findPivotCoordinatesProvider,
-          name: r'findPivotCoordinatesProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$findPivotCoordinatesHash,
-          dependencies: FindPivotCoordinatesFamily._dependencies,
-          allTransitiveDependencies:
-              FindPivotCoordinatesFamily._allTransitiveDependencies,
-          tableu: tableu,
-        );
-
-  FindPivotCoordinatesProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.tableu,
-  }) : super.internal();
-
-  final List<List<double>> tableu;
-
-  @override
-  Override overrideWith(
-    Point<int> Function(FindPivotCoordinatesRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: FindPivotCoordinatesProvider._internal(
-        (ref) => create(ref as FindPivotCoordinatesRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        tableu: tableu,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeProviderElement<Point<int>> createElement() {
-    return _FindPivotCoordinatesProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is FindPivotCoordinatesProvider && other.tableu == tableu;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, tableu.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-mixin FindPivotCoordinatesRef on AutoDisposeProviderRef<Point<int>> {
-  /// The parameter `tableu` of this provider.
-  List<List<double>> get tableu;
-}
-
-class _FindPivotCoordinatesProviderElement
-    extends AutoDisposeProviderElement<Point<int>>
-    with FindPivotCoordinatesRef {
-  _FindPivotCoordinatesProviderElement(super.provider);
-
-  @override
-  List<List<double>> get tableu =>
-      (origin as FindPivotCoordinatesProvider).tableu;
-}
+typedef _$SimplexController = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
