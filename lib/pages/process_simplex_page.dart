@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:linearprogrammingapp/constants/numeric.dart';
-import 'package:linearprogrammingapp/controllers/simplex_mode_controller.dart';
+
+import '../constants/numeric.dart';
+import '../controllers/simplex_mode_controller.dart';
+import '../widgets/gobackgohome_buttons_widget.dart';
 
 class SimplexProcessPage extends ConsumerWidget {
   const SimplexProcessPage({super.key});
@@ -12,6 +14,7 @@ class SimplexProcessPage extends ConsumerWidget {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
     final simplexData = ref.read(simplexControllerProvider.notifier).getAnswer();
+    
     Color? cellColor(int i, int j, int k) {
       if (i == simplexData.tableus.length - 1 && j == 0 && k == simplexData.tableus[i][j].length - 1) {
         return Colors.tealAccent.withOpacity(0.25);
@@ -27,8 +30,6 @@ class SimplexProcessPage extends ConsumerWidget {
       return null;
     }
 
-    print(
-        'tableus lenght: ${simplexData.tableus.length}, pivotsCoordinates lenght: ${simplexData.pivotsCoordinates.length}');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Simplex Method - Linear Programming App'),
@@ -83,26 +84,28 @@ class SimplexProcessPage extends ConsumerWidget {
                         rows: [
                           for (int j = 0; j < simplexData.tableus[i].length; j++)
                             DataRow(
-                              //selected: i != simplexData.tableus.length - 1 && simplexData.pivotsCoordinates[i].y == j,
                               cells: [
                                 for (int k = 0; k < simplexData.tableus[i][j].length; k++)
                                   DataCell(
                                     DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          color: cellColor(i, j, k),
-                                        ),
-                                        child: SizedBox.expand(
-                                            child: Padding(
+                                      decoration: BoxDecoration(
+                                        color: cellColor(i, j, k),
+                                      ),
+                                      child: SizedBox.expand(
+                                        child: Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: spaceXXXL),
                                           child: Center(
-                                              child: Text(
-                                            simplexData.tableus[i][j][k].toString(),
-                                            style: textTheme.bodyLarge!.copyWith(
-                                              fontFamily: 'CMRomanSerif',
-                                              fontWeight: FontWeight.bold,
+                                            child: Text(
+                                              simplexData.tableus[i][j][k].toString(),
+                                              style: textTheme.bodyLarge!.copyWith(
+                                                fontFamily: 'CMRomanSerif',
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
-                                          )),
-                                        ))),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                               ],
                             ),
@@ -113,6 +116,13 @@ class SimplexProcessPage extends ConsumerWidget {
                 ),
               ),
             ),
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(
+              horizontal: spaceXXL,
+              vertical: spaceXL,
+            ),
+            sliver: SliverToBoxAdapter(child: GoBackGoHomeButtons()),
+          ),
         ],
       ),
     );
