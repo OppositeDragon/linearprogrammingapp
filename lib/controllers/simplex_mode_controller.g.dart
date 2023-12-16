@@ -21,7 +21,7 @@ final calculateSizeProvider = AutoDisposeProvider<Point<int>>.internal(
 );
 
 typedef CalculateSizeRef = AutoDisposeProviderRef<Point<int>>;
-String _$toTabularFormHash() => r'f045a23942b82b08d7f168e83a493d65bad62b22';
+String _$toTabularFormHash() => r'c52e7ebcfcdf25d6d7a0ec7a1cbbf12572c7229c';
 
 /// See also [toTabularForm].
 @ProviderFor(toTabularForm)
@@ -36,7 +36,7 @@ final toTabularFormProvider = AutoDisposeProvider<List<List<double>>>.internal(
 );
 
 typedef ToTabularFormRef = AutoDisposeProviderRef<List<List<double>>>;
-String _$simplexControllerHash() => r'8c5bcd554ce0fa7cf37ac0fa55833ad73f416f1d';
+String _$simplexControllerHash() => r'd8bf81acc4da2bab6ee10a8ef8293b6fdc4679a5';
 
 /// See also [SimplexController].
 @ProviderFor(SimplexController)

@@ -41,7 +41,7 @@ List<List<double>> toTabularForm(ToTabularFormRef ref) {
   }
   //fills the slack variables
   for (var i = 0; i < dataEntry.constraints.length; i++) {
-    tableu[i + 1][dataEntry.constraints.first.length + i - 1] = dataEntry.operators[i] == Operators.leq ? 1 : -1;
+    tableu[i + 1][dataEntry.constraints.first.length + i - 1] = dataEntry.operators[i] == Operators.geq ? -1 : 1;
   }
   // debugPrint('tableuSize: $tableuSize');
   // debugPrint('tableu: $tableu');
@@ -94,8 +94,8 @@ class SimplexController extends _$SimplexController {
   }
 
   Point<int> findPivotCoordinates(List<List<double>> tableu) {
-    // final tableu = ref.watch(toTabularFormProvider);
     final smallestColumnPosition = tableu[0].indexOf(tableu[0].reduce(min));
+    if (smallestColumnPosition < 0) return const Point<int>(-1, -1);
     int smallestRowPosition = -1;
     double smallestresult = -1;
     for (var i = 0; i < tableu.length; i++) {
@@ -116,22 +116,32 @@ class SimplexController extends _$SimplexController {
   }
 
   List<List<double>> formNextTableu(Point<int> pivotCoordinates) {
-    final List<List<double>> currentTableu = _followingTableus.last;
+    final List<List<double>> previousTableu = _followingTableus.last;
     final List<List<double>> nextTableu = List.generate(
-      currentTableu.length,
-      (index) => List.generate(currentTableu[index].length, (index) => 0.0),
+      previousTableu.length,
+      (index) => List.generate(previousTableu[index].length, (index) => 0.0),
     );
-    final double pivotValue = currentTableu[pivotCoordinates.y][pivotCoordinates.x];
+    final double pivotValue = previousTableu[pivotCoordinates.y][pivotCoordinates.x];
     //fills the pivot row
-    for (var i = 0; i < currentTableu[pivotCoordinates.y].length; i++) {
-      nextTableu[pivotCoordinates.y][i] = currentTableu[pivotCoordinates.y][i] / pivotValue;
+    for (var i = 0; i < previousTableu[pivotCoordinates.y].length; i++) {
+      nextTableu[pivotCoordinates.y][i] = previousTableu[pivotCoordinates.y][i] / pivotValue;
     }
-    //fills the pivot column
-    for (var i = 0; i < currentTableu.length; i++) {
+    for (var i = 0; i < previousTableu.length; i++) {
       if (i != pivotCoordinates.y) {
-        final double pivotColumnValue = currentTableu[i][pivotCoordinates.x];
-        for (var j = 0; j < currentTableu[i].length; j++) {
-          nextTableu[i][j] = currentTableu[i][j] - pivotColumnValue * nextTableu[pivotCoordinates.y][j];
+        //get coeficient of the pivot column
+        final pivotColumnValue = previousTableu[i][pivotCoordinates.x];
+        //calculate the values for the new row
+        for (var j = 0; j < previousTableu[i].length; j++) {
+          final double previousColumnValue = previousTableu[i][j];
+          final double nextColumnValue = nextTableu[pivotCoordinates.y][j];
+          final double product = (pivotColumnValue).abs() * nextColumnValue;
+          late final double valueforNextTableu;
+          if (pivotColumnValue < 0) {
+            valueforNextTableu = previousColumnValue + product;
+          } else {
+            valueforNextTableu = previousColumnValue - product;
+          }
+          nextTableu[i][j] = valueforNextTableu;
         }
       }
     }
