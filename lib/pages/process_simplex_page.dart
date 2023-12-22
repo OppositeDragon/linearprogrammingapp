@@ -41,11 +41,13 @@ class SimplexProcessPage extends ConsumerWidget {
           const SliverToBoxAdapter(
             child: Text(''),
           ),
-          for (int i = 0; i < simplexData.tableaus.length; i++)
-            SliverPadding(
-              padding: const EdgeInsets.all(spaceL),
-              sliver: SliverToBoxAdapter(
-                child: Center(
+          SliverList.builder(
+            itemCount: simplexData.tableaus.length,
+            itemBuilder: (context, i) {
+              return Center(
+                child: SingleChildScrollView(
+                  primary: false,
+                  scrollDirection: Axis.horizontal,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -53,7 +55,9 @@ class SimplexProcessPage extends ConsumerWidget {
                         padding: const EdgeInsets.all(spaceS),
                         child: Text(
                           "Paso ${i + 1}",
-                          style: textTheme.displaySmall!.copyWith(fontFamily: 'CMClassic', fontWeight: FontWeight.bold),
+                          style: textTheme.displaySmall!.copyWith(
+                            fontFamily: 'CMClassic', //fontWeight: FontWeight.bold
+                          ),
                         ),
                       ),
                       DataTable(
@@ -69,7 +73,7 @@ class SimplexProcessPage extends ConsumerWidget {
                               child: Center(
                                 child: j == simplexData.tableaus[i].first.length - 2
                                     ? Text(
-                                        ' Lado \n  derecho  ',
+                                        ' Lado\n  derecho  ',
                                         textAlign: TextAlign.center,
                                         style: textTheme.titleMedium!.copyWith(
                                           fontFamily: 'CMRomanSerif',
@@ -98,8 +102,11 @@ class SimplexProcessPage extends ConsumerWidget {
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: spaceXXXL),
                                           child: Center(
-                                            child: Text(
-                                              simplexData.tableaus[i][j][k].toString(),
+                                            child: k == 0
+                                                ? Math.tex(simplexData.tableaus[i][j][k],
+                                                    textStyle: textTheme.titleLarge)
+                                                : Text(
+                                                    simplexData.tableaus[i][j][k],
                                               style: textTheme.bodyLarge!.copyWith(
                                                 fontFamily: 'CMRomanSerif',
                                                 fontWeight: FontWeight.bold,
@@ -117,8 +124,9 @@ class SimplexProcessPage extends ConsumerWidget {
                     ],
                   ),
                 ),
-              ),
-            ),
+              );
+            },
+          ),
           const SliverPadding(
             padding: EdgeInsets.symmetric(
               horizontal: spaceXXL,
