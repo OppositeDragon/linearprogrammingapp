@@ -13,13 +13,14 @@ class SimplexProcessPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final a = ref.read(simplexControllerProvider);
     final simplexData = ref.read(simplexControllerProvider.notifier).getAnswer();
-    
+
     Color? cellColor(int i, int j, int k) {
-      if (i == simplexData.tableus.length - 1 && j == 0 && k == simplexData.tableus[i][j].length - 1) {
+      if (i == simplexData.tableaus.length - 1 && j == 0 && k == simplexData.tableaus[i][j].length - 1) {
         return Colors.tealAccent.withOpacity(0.25);
       }
-      if (i != simplexData.tableus.length - 1) {
+      if (i != simplexData.tableaus.length - 1) {
         if (simplexData.pivotsCoordinates[i].y == j && simplexData.pivotsCoordinates[i].x == k) {
           return colorScheme.tertiary.withOpacity(0.2);
         }
@@ -40,7 +41,7 @@ class SimplexProcessPage extends ConsumerWidget {
           const SliverToBoxAdapter(
             child: Text(''),
           ),
-          for (int i = 0; i < simplexData.tableus.length; i++)
+          for (int i = 0; i < simplexData.tableaus.length; i++)
             SliverPadding(
               padding: const EdgeInsets.all(spaceL),
               sliver: SliverToBoxAdapter(
@@ -61,13 +62,15 @@ class SimplexProcessPage extends ConsumerWidget {
                         checkboxHorizontalMargin: 0,
                         horizontalMargin: 0,
                         columns: [
-                          for (int j = 0; j < simplexData.tableus[i].first.length; j++)
+                          const DataColumn(label: Text('')),
+                          for (int j = 0; j < simplexData.tableaus[i].first.length - 1; j++)
                             DataColumn(
                                 label: Expanded(
                               child: Center(
-                                child: j == simplexData.tableus[i].first.length - 1
+                                child: j == simplexData.tableaus[i].first.length - 2
                                     ? Text(
-                                        ' Lado derecho  ',
+                                        ' Lado \n  derecho  ',
+                                        textAlign: TextAlign.center,
                                         style: textTheme.titleMedium!.copyWith(
                                           fontFamily: 'CMRomanSerif',
                                           fontWeight: FontWeight.bold,
@@ -82,10 +85,10 @@ class SimplexProcessPage extends ConsumerWidget {
                             )),
                         ],
                         rows: [
-                          for (int j = 0; j < simplexData.tableus[i].length; j++)
+                          for (int j = 0; j < simplexData.tableaus[i].length; j++)
                             DataRow(
                               cells: [
-                                for (int k = 0; k < simplexData.tableus[i][j].length; k++)
+                                for (int k = 0; k < simplexData.tableaus[i][j].length; k++)
                                   DataCell(
                                     DecoratedBox(
                                       decoration: BoxDecoration(
@@ -96,7 +99,7 @@ class SimplexProcessPage extends ConsumerWidget {
                                           padding: const EdgeInsets.symmetric(horizontal: spaceXXXL),
                                           child: Center(
                                             child: Text(
-                                              simplexData.tableus[i][j][k].toString(),
+                                              simplexData.tableaus[i][j][k].toString(),
                                               style: textTheme.bodyLarge!.copyWith(
                                                 fontFamily: 'CMRomanSerif',
                                                 fontWeight: FontWeight.bold,

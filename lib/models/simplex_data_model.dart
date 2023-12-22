@@ -10,7 +10,16 @@ class SimplexDataModel with _$SimplexDataModel {
   const SimplexDataModel._();
   const factory SimplexDataModel({
     required SimplexStatus status,
-    required List<List<List<double>>> tableus,
+    required List<List<List<String>>> tableaus,
     required List<Point<int>> pivotsCoordinates,
   }) = _SimplexDataModel;
+}
+
+@freezed
+class TabularFormInformation with _$TabularFormInformation {
+  const TabularFormInformation._();
+  const factory TabularFormInformation({
+    required List<List<double>> matrix,
+    required List<String> basicVariables,
+  }) = _TabularFormInformation;
 }

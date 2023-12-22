@@ -6,7 +6,7 @@ part of 'simplex_mode_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$calculateSizeHash() => r'075fb591396d9ef9cfd18824e82777d71e1dd9c6';
+String _$calculateSizeHash() => r'8e9e1488aced6af2e612513e35f4413c2671f1b1';
 
 /// See also [calculateSize].
 @ProviderFor(calculateSize)
@@ -21,11 +21,12 @@ final calculateSizeProvider = AutoDisposeProvider<Point<int>>.internal(
 );
 
 typedef CalculateSizeRef = AutoDisposeProviderRef<Point<int>>;
-String _$toTabularFormHash() => r'c52e7ebcfcdf25d6d7a0ec7a1cbbf12572c7229c';
+String _$toTabularFormHash() => r'4288a17c9b243d044f6b3b06842cfadc1f668265';
 
 /// See also [toTabularForm].
 @ProviderFor(toTabularForm)
-final toTabularFormProvider = AutoDisposeProvider<List<List<double>>>.internal(
+final toTabularFormProvider =
+    AutoDisposeProvider<(TabularFormInformation, List<int>)>.internal(
   toTabularForm,
   name: r'toTabularFormProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -35,8 +36,9 @@ final toTabularFormProvider = AutoDisposeProvider<List<List<double>>>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef ToTabularFormRef = AutoDisposeProviderRef<List<List<double>>>;
-String _$simplexControllerHash() => r'd8bf81acc4da2bab6ee10a8ef8293b6fdc4679a5';
+typedef ToTabularFormRef
+    = AutoDisposeProviderRef<(TabularFormInformation, List<int>)>;
+String _$simplexControllerHash() => r'885b019f72423ff1e6551e4880535c371620f1d5';
 
 /// See also [SimplexController].
 @ProviderFor(SimplexController)

@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SimplexDataModel {
   SimplexStatus get status => throw _privateConstructorUsedError;
-  List<List<List<double>>> get tableus => throw _privateConstructorUsedError;
+  List<List<List<String>>> get tableaus => throw _privateConstructorUsedError;
   List<Point<int>> get pivotsCoordinates => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -33,7 +33,7 @@ abstract class $SimplexDataModelCopyWith<$Res> {
   @useResult
   $Res call(
       {SimplexStatus status,
-      List<List<List<double>>> tableus,
+      List<List<List<String>>> tableaus,
       List<Point<int>> pivotsCoordinates});
 }
 
@@ -51,7 +51,7 @@ class _$SimplexDataModelCopyWithImpl<$Res, $Val extends SimplexDataModel>
   @override
   $Res call({
     Object? status = null,
-    Object? tableus = null,
+    Object? tableaus = null,
     Object? pivotsCoordinates = null,
   }) {
     return _then(_value.copyWith(
@@ -59,10 +59,10 @@ class _$SimplexDataModelCopyWithImpl<$Res, $Val extends SimplexDataModel>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as SimplexStatus,
-      tableus: null == tableus
-          ? _value.tableus
-          : tableus // ignore: cast_nullable_to_non_nullable
-              as List<List<List<double>>>,
+      tableaus: null == tableaus
+          ? _value.tableaus
+          : tableaus // ignore: cast_nullable_to_non_nullable
+              as List<List<List<String>>>,
       pivotsCoordinates: null == pivotsCoordinates
           ? _value.pivotsCoordinates
           : pivotsCoordinates // ignore: cast_nullable_to_non_nullable
@@ -81,7 +81,7 @@ abstract class _$$SimplexDataModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {SimplexStatus status,
-      List<List<List<double>>> tableus,
+      List<List<List<String>>> tableaus,
       List<Point<int>> pivotsCoordinates});
 }
 
@@ -97,7 +97,7 @@ class __$$SimplexDataModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
-    Object? tableus = null,
+    Object? tableaus = null,
     Object? pivotsCoordinates = null,
   }) {
     return _then(_$SimplexDataModelImpl(
@@ -105,10 +105,10 @@ class __$$SimplexDataModelImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as SimplexStatus,
-      tableus: null == tableus
-          ? _value._tableus
-          : tableus // ignore: cast_nullable_to_non_nullable
-              as List<List<List<double>>>,
+      tableaus: null == tableaus
+          ? _value._tableaus
+          : tableaus // ignore: cast_nullable_to_non_nullable
+              as List<List<List<String>>>,
       pivotsCoordinates: null == pivotsCoordinates
           ? _value._pivotsCoordinates
           : pivotsCoordinates // ignore: cast_nullable_to_non_nullable
@@ -122,20 +122,20 @@ class __$$SimplexDataModelImplCopyWithImpl<$Res>
 class _$SimplexDataModelImpl extends _SimplexDataModel {
   const _$SimplexDataModelImpl(
       {required this.status,
-      required final List<List<List<double>>> tableus,
+      required final List<List<List<String>>> tableaus,
       required final List<Point<int>> pivotsCoordinates})
-      : _tableus = tableus,
+      : _tableaus = tableaus,
         _pivotsCoordinates = pivotsCoordinates,
         super._();
 
   @override
   final SimplexStatus status;
-  final List<List<List<double>>> _tableus;
+  final List<List<List<String>>> _tableaus;
   @override
-  List<List<List<double>>> get tableus {
-    if (_tableus is EqualUnmodifiableListView) return _tableus;
+  List<List<List<String>>> get tableaus {
+    if (_tableaus is EqualUnmodifiableListView) return _tableaus;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_tableus);
+    return EqualUnmodifiableListView(_tableaus);
   }
 
   final List<Point<int>> _pivotsCoordinates;
@@ -149,7 +149,7 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
 
   @override
   String toString() {
-    return 'SimplexDataModel(status: $status, tableus: $tableus, pivotsCoordinates: $pivotsCoordinates)';
+    return 'SimplexDataModel(status: $status, tableaus: $tableaus, pivotsCoordinates: $pivotsCoordinates)';
   }
 
   @override
@@ -158,7 +158,7 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
         (other.runtimeType == runtimeType &&
             other is _$SimplexDataModelImpl &&
             (identical(other.status, status) || other.status == status) &&
-            const DeepCollectionEquality().equals(other._tableus, _tableus) &&
+            const DeepCollectionEquality().equals(other._tableaus, _tableaus) &&
             const DeepCollectionEquality()
                 .equals(other._pivotsCoordinates, _pivotsCoordinates));
   }
@@ -167,7 +167,7 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
   int get hashCode => Object.hash(
       runtimeType,
       status,
-      const DeepCollectionEquality().hash(_tableus),
+      const DeepCollectionEquality().hash(_tableaus),
       const DeepCollectionEquality().hash(_pivotsCoordinates));
 
   @JsonKey(ignore: true)
@@ -181,7 +181,7 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
 abstract class _SimplexDataModel extends SimplexDataModel {
   const factory _SimplexDataModel(
           {required final SimplexStatus status,
-          required final List<List<List<double>>> tableus,
+          required final List<List<List<String>>> tableaus,
           required final List<Point<int>> pivotsCoordinates}) =
       _$SimplexDataModelImpl;
   const _SimplexDataModel._() : super._();
@@ -189,11 +189,173 @@ abstract class _SimplexDataModel extends SimplexDataModel {
   @override
   SimplexStatus get status;
   @override
-  List<List<List<double>>> get tableus;
+  List<List<List<String>>> get tableaus;
   @override
   List<Point<int>> get pivotsCoordinates;
   @override
   @JsonKey(ignore: true)
   _$$SimplexDataModelImplCopyWith<_$SimplexDataModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$TabularFormInformation {
+  List<List<double>> get matrix => throw _privateConstructorUsedError;
+  List<String> get basicVariables => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $TabularFormInformationCopyWith<TabularFormInformation> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TabularFormInformationCopyWith<$Res> {
+  factory $TabularFormInformationCopyWith(TabularFormInformation value,
+          $Res Function(TabularFormInformation) then) =
+      _$TabularFormInformationCopyWithImpl<$Res, TabularFormInformation>;
+  @useResult
+  $Res call({List<List<double>> matrix, List<String> basicVariables});
+}
+
+/// @nodoc
+class _$TabularFormInformationCopyWithImpl<$Res,
+        $Val extends TabularFormInformation>
+    implements $TabularFormInformationCopyWith<$Res> {
+  _$TabularFormInformationCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? matrix = null,
+    Object? basicVariables = null,
+  }) {
+    return _then(_value.copyWith(
+      matrix: null == matrix
+          ? _value.matrix
+          : matrix // ignore: cast_nullable_to_non_nullable
+              as List<List<double>>,
+      basicVariables: null == basicVariables
+          ? _value.basicVariables
+          : basicVariables // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TabularFormInformationImplCopyWith<$Res>
+    implements $TabularFormInformationCopyWith<$Res> {
+  factory _$$TabularFormInformationImplCopyWith(
+          _$TabularFormInformationImpl value,
+          $Res Function(_$TabularFormInformationImpl) then) =
+      __$$TabularFormInformationImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<List<double>> matrix, List<String> basicVariables});
+}
+
+/// @nodoc
+class __$$TabularFormInformationImplCopyWithImpl<$Res>
+    extends _$TabularFormInformationCopyWithImpl<$Res,
+        _$TabularFormInformationImpl>
+    implements _$$TabularFormInformationImplCopyWith<$Res> {
+  __$$TabularFormInformationImplCopyWithImpl(
+      _$TabularFormInformationImpl _value,
+      $Res Function(_$TabularFormInformationImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? matrix = null,
+    Object? basicVariables = null,
+  }) {
+    return _then(_$TabularFormInformationImpl(
+      matrix: null == matrix
+          ? _value._matrix
+          : matrix // ignore: cast_nullable_to_non_nullable
+              as List<List<double>>,
+      basicVariables: null == basicVariables
+          ? _value._basicVariables
+          : basicVariables // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TabularFormInformationImpl extends _TabularFormInformation {
+  const _$TabularFormInformationImpl(
+      {required final List<List<double>> matrix,
+      required final List<String> basicVariables})
+      : _matrix = matrix,
+        _basicVariables = basicVariables,
+        super._();
+
+  final List<List<double>> _matrix;
+  @override
+  List<List<double>> get matrix {
+    if (_matrix is EqualUnmodifiableListView) return _matrix;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_matrix);
+  }
+
+  final List<String> _basicVariables;
+  @override
+  List<String> get basicVariables {
+    if (_basicVariables is EqualUnmodifiableListView) return _basicVariables;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_basicVariables);
+  }
+
+  @override
+  String toString() {
+    return 'TabularFormInformation(matrix: $matrix, basicVariables: $basicVariables)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TabularFormInformationImpl &&
+            const DeepCollectionEquality().equals(other._matrix, _matrix) &&
+            const DeepCollectionEquality()
+                .equals(other._basicVariables, _basicVariables));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_matrix),
+      const DeepCollectionEquality().hash(_basicVariables));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TabularFormInformationImplCopyWith<_$TabularFormInformationImpl>
+      get copyWith => __$$TabularFormInformationImplCopyWithImpl<
+          _$TabularFormInformationImpl>(this, _$identity);
+}
+
+abstract class _TabularFormInformation extends TabularFormInformation {
+  const factory _TabularFormInformation(
+          {required final List<List<double>> matrix,
+          required final List<String> basicVariables}) =
+      _$TabularFormInformationImpl;
+  const _TabularFormInformation._() : super._();
+
+  @override
+  List<List<double>> get matrix;
+  @override
+  List<String> get basicVariables;
+  @override
+  @JsonKey(ignore: true)
+  _$$TabularFormInformationImplCopyWith<_$TabularFormInformationImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
