@@ -133,7 +133,7 @@ class _$EntrySizeStateImpl implements _EntrySizeState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EntrySizeStateImpl &&
@@ -344,7 +344,7 @@ class _$DataEntryModelImpl implements _DataEntryModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DataEntryModelImpl &&

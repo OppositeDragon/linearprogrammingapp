@@ -22,7 +22,9 @@ void main() {
     }
 
     test('toStandardForm maximize', () {
-      final overrides = <Override>[dataEntryControllerProvider.overrideWith(MockDataMaximize.new)];
+      final overrides = <Override>[
+        dataEntryControllerProvider.overrideWith(MockDataMaximize2Var7Con.new),
+      ];
       final container = createProviderContainer(overrides: overrides);
       final algebraicData = container.read(algebraicControllerProvider.notifier).toStandardForm();
       expect(algebraicData.standardForm, [
@@ -61,46 +63,46 @@ void main() {
     });
 
     test('toStandardForm minimize', () {
-      final overrides = <Override>[dataEntryControllerProvider.overrideWith(MockDataMinimize.new)];
+      final overrides = <Override>[dataEntryControllerProvider.overrideWith(MockDataMinimize2Var3Con.new)];
       final container = createProviderContainer(overrides: overrides);
       final algebraicData = container.read(algebraicControllerProvider.notifier).toStandardForm();
       expect(algebraicData.standardForm, [
-        [4.0, 5.0, -1.0, 0.0, 0.0, 200.0],
-        [2.0, 8.0, 0.0, -1.0, 0.0, 160.0],
-        [5.0, 3.0, 0.0, 0.0, -1.0, 150.0]
+        [0.3, 0.1, 1.0, 0.0, 0.0, 2.7],
+        [0.5, 0.5, 0.0, 1.0, 0.0, 6.0],
+        [0.6, 0.4, 0.0, 0.0, -1.0, 6.0],
       ]);
       expect(algebraicData.constraintWithSlack, [
-        [4.0, 5.0, -1.0, 0.0, 0.0],
-        [2.0, 8.0, 0.0, -1.0, 0.0],
-        [5.0, 3.0, 0.0, 0.0, -1.0]
+        [0.3, 0.1, 1.0, 0.0, 0.0],
+        [0.5, 0.5, 0.0, 1.0, 0.0],
+        [0.6, 0.4, 0.0, 0.0, -1.0]
       ]);
-      expect(algebraicData.rightSide, [200.0, 160.0, 150.0]);
-      expect(algebraicData.rightSideString, ['\\;200', '\\;160', '\\;150']);
+      expect(algebraicData.rightSide, [2.7, 6, 6]);
+      expect(algebraicData.rightSideString, ['\\;2.7', '\\;6', '\\;6']);
       expect(algebraicData.constraintsString, [
-        ['+4x_{1}', '+2x_{1}', '+5x_{1}'],
-        ['+5x_{2}', '+8x_{2}', '+3x_{2}'],
-        ['-x_{3}', '\\;', '\\;'],
-        ['\\;', '-x_{4}', '\\;'],
+        ['+0.3x_{1}', '+0.5x_{1}', '+0.6x_{1}'],
+        ['+0.1x_{2}', '+0.5x_{2}', '+0.4x_{2}'],
+        ['+x_{3}', '\\;', '\\;'],
+        ['\\;', '+x_{4}', '\\;'],
         ['\\;', '\\;', '-x_{5}'],
-        ['\\;=', '\\;=', '\\;=']
+        ['\\;=', '\\;=', '\\;='],
       ]);
       expect(algebraicData.combinationsEquation, 'C(n,r) = \\frac{0!}{0!(0-0)!} = 1');
     });
 
     test('answerAlgebraic minimize', () {
-      final overrides = <Override>[dataEntryControllerProvider.overrideWith(MockDataMinimize.new)];
+      final overrides = <Override>[dataEntryControllerProvider.overrideWith(MockDataMinimize2Var3Con.new)];
       final container = createProviderContainer(overrides: overrides);
       final answerAlgebraic = container.read(algebraicControllerProvider.notifier).answerAlgebraic(
         [
-          [4.0, 5.0, -1.0, 0.0, 0.0],
-          [2.0, 8.0, 0.0, -1.0, 0.0],
-          [5.0, 3.0, 0.0, 0.0, -1.0]
+          [0.3, 0.1, 1.0, 0.0, 0.0],
+          [0.5, 0.5, 0.0, 1.0, 0.0],
+          [0.6, 0.4, 0.0, 0.0, -1.0]
         ],
-        [200.0, 160.0, 150.0],
+        [2.7, 6, 6],
       );
-      expect(answerAlgebraic.definitiveSolution, 16363.636363636364);
-      expect(answerAlgebraic.finalSolutionString, 'Z=300 (36.364) + 500 (10.909) = 16363.636');
-      expect(answerAlgebraic.step, 8);
+      expect(answerAlgebraic.definitiveSolution, 4.7);
+      expect(answerAlgebraic.finalSolutionString, 'Z=0.4 (8) + 0.5 (3) = 4.7');
+      expect(answerAlgebraic.step, 9);
     });
   });
 }

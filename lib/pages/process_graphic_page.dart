@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:linearprogrammingapp/constants/routes.dart';
 
 import '../constants/numeric.dart';
 import '../controllers/data_entry_controller.dart';
 import '../controllers/graphic_mode_controller.dart';
 import '../custom_painters/graphic_process_painter.dart';
+import '../widgets/gobackgohome_buttons_widget.dart';
 
 class GraphicProcessPage extends ConsumerWidget {
   const GraphicProcessPage({super.key});
@@ -91,28 +90,12 @@ class GraphicProcessPage extends ConsumerWidget {
                   ),
                 ),
               ),
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(
+              const SliverPadding(
+                padding: EdgeInsets.symmetric(
                   horizontal: spaceXXL,
                   vertical: spaceXL,
                 ),
-                sliver: SliverToBoxAdapter(
-                  child: Row(
-                    children: [
-                      const Spacer(),
-                      OutlinedButton(
-                        onPressed: () => context.goNamed(routeHomeName),
-                        child: const Text('Ir a inicio'),
-                      ),
-                      const SizedBox(width: spaceXL),
-                      FilledButton(
-                        onPressed: context.pop,
-                        child: const Text('Regresar'),
-                      ),
-                      const Spacer(),
-                    ],
-                  ),
-                ),
+                sliver: SliverToBoxAdapter(child: GoBackGoHomeButtons()),
               ),
             ],
           );

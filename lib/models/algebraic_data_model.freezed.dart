@@ -241,7 +241,7 @@ class _$AlgebraicDataModelImpl implements _AlgebraicDataModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AlgebraicDataModelImpl &&
@@ -544,7 +544,7 @@ class _$StepsForAlgebraicImpl implements _StepsForAlgebraic {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StepsForAlgebraicImpl &&
@@ -764,7 +764,7 @@ class _$AlgebraicAnswerImpl implements _AlgebraicAnswer {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AlgebraicAnswerImpl &&
