@@ -134,7 +134,7 @@ void main() {
     });
 
     test('updateObjectiveFunction', () {
-      final overrides = [entrySizeControllerProvider.overrideWith(MockSizeEntryNonSimplex.new)];
+      final overrides = [entrySizeControllerProvider.overrideWith(MockSizeEntry2Var3Con.new)];
       final container = createProviderContainer(overrides: overrides);
       container.read(dataEntryControllerProvider.notifier).updateObjectiveFunction(0, 1.23);
       final dataEntryState = container.read(dataEntryControllerProvider);
@@ -154,7 +154,7 @@ void main() {
     });
 
     test('updateConstraints', () {
-      final overrides = [entrySizeControllerProvider.overrideWith(MockSizeEntryNonSimplex.new)];
+      final overrides = [entrySizeControllerProvider.overrideWith(MockSizeEntry2Var3Con.new)];
       final container = createProviderContainer(overrides: overrides);
       container.read(dataEntryControllerProvider.notifier).updateConstraints(0, 0, 1.23);
       final dataEntryState = container.read(dataEntryControllerProvider);
@@ -173,7 +173,7 @@ void main() {
           ));
     });
     test('updateOperator', () {
-      final overrides = [entrySizeControllerProvider.overrideWith(MockSizeEntryNonSimplex.new)];
+      final overrides = [entrySizeControllerProvider.overrideWith(MockSizeEntry2Var3Con.new)];
       final container = createProviderContainer(overrides: overrides);
       container.read(dataEntryControllerProvider.notifier).updateOperator(0, Operators.equal);
       final dataEntryState = container.read(dataEntryControllerProvider);
@@ -192,7 +192,7 @@ void main() {
           ));
     });
     test('updateConstraintsRS', () {
-      final overrides = [entrySizeControllerProvider.overrideWith(MockSizeEntryNonSimplex.new)];
+      final overrides = [entrySizeControllerProvider.overrideWith(MockSizeEntry2Var3Con.new)];
       final container = createProviderContainer(overrides: overrides);
       container.read(dataEntryControllerProvider.notifier).updateConstraintsRS(0, 1.23);
       final dataEntryState = container.read(dataEntryControllerProvider);
