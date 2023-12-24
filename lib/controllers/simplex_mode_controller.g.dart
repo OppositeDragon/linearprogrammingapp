@@ -36,22 +36,7 @@ final calculateSizeProvider = AutoDisposeProvider<Point<int>>.internal(
 );
 
 typedef CalculateSizeRef = AutoDisposeProviderRef<Point<int>>;
-String _$ofToTabularFormHash() => r'12fcf577f592070c247f2487faafbe1dab7db753';
-
-/// See also [ofToTabularForm].
-@ProviderFor(ofToTabularForm)
-final ofToTabularFormProvider = AutoDisposeProvider<List<double>>.internal(
-  ofToTabularForm,
-  name: r'ofToTabularFormProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$ofToTabularFormHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef OfToTabularFormRef = AutoDisposeProviderRef<List<double>>;
-String _$toTabularFormHash() => r'4cf5b2ea4cd4267e04b7a72463bd96e60edd5234';
+String _$toTabularFormHash() => r'27979cc3c69887ed860edfeed4e56df8edb6155e';
 
 /// See also [toTabularForm].
 @ProviderFor(toTabularForm)
@@ -68,12 +53,12 @@ final toTabularFormProvider =
 
 typedef ToTabularFormRef
     = AutoDisposeProviderRef<(TabularFormInformation, List<int>)>;
-String _$simplexControllerHash() => r'77e92b20435a96d78d53ddb1a03fd5bea346d10a';
+String _$simplexControllerHash() => r'5b76ea661eea3fc196b0dd26e4c73dcd3d327691';
 
 /// See also [SimplexController].
 @ProviderFor(SimplexController)
 final simplexControllerProvider =
-    AutoDisposeNotifierProvider<SimplexController, void>.internal(
+    AutoDisposeNotifierProvider<SimplexController, SimplexDataModel>.internal(
   SimplexController.new,
   name: r'simplexControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -83,6 +68,6 @@ final simplexControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$SimplexController = AutoDisposeNotifier<void>;
+typedef _$SimplexController = AutoDisposeNotifier<SimplexDataModel>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
