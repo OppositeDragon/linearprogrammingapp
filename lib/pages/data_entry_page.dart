@@ -132,10 +132,11 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
                                           context: context,
                                           builder: (context) => AlertDialog(
                                             title: const Text('Ha ocurrido un error'),
-                                            contentTextStyle: textTheme.bodyMedium?.copyWith(
-                                              color: colorScheme.onErrorContainer,
-                                            ),
-                                            content: Text(e.toString()),
+                                            
+                                            backgroundColor: colorScheme.errorContainer,
+                                            content: ConstrainedBox(
+                                                constraints: const BoxConstraints(maxWidth: 450),
+                                                child: Text(e.toString())),
                                             actions: [
                                               ElevatedButton(
                                                 onPressed: context.pop,
