@@ -110,7 +110,7 @@ void main() {
 
       expect(
           dataEntryState,
-          const DataEntryState(
+          const DataEntryModel(
             objectiveFunction: [],
             constraints: [],
             operators: [],
@@ -125,7 +125,7 @@ void main() {
 
       expect(
           dataEntryState,
-          const DataEntryState(
+          const DataEntryModel(
             objectiveFunction: [],
             constraints: [],
             operators: [],
@@ -141,7 +141,7 @@ void main() {
 
       expect(
           dataEntryState,
-          const DataEntryState(
+          const DataEntryModel(
             objectiveFunction: [1.23, 0.0],
             constraints: [
               [0.0, 0.0, 0.0],
@@ -161,7 +161,7 @@ void main() {
 
       expect(
           dataEntryState,
-          const DataEntryState(
+          const DataEntryModel(
             objectiveFunction: [0.0, 0.0],
             constraints: [
               [1.23, 0.0, 0.0],
@@ -180,7 +180,7 @@ void main() {
 
       expect(
           dataEntryState,
-          const DataEntryState(
+          const DataEntryModel(
             objectiveFunction: [0.0, 0.0],
             constraints: [
               [0, 0.0, 0.0],
@@ -199,7 +199,7 @@ void main() {
 
       expect(
           dataEntryState,
-          const DataEntryState(
+          const DataEntryModel(
             objectiveFunction: [0.0, 0.0],
             constraints: [
               [0.0, 0.0, 1.23],

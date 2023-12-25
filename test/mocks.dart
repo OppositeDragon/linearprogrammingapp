@@ -19,8 +19,8 @@ class MockSizeEntry3Var3Con extends EntrySizeController {
 
 class MockDataMaximize2Var3Con extends DataEntryController {
   @override
-  DataEntryState build() {
-    return const DataEntryState(
+  DataEntryModel build() {
+    return const DataEntryModel(
       objective: Objectives.max,
       objectiveFunction: [180, 90],
       operators: [
@@ -39,8 +39,8 @@ class MockDataMaximize2Var3Con extends DataEntryController {
 
 class MockDataMinimize2Var3Con extends DataEntryController {
   @override
-  DataEntryState build() {
-    return const DataEntryState(
+  DataEntryModel build() {
+    return const DataEntryModel(
       objective: Objectives.min,
       objectiveFunction: [0.4, 0.5],
       operators: [
@@ -59,8 +59,8 @@ class MockDataMinimize2Var3Con extends DataEntryController {
 
 class MockDataMaximize2Var7Con extends DataEntryController {
   @override
-  DataEntryState build() {
-    return const DataEntryState(
+  DataEntryModel build() {
+    return const DataEntryModel(
       objective: Objectives.max,
       objectiveFunction: [180, 90],
       operators: [
@@ -87,8 +87,8 @@ class MockDataMaximize2Var7Con extends DataEntryController {
 
 class MockDataMinimize3Var3Con extends DataEntryController {
   @override
-  DataEntryState build() {
-    return const DataEntryState(
+  DataEntryModel build() {
+    return const DataEntryModel(
       objective: Objectives.min,
       objectiveFunction: [0.4, 0.35, 0.3],
       operators: [
@@ -107,8 +107,8 @@ class MockDataMinimize3Var3Con extends DataEntryController {
 
 class MockDataMaximize3Var3Con extends DataEntryController {
   @override
-  DataEntryState build() {
-    return const DataEntryState(
+  DataEntryModel build() {
+    return const DataEntryModel(
       objective: Objectives.min,
       objectiveFunction: [0.4, 0.35, 0.3],
       operators: [
