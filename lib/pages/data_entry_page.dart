@@ -123,30 +123,27 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
                                     }
                                     debugPrint(jsonContent);
                                     try {
-                                      var entrySize = uploadController.operateOnContent(jsonContent);
-
+                                      uploadController.operateOnContent(jsonContent);
                                       if (mounted) context.pop();
                                     } catch (e) {
                                       debugPrint(e.toString());
                                       if (mounted) {
                                         showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                                title: const Text('Ha ocurrido un error'),
-                                                //  backgroundColor: colorScheme.errorContainer,
-                                                contentTextStyle:
-                                                    textTheme.bodyMedium?.copyWith(color: colorScheme.onErrorContainer),
-                                                content: Text(e.toString())));
-                                        // ScaffoldMessenger.of(context).showSnackBar(
-                                        //   SnackBar(
-                                        //     backgroundColor: colorScheme.errorContainer,
-                                        //     content: Text(
-                                        //       '$e',
-                                        //       style: textTheme.bodyMedium?.copyWith(color: colorScheme.error),
-                                        //     ),
-                                        //     duration: const Duration(seconds: 7),
-                                        //   ),
-                                        // );
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            title: const Text('Ha ocurrido un error'),
+                                            contentTextStyle: textTheme.bodyMedium?.copyWith(
+                                              color: colorScheme.onErrorContainer,
+                                            ),
+                                            content: Text(e.toString()),
+                                            actions: [
+                                              ElevatedButton(
+                                                onPressed: context.pop,
+                                                child: const Text('Aceptar'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
                                         uploadController.toggleHelpMessage(true);
                                       }
                                     }
