@@ -16,14 +16,14 @@ typedef TableuSize = ({int rows, int columns});
 
 @riverpod
 bool needsTwoPhase(NeedsTwoPhaseRef ref) {
-  final DataEntryState dataEntry = ref.watch(dataEntryControllerProvider);
+  final DataEntryModel dataEntry = ref.watch(dataEntryControllerProvider);
   return dataEntry.operators.any((element) => element != Operators.leq);
 }
 
 @riverpod
 Point<int> calculateSize(CalculateSizeRef ref) {
   final EntrySizeState entrySize = ref.watch(entrySizeControllerProvider);
-  final DataEntryState dataEntry = ref.watch(dataEntryControllerProvider);
+  final DataEntryModel dataEntry = ref.watch(dataEntryControllerProvider);
   final needsTwoPhase = ref.watch(needsTwoPhaseProvider);
   final int rows = entrySize.constraints + 1;
   final int columns = entrySize.variables + entrySize.constraints + 1;
@@ -40,7 +40,7 @@ Point<int> calculateSize(CalculateSizeRef ref) {
 @riverpod
 (TabularFormInformation, List<int>) toTabularForm(ToTabularFormRef ref) {
   final tableauSize = ref.watch(calculateSizeProvider);
-  final DataEntryState dataEntry = ref.watch(dataEntryControllerProvider);
+  final DataEntryModel dataEntry = ref.watch(dataEntryControllerProvider);
   final tableau = List<List<double>>.generate(
     tableauSize.x,
     (index) => List.generate(tableauSize.y, (index) => 0),

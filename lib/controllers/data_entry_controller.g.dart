@@ -24,7 +24,7 @@ final entryPageControllerProvider =
 
 typedef _$EntryPageController = AutoDisposeNotifier<int>;
 String _$entrySizeControllerHash() =>
-    r'904a9b19c3dd8787d9397309df63b2f504b289f9';
+    r'4c496f0f0d6bcd712fcbc467e1170af909d1b989';
 
 /// See also [EntrySizeController].
 @ProviderFor(EntrySizeController)
@@ -58,12 +58,12 @@ final processTypeControllerProvider =
 
 typedef _$ProcessTypeController = AutoDisposeNotifier<ProcessTypes>;
 String _$dataEntryControllerHash() =>
-    r'abe8d2dba4f805925d24bc0287391c1a435db7e5';
+    r'1377343637e0285ee39b38e3720a02a2cd7eca26';
 
 /// See also [DataEntryController].
 @ProviderFor(DataEntryController)
 final dataEntryControllerProvider =
-    AutoDisposeNotifierProvider<DataEntryController, DataEntryState>.internal(
+    AutoDisposeNotifierProvider<DataEntryController, DataEntryModel>.internal(
   DataEntryController.new,
   name: r'dataEntryControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -73,6 +73,6 @@ final dataEntryControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$DataEntryController = AutoDisposeNotifier<DataEntryState>;
+typedef _$DataEntryController = AutoDisposeNotifier<DataEntryModel>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -23,13 +23,8 @@ class _EntrySizeWidgetState extends ConsumerState<EntrySizeWidget> {
   @override
   void initState() {
     super.initState();
-    final dataEntrySizeState = ref.read(entrySizeControllerProvider);
-    variablesController = TextEditingController(
-      text: dataEntrySizeState.variables == 0 ? '' : dataEntrySizeState.variables.toString(),
-    );
-    constraintsController = TextEditingController(
-      text: dataEntrySizeState.constraints == 0 ? '' : dataEntrySizeState.constraints.toString(),
-    );
+variablesController = TextEditingController();
+    constraintsController = TextEditingController();
     variablesController.addListener(() {
       ref.read(entrySizeControllerProvider.notifier).setVariables(variablesController.text);
     });
@@ -47,8 +42,16 @@ class _EntrySizeWidgetState extends ConsumerState<EntrySizeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    //final dataEntrySizeState = ref.read(entrySizeControllerProvider);
     final textTheme = Theme.of(context).textTheme;
     final dataEntrySizeState = ref.watch(entrySizeControllerProvider);
+    Future(
+      () {
+        variablesController.text = dataEntrySizeState.variables == 0 ? '' : dataEntrySizeState.variables.toString();
+        constraintsController.text =
+            dataEntrySizeState.constraints == 0 ? '' : dataEntrySizeState.constraints.toString();
+      },
+    );
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(
