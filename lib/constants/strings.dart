@@ -11,3 +11,5 @@ const String uploadDataHelpMessage = '''{
                    [0, 1,  4] ],
   "operators": ["equal", "geq", "leq"]
 }''';
+
+const String invalidMessage = 'Inválido';

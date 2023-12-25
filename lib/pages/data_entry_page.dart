@@ -164,12 +164,6 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
                 icon: const Icon(Icons.upload_file_rounded),
                 tooltip: 'Upload problem data, as json file',
               ),
-            if (entryPage > 0)
-              IconButton(
-                onPressed: () => ref.invalidate(dataEntryControllerProvider),
-                icon: const Icon(Icons.backspace),
-                tooltip: 'Clear all fields',
-              ),
           ],
         ),
         body: Padding(
