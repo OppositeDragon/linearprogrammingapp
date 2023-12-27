@@ -46,7 +46,7 @@ GoRouter goRouter(GoRouterRef ref) {
           GoRoute(
             path: routeDataEntry,
             name: routeDataEntryName,
-            builder: (context, state) => const DataEntryPage(),
+            builder: (context, state) => DataEntryPage(state.uri.queryParameters['data']),
             routes: [
               GoRoute(
                 path: routeAlgebraicProcess,

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linearprogrammingapp/constants/strings.dart';
@@ -14,7 +15,8 @@ import '../constants/numeric.dart';
 import '../widgets/data_entry_widget.dart';
 
 class DataEntryPage extends ConsumerStatefulWidget {
-  const DataEntryPage({super.key});
+  const DataEntryPage(this.data, {super.key});
+  final String? data;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _DataEntryPageState();
@@ -22,10 +24,31 @@ class DataEntryPage extends ConsumerStatefulWidget {
 
 class _DataEntryPageState extends ConsumerState<DataEntryPage> {
   late final PageController pageController;
+
   @override
   void initState() {
     super.initState();
     pageController = PageController(keepPage: true);
+    if (widget.data != null) {
+      try {
+        ref.read(uploadControllerProvider.notifier).operateOnContent(widget.data!);
+      } catch (e) {
+        final TextTheme textTheme = Theme.of(context).textTheme;
+        final ColorScheme colorScheme = Theme.of(context).colorScheme;
+        SchedulerBinding.instance.addPostFrameCallback(
+          (timstamp) => ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Ha ocurrido un error al cargar los datos embebidos en el enlace.',
+                style: textTheme.bodyMedium?.copyWith(color: colorScheme.error),
+              ),
+              backgroundColor: colorScheme.errorContainer,
+            ),
+          ),
+        );
+        debugPrint(e.toString());
+      }
+    }
   }
 
   @override
@@ -132,7 +155,6 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
                                           context: context,
                                           builder: (context) => AlertDialog(
                                             title: const Text('Ha ocurrido un error'),
-                                            
                                             backgroundColor: colorScheme.errorContainer,
                                             content: ConstrainedBox(
                                                 constraints: const BoxConstraints(maxWidth: 450),

@@ -21,6 +21,7 @@ dependencies:
   equations: ^5.0.2
   decimal: ^2.3.3
   file_picker: ^5.3.1
+  url_strategy: ^0.2.0
 
 dev_dependencies:
   flutter_test:
