@@ -6,7 +6,7 @@ part of 'upload_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$uploadControllerHash() => r'6fbcf420f98bc4a5f49def4f2250f502c1abf149';
+String _$uploadControllerHash() => r'448f301deea24a63a864e8fc7b93f7126c6d2fde';
 
 /// See also [UploadController].
 @ProviderFor(UploadController)
