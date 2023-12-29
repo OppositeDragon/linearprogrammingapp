@@ -20,6 +20,8 @@ dependencies:
   flutter_math_fork: ^0.7.1
   equations: ^5.0.2
   decimal: ^2.3.3
+  file_picker: ^5.3.1
+  url_strategy: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -44,3 +46,6 @@ flutter:
     - family: CMRomanSerif
       fonts:
         - asset: assets/fonts/cmunrm.ttf
+    - family: MonaspaceXenon
+      fonts:
+        - asset: assets/fonts/MonaspaceXenonVarVF.ttf

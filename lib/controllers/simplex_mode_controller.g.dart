@@ -6,7 +6,7 @@ part of 'simplex_mode_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$needsTwoPhaseHash() => r'5104453cad711823f96157fc6924413b352bd2f5';
+String _$needsTwoPhaseHash() => r'7dce4fa8d8a370eac01de3424f78f5ae747ba503';
 
 /// See also [needsTwoPhase].
 @ProviderFor(needsTwoPhase)
@@ -21,7 +21,7 @@ final needsTwoPhaseProvider = AutoDisposeProvider<bool>.internal(
 );
 
 typedef NeedsTwoPhaseRef = AutoDisposeProviderRef<bool>;
-String _$calculateSizeHash() => r'de75f5bf666de26404eb30bb2c8561c13248ea97';
+String _$calculateSizeHash() => r'b06c50ef6d1b6e6311302d54339832ecd2258252';
 
 /// See also [calculateSize].
 @ProviderFor(calculateSize)
@@ -36,7 +36,7 @@ final calculateSizeProvider = AutoDisposeProvider<Point<int>>.internal(
 );
 
 typedef CalculateSizeRef = AutoDisposeProviderRef<Point<int>>;
-String _$toTabularFormHash() => r'27979cc3c69887ed860edfeed4e56df8edb6155e';
+String _$toTabularFormHash() => r'934e18ec0b7ddc12cb4462c135d6f708df44b8ac';
 
 /// See also [toTabularForm].
 @ProviderFor(toTabularForm)

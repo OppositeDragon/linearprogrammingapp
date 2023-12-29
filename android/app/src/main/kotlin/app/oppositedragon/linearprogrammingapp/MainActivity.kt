@@ -1,4 +1,4 @@
-package app.oppositedragon.linear_programming_app
+package app.oppositedragon.linearprogrammingapp
 
 import io.flutter.embedding.android.FlutterActivity
 

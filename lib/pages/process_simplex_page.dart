@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../constants/numeric.dart';
 import '../controllers/simplex_mode_controller.dart';
 import '../widgets/gobackgohome_buttons_widget.dart';
+import '../widgets/share.dart';
 
 class SimplexProcessPage extends ConsumerWidget {
   const SimplexProcessPage({super.key});
@@ -38,6 +39,7 @@ class SimplexProcessPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Simplex Method - Linear Programming App'),
         centerTitle: true,
+        actions: const [ShareWidget()],
       ),
       body: CustomScrollView(
         slivers: [

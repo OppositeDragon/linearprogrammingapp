@@ -5,6 +5,7 @@ import '../constants/numeric.dart';
 import '../controllers/algebraic_mode_controller.dart';
 import '../widgets/gobackgohome_buttons_widget.dart';
 import '../widgets/math_tex_algebraic.dart';
+import '../widgets/share.dart';
 
 class AlgebraicProcessPage extends ConsumerWidget {
   const AlgebraicProcessPage({super.key});
@@ -23,6 +24,7 @@ class AlgebraicProcessPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Algebraic Method - Linear Programming App'),
         centerTitle: true,
+        actions: const [ShareWidget()],
       ),
       body: CustomScrollView(
         slivers: [

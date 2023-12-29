@@ -175,12 +175,12 @@ abstract class _EntrySizeState implements EntrySizeState {
       throw _privateConstructorUsedError;
 }
 
-DataEntryState _$DataEntryStateFromJson(Map<String, dynamic> json) {
+DataEntryModel _$DataEntryModelFromJson(Map<String, dynamic> json) {
   return _DataEntryModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$DataEntryState {
+mixin _$DataEntryModel {
   Objectives get objective => throw _privateConstructorUsedError;
   List<double> get objectiveFunction => throw _privateConstructorUsedError;
   List<Operators> get operators => throw _privateConstructorUsedError;
@@ -188,15 +188,15 @@ mixin _$DataEntryState {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $DataEntryStateCopyWith<DataEntryState> get copyWith =>
+  $DataEntryModelCopyWith<DataEntryModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DataEntryStateCopyWith<$Res> {
-  factory $DataEntryStateCopyWith(
-          DataEntryState value, $Res Function(DataEntryState) then) =
-      _$DataEntryStateCopyWithImpl<$Res, DataEntryState>;
+abstract class $DataEntryModelCopyWith<$Res> {
+  factory $DataEntryModelCopyWith(
+          DataEntryModel value, $Res Function(DataEntryModel) then) =
+      _$DataEntryModelCopyWithImpl<$Res, DataEntryModel>;
   @useResult
   $Res call(
       {Objectives objective,
@@ -206,9 +206,9 @@ abstract class $DataEntryStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DataEntryStateCopyWithImpl<$Res, $Val extends DataEntryState>
-    implements $DataEntryStateCopyWith<$Res> {
-  _$DataEntryStateCopyWithImpl(this._value, this._then);
+class _$DataEntryModelCopyWithImpl<$Res, $Val extends DataEntryModel>
+    implements $DataEntryModelCopyWith<$Res> {
+  _$DataEntryModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -246,7 +246,7 @@ class _$DataEntryStateCopyWithImpl<$Res, $Val extends DataEntryState>
 
 /// @nodoc
 abstract class _$$DataEntryModelImplCopyWith<$Res>
-    implements $DataEntryStateCopyWith<$Res> {
+    implements $DataEntryModelCopyWith<$Res> {
   factory _$$DataEntryModelImplCopyWith(_$DataEntryModelImpl value,
           $Res Function(_$DataEntryModelImpl) then) =
       __$$DataEntryModelImplCopyWithImpl<$Res>;
@@ -261,7 +261,7 @@ abstract class _$$DataEntryModelImplCopyWith<$Res>
 
 /// @nodoc
 class __$$DataEntryModelImplCopyWithImpl<$Res>
-    extends _$DataEntryStateCopyWithImpl<$Res, _$DataEntryModelImpl>
+    extends _$DataEntryModelCopyWithImpl<$Res, _$DataEntryModelImpl>
     implements _$$DataEntryModelImplCopyWith<$Res> {
   __$$DataEntryModelImplCopyWithImpl(
       _$DataEntryModelImpl _value, $Res Function(_$DataEntryModelImpl) _then)
@@ -340,7 +340,7 @@ class _$DataEntryModelImpl implements _DataEntryModel {
 
   @override
   String toString() {
-    return 'DataEntryState(objective: $objective, objectiveFunction: $objectiveFunction, operators: $operators, constraints: $constraints)';
+    return 'DataEntryModel(objective: $objective, objectiveFunction: $objectiveFunction, operators: $operators, constraints: $constraints)';
   }
 
   @override
@@ -382,7 +382,7 @@ class _$DataEntryModelImpl implements _DataEntryModel {
   }
 }
 
-abstract class _DataEntryModel implements DataEntryState {
+abstract class _DataEntryModel implements DataEntryModel {
   const factory _DataEntryModel(
       {required final Objectives objective,
       required final List<double> objectiveFunction,
