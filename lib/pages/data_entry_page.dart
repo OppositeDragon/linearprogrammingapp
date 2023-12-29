@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:linearprogrammingapp/constants/strings.dart';
-import 'package:linearprogrammingapp/controllers/data_entry_controller.dart';
-import 'package:linearprogrammingapp/controllers/upload_controller.dart';
-import 'package:linearprogrammingapp/widgets/entry_size_widget.dart';
 
 import '../constants/numeric.dart';
+import '../constants/strings.dart';
+import '../controllers/data_entry_controller.dart';
+import '../controllers/upload_controller.dart';
 import '../widgets/data_entry_widget.dart';
+import '../widgets/entry_size_widget.dart';
 
 class DataEntryPage extends ConsumerStatefulWidget {
   const DataEntryPage(this.data, {super.key});
@@ -29,6 +29,11 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
   void initState() {
     super.initState();
     pageController = PageController(keepPage: true);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     if (widget.data != null) {
       try {
         ref.read(uploadControllerProvider.notifier).operateOnContent(widget.data!);
@@ -36,7 +41,7 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
         final TextTheme textTheme = Theme.of(context).textTheme;
         final ColorScheme colorScheme = Theme.of(context).colorScheme;
         SchedulerBinding.instance.addPostFrameCallback(
-          (timstamp) => ScaffoldMessenger.of(context).showSnackBar(
+          (timestamp) => ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
                 'Ha ocurrido un error al cargar los datos embebidos en el enlace.',

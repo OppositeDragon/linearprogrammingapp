@@ -35,7 +35,7 @@ class UploadController extends _$UploadController {
       }
       if (data.constraints.length != data.operators.length) {
         throw FileProcessingException('La cantidad de restricciones no concuerda con la cantidad de operadores.');
-      } 
+      }
       if (data.constraints.any((constraint) => constraint.length != data.objectiveFunction.length + 1)) {
         throw FileProcessingException(
             'Todas las restricciones deben tener el mismo numero de elementos, y la cantidad de variables de la funcion objetivo debe coincider con las variables en las restricciones.');
@@ -45,7 +45,7 @@ class UploadController extends _$UploadController {
       }
       ref.read(entrySizeControllerProvider.notifier).setData(data.objectiveFunction.length, data.constraints.length);
       ref.read(dataEntryControllerProvider.notifier).setData(data);
-      if (data.objectiveFunction.length > 2) ref.read(entryPageControllerProvider.notifier).updatePage(1);
+      ref.read(entryPageControllerProvider.notifier).updatePage(data.objectiveFunction.length > 2 ? 1 : 0);
       return (data.objectiveFunction.length, data.constraints.length);
     } on FormatException {
       throw 'El archivo no es JSON valido.';
