@@ -15,6 +15,7 @@ class SimplexDataModel with _$SimplexDataModel {
     @Default(null) List<List<List<String>>>? tableaus1st,
     @Default(null) List<Point<int>>? pivotsCoordinates1st,
     @Default(null) List<int>? artificialVariablesIndexes,
+    AnswerPresentationModel? answerPresentation,
   }) = _SimplexDataModel;
 }
 
@@ -25,4 +26,15 @@ class TabularFormInformation with _$TabularFormInformation {
     required List<List<double>> matrix,
     required List<int> basicVariables,
   }) = _TabularFormInformation;
+}
+
+typedef AnswerVariableData = ({String letter, double coefficient, double value});
+
+@freezed
+class AnswerPresentationModel with _$AnswerPresentationModel {
+  const AnswerPresentationModel._();
+  const factory AnswerPresentationModel({
+    required List<AnswerVariableData> variablesData,
+    required double z,
+  }) = _AnswerPresentationModel;
 }
