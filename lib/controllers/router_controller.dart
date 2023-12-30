@@ -1,13 +1,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:linearprogrammingapp/pages/data_entry_page.dart';
-import 'package:linearprogrammingapp/pages/process_algebraic_page.dart';
-import 'package:linearprogrammingapp/pages/process_graphic_page.dart';
-import 'package:linearprogrammingapp/pages/process_simplex_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../constants/routes.dart';
+import '../pages/data_entry_page.dart';
 import '../pages/home_page.dart';
 import '../pages/login_page.dart';
+import '../pages/process_algebraic_page.dart';
+import '../pages/process_graphic_page.dart';
+import '../pages/process_simplex_page.dart';
 import 'db_controller.dart';
 
 part 'router_controller.g.dart';
@@ -15,51 +16,52 @@ part 'router_controller.g.dart';
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   final router = GoRouter(
-    refreshListenable: ref.read(dbLoginProvider).listenable(keys: [
-      userKey,
-    ]),
+    refreshListenable: ref.read(dbLoginProvider).listenable(
+      keys: [userKey],
+    ),
     redirect: (context, state) async {
       final loginBox = ref.read(dbLoginProvider);
       final bool isLoggedIn = loginBox.get(userKey) != null;
-      final location = state.uri.toString();
-      if (!isLoggedIn && location != '/login') {
-        return '/login';
+      final bool isLoggingIn = state.matchedLocation == routeLogin;
+      final String targetLocation = state.matchedLocation == '/' ? '' : '?from=${state.uri}';
+      if (!isLoggedIn && !isLoggingIn) {
+        return '$routeLogin$targetLocation';
       }
-      if (isLoggedIn && location == '/login') {
-        return '/';
+      if (isLoggedIn && isLoggingIn) {
+        return state.uri.queryParameters['from'] ?? routeHome;
       }
       return null;
     },
-    initialLocation: '/login',
+    initialLocation: routeLogin,
     routes: [
       GoRoute(
-        path: '/login',
-        name: 'login',
+        path: routeLogin,
+        name: routeLoginName,
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: '/',
-        name: 'home',
+        path: routeHome,
+        name: routeHomeName,
         builder: (context, state) => const HomePage(),
         routes: [
           GoRoute(
-            path: 'data-entry',
-            name: 'data-entry',
-            builder: (context, state) => const DataEntryPage(),
+            path: routeDataEntry,
+            name: routeDataEntryName,
+            builder: (context, state) => DataEntryPage(state.uri.queryParameters['data']),
             routes: [
               GoRoute(
-                path: 'algebraic-process',
-                name: 'algebraic-process',
+                path: routeAlgebraicProcess,
+                name: routeAlgebraicProcessName,
                 builder: (context, state) => const AlgebraicProcessPage(),
               ),
               GoRoute(
-                path: 'graphic-process',
-                name: 'graphic-process',
+                path: routeGraphicProcess,
+                name: routeGraphicProcessName,
                 builder: (context, state) => const GraphicProcessPage(),
               ),
               GoRoute(
-                path: 'simplex-process',
-                name: 'simplex-process',
+                path: routeSimplexProcess,
+                name: routeSimplexProcessName,
                 builder: (context, state) => const SimplexProcessPage(),
               ),
             ],

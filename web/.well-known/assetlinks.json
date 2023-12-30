@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.oppositedragon.linearprogrammingapp",
+      "sha256_cert_fingerprints": [
+        "FB:C6:A3:01:66:E8:C8:A6:F1:9C:84:44:23:11:7E:B2:75:F5:0B:8A:D1:75:5D:00:18:A1:E2:34:14:AC:71:61"
+      ]
+    }
+  }
+]

@@ -13,22 +13,24 @@ class TextFieldWidget extends StatefulWidget {
     this.initialValue,
     this.maxLength,
     this.maxLines = 1,
-    this.required = false,
     this.obscureText = false,
     this.isDense = false,
     this.enabled = true,
     this.readOnly = false,
+    this.autoFocus = false,
+    this.selectAllOnGainFocus = false,
     this.enabledBorderColor,
     this.disabledBorderColor,
     this.errorBorderColor,
     this.focusedBorderColor,
     this.onSave,
     this.onChanged,
+    this.onTap,
     this.onEditingComplete,
     this.onFieldSubmitted,
     this.validator,
     this.formatters,
-    this.controller,
+    required this.controller,
     this.prefixIcon,
     this.suffixIcon,
     this.keyboardType,
@@ -42,22 +44,24 @@ class TextFieldWidget extends StatefulWidget {
   final String? initialValue;
   final int? maxLength;
   final int? maxLines;
-  final bool required;
   final bool obscureText;
   final bool isDense;
   final bool enabled;
   final bool readOnly;
+  final bool selectAllOnGainFocus;
+  final bool autoFocus;
   final Color? enabledBorderColor;
   final Color? disabledBorderColor;
   final Color? errorBorderColor;
   final Color? focusedBorderColor;
   final void Function(String?)? onSave;
   final void Function(String)? onChanged;
-  final void Function()? onEditingComplete;
   final void Function(String)? onFieldSubmitted;
+  final void Function()? onTap;
+  final void Function()? onEditingComplete;
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? formatters;
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
@@ -67,10 +71,36 @@ class TextFieldWidget extends StatefulWidget {
 }
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
+  late final FocusNode focusNode;
+  @override
+  void initState() {
+    super.initState();
+    focusNode = widget.focusNode ?? FocusNode();
+    focusNode.addListener(() {
+      if (widget.selectAllOnGainFocus && focusNode.hasFocus) {
+        widget.controller.selection = TextSelection(baseOffset: 0, extentOffset: widget.controller.text.length);
+      }
+    });
+  }
+
+  @override
+  dispose() {
+    if (widget.focusNode == null) {
+      focusNode.dispose();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    Future(() {
+      widget.controller.value = widget.controller.value.copyWith(text: widget.initialValue);
+    });
     final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
+      autofocus: widget.autoFocus,
+      focusNode: focusNode,
+      onTap: widget.onTap,
       keyboardType: widget.keyboardType,
       textInputAction: widget.action,
       style: widget.style,
@@ -78,10 +108,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       enabled: widget.enabled,
       onFieldSubmitted: widget.onFieldSubmitted,
       onEditingComplete: widget.onEditingComplete,
-      focusNode: widget.focusNode,
       controller: widget.controller,
       inputFormatters: widget.formatters,
-      initialValue: widget.initialValue,
       maxLength: widget.maxLength,
       maxLines: widget.maxLines,
       obscureText: widget.obscureText,
@@ -90,32 +118,48 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       onChanged: widget.onChanged,
       decoration: InputDecoration(
         labelText: widget.label,
-        contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: spaceM,
+          horizontal: spaceL,
+        ),
         hintText: widget.hint,
         isDense: widget.isDense,
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: widget.enabledBorderColor ?? colorScheme.inversePrimary),
+          borderSide: BorderSide(
+            width: spaceXS,
+            color: widget.enabledBorderColor ?? colorScheme.inversePrimary,
+          ),
           borderRadius: BorderRadius.circular(spaceL),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: widget.focusedBorderColor ?? colorScheme.primary),
+          borderSide: BorderSide(
+            width: 2,
+            color: widget.focusedBorderColor ?? colorScheme.primary,
+          ),
           borderRadius: BorderRadius.circular(spaceL),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 1, color: widget.errorBorderColor ?? colorScheme.error),
+          borderSide: BorderSide(
+            width: 1,
+            color: widget.errorBorderColor ?? colorScheme.error,
+          ),
           borderRadius: BorderRadius.circular(spaceL),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: widget.focusedBorderColor ?? colorScheme.error),
+          borderSide: BorderSide(
+            width: spaceXS,
+            color: widget.focusedBorderColor ?? colorScheme.error,
+          ),
           borderRadius: BorderRadius.circular(spaceL),
         ),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-              width: 3,
-              color: widget.disabledBorderColor ??
-                  (colorScheme.brightness == Brightness.light ? Colors.grey.shade300 : Colors.blueGrey.shade700)),
+            width: 3,
+            color: widget.disabledBorderColor ??
+                (colorScheme.brightness == Brightness.light ? Colors.grey.shade300 : Colors.blueGrey.shade700),
+          ),
           borderRadius: BorderRadius.circular(spaceL),
         ),
       ),

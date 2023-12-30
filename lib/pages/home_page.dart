@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:linearprogrammingapp/constants/numeric.dart';
 
+import '../constants/numeric.dart';
+import '../constants/routes.dart';
 import '../controllers/login_controller.dart';
-import '../widgets/data_size_entry.dart';
+import '../controllers/router_controller.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    showDataEntryDialog() => showDialog(
-          context: context,
-          builder: (context) => const Dialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(spaceXL))),
-            child: DataSizeEntryWidget(),
-          ),
-        );
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Linear Programming App'),
@@ -25,13 +18,14 @@ class HomePage extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
+            tooltip: 'Cerrar sesión',
             onPressed: () => ref.read(loginControllerProvider.notifier).logOut(),
           ),
         ],
       ),
       body: Center(
         child: FilledButton.tonal(
-          onPressed: showDataEntryDialog,
+          onPressed: () => ref.read(goRouterProvider).goNamed(routeDataEntryName),
           child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [

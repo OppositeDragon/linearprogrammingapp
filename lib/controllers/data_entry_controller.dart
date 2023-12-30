@@ -1,50 +1,83 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:linearprogrammingapp/constants/enums.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../constants/enums.dart';
 import '../models/data_entry_model.dart';
 
 part 'data_entry_controller.g.dart';
 
-typedef DataEntrySize = ({int variables, int constraints});
-
-@Riverpod(keepAlive: true)
-class DataEntrySizeController extends _$DataEntrySizeController {
+@riverpod
+class EntryPageController extends _$EntryPageController {
   @override
-  DataEntrySize build() => (variables: 0, constraints: 0);
+  int build() => 0;
 
-  void updateValues(int variables, int constraints) {
-    state = (variables: variables, constraints: constraints);
-    debugPrint('DataEntrySizeController: $state');
+  void updatePage(int page) {
+    state = page;
+    debugPrint('PageController: $state');
   }
 }
 
-@Riverpod(keepAlive: true)
-class ProcessController extends _$ProcessController {
+@riverpod
+class EntrySizeController extends _$EntrySizeController {
   @override
-  ProcessTypes build() {
-    return ProcessTypes.simplex;
+  EntrySizeState build() => const EntrySizeState(variables: 0, constraints: 0);
+
+  void setVariables(String source) {
+    if (int.tryParse(source) == null) return;
+    final value = int.parse(source);
+    if (state.variables == value) return;
+    state = state.copyWith(
+      variables: value,
+      showProcess: value == 2,
+    );
+    if (state.variables != 2) {
+      ref.read(processTypeControllerProvider.notifier).setProcess(ProcessTypes.simplex);
+    }
   }
 
-  void updateProcess(ProcessTypes process) {
+  void setConstraints(String source) {
+    if (int.tryParse(source) == null) return;
+    final value = int.parse(source);
+    if (state.constraints == value) return;
+    state = state.copyWith(constraints: value);
+  }
+
+  void setData(int variablesLength, int constraintsLength) {
+    state = state.copyWith(
+      variables: variablesLength,
+      constraints: constraintsLength,
+      showProcess: variablesLength == 2,
+    );
+    if (state.variables != 2) {
+      ref.read(processTypeControllerProvider.notifier).setProcess(ProcessTypes.simplex);
+    }
+  }
+}
+
+@riverpod
+class ProcessTypeController extends _$ProcessTypeController {
+  @override
+  ProcessTypes build() => ProcessTypes.simplex;
+
+  void setProcess(ProcessTypes process) {
     state = process;
-    debugPrint('ProcessController: $state');
   }
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 class DataEntryController extends _$DataEntryController {
   @override
   DataEntryModel build() {
-    final dataSize = ref.watch(dataEntrySizeControllerProvider);
-    return DataEntryModel(
-      objectiveFunction: List.generate(dataSize.variables, (i) => 0.0),
-      constraints: List.generate(dataSize.constraints, (i) => List.generate(dataSize.variables + 1, (j) => 0.0)),
-      operators: List.generate(dataSize.constraints, (i) => Operators.leq),
+    final variables = ref.watch(entrySizeControllerProvider.select((value) => value.variables));
+    final constraints = ref.watch(entrySizeControllerProvider.select((value) => value.constraints));
+    final DataEntryModel dataEntryState = DataEntryModel(
+      objectiveFunction: List.generate(variables, (i) => 0.0),
+      constraints: List.generate(constraints, (i) => List.generate(variables + 1, (j) => 0.0)),
+      operators: List.generate(constraints, (i) => Operators.leq),
       objective: Objectives.max,
     );
+    debugPrint('$dataEntryState');
+    return dataEntryState;
   }
 
   void updateObjective(Objectives objective) {
@@ -66,29 +99,8 @@ class DataEntryController extends _$DataEntryController {
   void updateConstraintsRS(int index, double value) {
     state = state.copyWith(constraints: List.from(state.constraints)..[index].last = value);
   }
-}
 
-@Riverpod(keepAlive: true)
-class DataControllerForGraphic extends _$DataControllerForGraphic {
-  @override
-  void build() {}
-
-  DataModelForGraphic interceptions() {
-    final data = ref.read(dataEntryControllerProvider);
-    List<Point<double>> interceptions = [];
-    for (final eq in data.constraints) {
-      final [first, second, ..., last] = eq;
-      final double intX = first == 0 ? 0 : last / first;
-      final double intY = second == 0 ? 0 : last / second;
-      interceptions.add(Point<double>(intX, intY));
-    }
-    double maxX = 0;
-    double maxY = 0;
-    for (var inter in interceptions) {
-      if (inter.x > maxX) maxX = inter.x;
-      if (inter.y > maxY) maxY = inter.y;
-    }
-    final max = Point(maxX, maxY);
-    return DataModelForGraphic(intersections: interceptions, max: max);
+  void setData(DataEntryModel data) {
+    state = data;
   }
 }
