@@ -15,14 +15,14 @@ class EntrySizeState with _$EntrySizeState {
 }
 
 @freezed
-class DataEntryState with _$DataEntryState {
-  const factory DataEntryState({
+class DataEntryModel with _$DataEntryModel {
+  const factory DataEntryModel({
     required Objectives objective,
     required List<double> objectiveFunction,
     required List<Operators> operators,
     required List<List<double>> constraints,
   }) = _DataEntryModel;
 
-  factory DataEntryState.fromJson(Map<String, dynamic> json) => _$DataEntryStateFromJson(json);
+  factory DataEntryModel.fromJson(Map<String, dynamic> json) => _$DataEntryModelFromJson(json);
 }
 

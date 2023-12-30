@@ -7,6 +7,7 @@ import '../controllers/data_entry_controller.dart';
 import '../controllers/graphic_mode_controller.dart';
 import '../custom_painters/graphic_process_painter.dart';
 import '../widgets/gobackgohome_buttons_widget.dart';
+import '../widgets/share.dart';
 
 class GraphicProcessPage extends ConsumerWidget {
   const GraphicProcessPage({super.key});
@@ -28,6 +29,7 @@ class GraphicProcessPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Graphic Method - Linear Programming App'),
         centerTitle: true,
+        actions: const [ShareWidget()],
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {

@@ -25,6 +25,8 @@ mixin _$SimplexDataModel {
       throw _privateConstructorUsedError;
   List<int>? get artificialVariablesIndexes =>
       throw _privateConstructorUsedError;
+  AnswerPresentationModel? get answerPresentation =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SimplexDataModelCopyWith<SimplexDataModel> get copyWith =>
@@ -43,7 +45,10 @@ abstract class $SimplexDataModelCopyWith<$Res> {
       List<Point<int>> pivotsCoordinates,
       List<List<List<String>>>? tableaus1st,
       List<Point<int>>? pivotsCoordinates1st,
-      List<int>? artificialVariablesIndexes});
+      List<int>? artificialVariablesIndexes,
+      AnswerPresentationModel? answerPresentation});
+
+  $AnswerPresentationModelCopyWith<$Res>? get answerPresentation;
 }
 
 /// @nodoc
@@ -65,6 +70,7 @@ class _$SimplexDataModelCopyWithImpl<$Res, $Val extends SimplexDataModel>
     Object? tableaus1st = freezed,
     Object? pivotsCoordinates1st = freezed,
     Object? artificialVariablesIndexes = freezed,
+    Object? answerPresentation = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -91,7 +97,24 @@ class _$SimplexDataModelCopyWithImpl<$Res, $Val extends SimplexDataModel>
           ? _value.artificialVariablesIndexes
           : artificialVariablesIndexes // ignore: cast_nullable_to_non_nullable
               as List<int>?,
+      answerPresentation: freezed == answerPresentation
+          ? _value.answerPresentation
+          : answerPresentation // ignore: cast_nullable_to_non_nullable
+              as AnswerPresentationModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AnswerPresentationModelCopyWith<$Res>? get answerPresentation {
+    if (_value.answerPresentation == null) {
+      return null;
+    }
+
+    return $AnswerPresentationModelCopyWith<$Res>(_value.answerPresentation!,
+        (value) {
+      return _then(_value.copyWith(answerPresentation: value) as $Val);
+    });
   }
 }
 
@@ -109,7 +132,11 @@ abstract class _$$SimplexDataModelImplCopyWith<$Res>
       List<Point<int>> pivotsCoordinates,
       List<List<List<String>>>? tableaus1st,
       List<Point<int>>? pivotsCoordinates1st,
-      List<int>? artificialVariablesIndexes});
+      List<int>? artificialVariablesIndexes,
+      AnswerPresentationModel? answerPresentation});
+
+  @override
+  $AnswerPresentationModelCopyWith<$Res>? get answerPresentation;
 }
 
 /// @nodoc
@@ -129,6 +156,7 @@ class __$$SimplexDataModelImplCopyWithImpl<$Res>
     Object? tableaus1st = freezed,
     Object? pivotsCoordinates1st = freezed,
     Object? artificialVariablesIndexes = freezed,
+    Object? answerPresentation = freezed,
   }) {
     return _then(_$SimplexDataModelImpl(
       status: null == status
@@ -155,6 +183,10 @@ class __$$SimplexDataModelImplCopyWithImpl<$Res>
           ? _value._artificialVariablesIndexes
           : artificialVariablesIndexes // ignore: cast_nullable_to_non_nullable
               as List<int>?,
+      answerPresentation: freezed == answerPresentation
+          ? _value.answerPresentation
+          : answerPresentation // ignore: cast_nullable_to_non_nullable
+              as AnswerPresentationModel?,
     ));
   }
 }
@@ -168,7 +200,8 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
       required final List<Point<int>> pivotsCoordinates,
       final List<List<List<String>>>? tableaus1st = null,
       final List<Point<int>>? pivotsCoordinates1st = null,
-      final List<int>? artificialVariablesIndexes = null})
+      final List<int>? artificialVariablesIndexes = null,
+      this.answerPresentation})
       : _tableaus = tableaus,
         _pivotsCoordinates = pivotsCoordinates,
         _tableaus1st = tableaus1st,
@@ -231,8 +264,11 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
   }
 
   @override
+  final AnswerPresentationModel? answerPresentation;
+
+  @override
   String toString() {
-    return 'SimplexDataModel(status: $status, tableaus: $tableaus, pivotsCoordinates: $pivotsCoordinates, tableaus1st: $tableaus1st, pivotsCoordinates1st: $pivotsCoordinates1st, artificialVariablesIndexes: $artificialVariablesIndexes)';
+    return 'SimplexDataModel(status: $status, tableaus: $tableaus, pivotsCoordinates: $pivotsCoordinates, tableaus1st: $tableaus1st, pivotsCoordinates1st: $pivotsCoordinates1st, artificialVariablesIndexes: $artificialVariablesIndexes, answerPresentation: $answerPresentation)';
   }
 
   @override
@@ -250,7 +286,9 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
                 .equals(other._pivotsCoordinates1st, _pivotsCoordinates1st) &&
             const DeepCollectionEquality().equals(
                 other._artificialVariablesIndexes,
-                _artificialVariablesIndexes));
+                _artificialVariablesIndexes) &&
+            (identical(other.answerPresentation, answerPresentation) ||
+                other.answerPresentation == answerPresentation));
   }
 
   @override
@@ -261,7 +299,8 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
       const DeepCollectionEquality().hash(_pivotsCoordinates),
       const DeepCollectionEquality().hash(_tableaus1st),
       const DeepCollectionEquality().hash(_pivotsCoordinates1st),
-      const DeepCollectionEquality().hash(_artificialVariablesIndexes));
+      const DeepCollectionEquality().hash(_artificialVariablesIndexes),
+      answerPresentation);
 
   @JsonKey(ignore: true)
   @override
@@ -273,12 +312,14 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
 
 abstract class _SimplexDataModel extends SimplexDataModel {
   const factory _SimplexDataModel(
-      {required final SimplexStatus status,
-      required final List<List<List<String>>> tableaus,
-      required final List<Point<int>> pivotsCoordinates,
-      final List<List<List<String>>>? tableaus1st,
-      final List<Point<int>>? pivotsCoordinates1st,
-      final List<int>? artificialVariablesIndexes}) = _$SimplexDataModelImpl;
+          {required final SimplexStatus status,
+          required final List<List<List<String>>> tableaus,
+          required final List<Point<int>> pivotsCoordinates,
+          final List<List<List<String>>>? tableaus1st,
+          final List<Point<int>>? pivotsCoordinates1st,
+          final List<int>? artificialVariablesIndexes,
+          final AnswerPresentationModel? answerPresentation}) =
+      _$SimplexDataModelImpl;
   const _SimplexDataModel._() : super._();
 
   @override
@@ -293,6 +334,8 @@ abstract class _SimplexDataModel extends SimplexDataModel {
   List<Point<int>>? get pivotsCoordinates1st;
   @override
   List<int>? get artificialVariablesIndexes;
+  @override
+  AnswerPresentationModel? get answerPresentation;
   @override
   @JsonKey(ignore: true)
   _$$SimplexDataModelImplCopyWith<_$SimplexDataModelImpl> get copyWith =>
@@ -457,5 +500,166 @@ abstract class _TabularFormInformation extends TabularFormInformation {
   @override
   @JsonKey(ignore: true)
   _$$TabularFormInformationImplCopyWith<_$TabularFormInformationImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$AnswerPresentationModel {
+  List<({double coefficient, String letter, double value})> get variablesData =>
+      throw _privateConstructorUsedError;
+  double get z => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AnswerPresentationModelCopyWith<AnswerPresentationModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AnswerPresentationModelCopyWith<$Res> {
+  factory $AnswerPresentationModelCopyWith(AnswerPresentationModel value,
+          $Res Function(AnswerPresentationModel) then) =
+      _$AnswerPresentationModelCopyWithImpl<$Res, AnswerPresentationModel>;
+  @useResult
+  $Res call(
+      {List<({double coefficient, String letter, double value})> variablesData,
+      double z});
+}
+
+/// @nodoc
+class _$AnswerPresentationModelCopyWithImpl<$Res,
+        $Val extends AnswerPresentationModel>
+    implements $AnswerPresentationModelCopyWith<$Res> {
+  _$AnswerPresentationModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? variablesData = null,
+    Object? z = null,
+  }) {
+    return _then(_value.copyWith(
+      variablesData: null == variablesData
+          ? _value.variablesData
+          : variablesData // ignore: cast_nullable_to_non_nullable
+              as List<({double coefficient, String letter, double value})>,
+      z: null == z
+          ? _value.z
+          : z // ignore: cast_nullable_to_non_nullable
+              as double,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AnswerPresentationModelImplCopyWith<$Res>
+    implements $AnswerPresentationModelCopyWith<$Res> {
+  factory _$$AnswerPresentationModelImplCopyWith(
+          _$AnswerPresentationModelImpl value,
+          $Res Function(_$AnswerPresentationModelImpl) then) =
+      __$$AnswerPresentationModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<({double coefficient, String letter, double value})> variablesData,
+      double z});
+}
+
+/// @nodoc
+class __$$AnswerPresentationModelImplCopyWithImpl<$Res>
+    extends _$AnswerPresentationModelCopyWithImpl<$Res,
+        _$AnswerPresentationModelImpl>
+    implements _$$AnswerPresentationModelImplCopyWith<$Res> {
+  __$$AnswerPresentationModelImplCopyWithImpl(
+      _$AnswerPresentationModelImpl _value,
+      $Res Function(_$AnswerPresentationModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? variablesData = null,
+    Object? z = null,
+  }) {
+    return _then(_$AnswerPresentationModelImpl(
+      variablesData: null == variablesData
+          ? _value._variablesData
+          : variablesData // ignore: cast_nullable_to_non_nullable
+              as List<({double coefficient, String letter, double value})>,
+      z: null == z
+          ? _value.z
+          : z // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AnswerPresentationModelImpl extends _AnswerPresentationModel {
+  const _$AnswerPresentationModelImpl(
+      {required final List<({double coefficient, String letter, double value})>
+          variablesData,
+      required this.z})
+      : _variablesData = variablesData,
+        super._();
+
+  final List<({double coefficient, String letter, double value})>
+      _variablesData;
+  @override
+  List<({double coefficient, String letter, double value})> get variablesData {
+    if (_variablesData is EqualUnmodifiableListView) return _variablesData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_variablesData);
+  }
+
+  @override
+  final double z;
+
+  @override
+  String toString() {
+    return 'AnswerPresentationModel(variablesData: $variablesData, z: $z)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AnswerPresentationModelImpl &&
+            const DeepCollectionEquality()
+                .equals(other._variablesData, _variablesData) &&
+            (identical(other.z, z) || other.z == z));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_variablesData), z);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AnswerPresentationModelImplCopyWith<_$AnswerPresentationModelImpl>
+      get copyWith => __$$AnswerPresentationModelImplCopyWithImpl<
+          _$AnswerPresentationModelImpl>(this, _$identity);
+}
+
+abstract class _AnswerPresentationModel extends AnswerPresentationModel {
+  const factory _AnswerPresentationModel(
+      {required final List<({double coefficient, String letter, double value})>
+          variablesData,
+      required final double z}) = _$AnswerPresentationModelImpl;
+  const _AnswerPresentationModel._() : super._();
+
+  @override
+  List<({double coefficient, String letter, double value})> get variablesData;
+  @override
+  double get z;
+  @override
+  @JsonKey(ignore: true)
+  _$$AnswerPresentationModelImplCopyWith<_$AnswerPresentationModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

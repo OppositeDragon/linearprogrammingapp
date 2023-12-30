@@ -16,14 +16,14 @@ typedef TableuSize = ({int rows, int columns});
 
 @riverpod
 bool needsTwoPhase(NeedsTwoPhaseRef ref) {
-  final DataEntryState dataEntry = ref.watch(dataEntryControllerProvider);
+  final DataEntryModel dataEntry = ref.watch(dataEntryControllerProvider);
   return dataEntry.operators.any((element) => element != Operators.leq);
 }
 
 @riverpod
 Point<int> calculateSize(CalculateSizeRef ref) {
   final EntrySizeState entrySize = ref.watch(entrySizeControllerProvider);
-  final DataEntryState dataEntry = ref.watch(dataEntryControllerProvider);
+  final DataEntryModel dataEntry = ref.watch(dataEntryControllerProvider);
   final needsTwoPhase = ref.watch(needsTwoPhaseProvider);
   final int rows = entrySize.constraints + 1;
   final int columns = entrySize.variables + entrySize.constraints + 1;
@@ -40,7 +40,7 @@ Point<int> calculateSize(CalculateSizeRef ref) {
 @riverpod
 (TabularFormInformation, List<int>) toTabularForm(ToTabularFormRef ref) {
   final tableauSize = ref.watch(calculateSizeProvider);
-  final DataEntryState dataEntry = ref.watch(dataEntryControllerProvider);
+  final DataEntryModel dataEntry = ref.watch(dataEntryControllerProvider);
   final tableau = List<List<double>>.generate(
     tableauSize.x,
     (index) => List.generate(tableauSize.y, (index) => 0),
@@ -126,6 +126,8 @@ Point<int> calculateSize(CalculateSizeRef ref) {
   );
 }
 
+const Point<int> unboundPoint = Point<int>(-1, -1);
+
 @riverpod
 class SimplexController extends _$SimplexController {
   List<TabularFormInformation> _followingTableaus = [];
@@ -155,62 +157,66 @@ class SimplexController extends _$SimplexController {
       }
       debugPrint('1st phase out of while loop');
     }
-    if (status == SimplexStatus.optimal) {
+    if (needsTwoPhase) {
       //place 1st phase tableaus on its own variable
       _firstPhaseTableaus = [..._followingTableaus];
-      //drop artificial columns
-      final List<List<double>> previousTableu = _followingTableaus.last.matrix;
-      final List<int> basicVariables = _followingTableaus.last.basicVariables;
-      final List<List<double>> nextTableu = [];
-      for (int i = 1; i < previousTableu.length; i++) {
-        List<double> row = [];
-        for (int j = 0; j < previousTableu[i].length; j++) {
-          if (!_artificialVariablesIndexes.contains(j)) {
-            row.add(previousTableu[i][j]);
+      _firstPhasePivotsCoordinates = [..._pivotsCoordinates];
+      if (_followingTableaus.last.matrix.first.last == 0) {
+        //drop artificial columns
+        final List<List<double>> previousTableu = _followingTableaus.last.matrix;
+        final List<int> basicVariables = _followingTableaus.last.basicVariables;
+        final List<List<double>> nextTableu = [];
+        for (int i = 1; i < previousTableu.length; i++) {
+          List<double> row = [];
+          for (int j = 0; j < previousTableu[i].length; j++) {
+            if (!_artificialVariablesIndexes.contains(j)) {
+              row.add(previousTableu[i][j]);
+            }
+          }
+          nextTableu.add(row);
+        }
+        //create a new row, to start calculating the new Z row
+        final ofTabular = previousTableu.first;
+        for (int i = 0; i < dataEntry.objectiveFunction.length; i++) {
+          ofTabular[i] = dataEntry.objectiveFunction[i];
+        }
+        List<double> newObjectiveFunction = List<double>.generate(ofTabular.length, (index) => 0);
+        //values of the objective function in the position of basic variables
+        final basicVariablesValues = List<double>.generate(dataEntry.constraints.length, (index) => 0);
+        for (int i = 0; i < basicVariables.length; i++) {
+          if (basicVariables[i] - 1 < dataEntry.objectiveFunction.length) {
+            basicVariablesValues[i] = dataEntry.objectiveFunction[basicVariables[i] - 1];
           }
         }
-        nextTableu.add(row);
-      }
-      //create a now row, to start calculating the new Z row
-      final ofTabular = previousTableu.first;
-      for (int i = 0; i < dataEntry.objectiveFunction.length; i++) {
-        ofTabular[i] = dataEntry.objectiveFunction[i];
-      }
-      List<double> newObjectiveFunction = List<double>.generate(ofTabular.length, (index) => 0);
-      //values of the objective function in the position of basic variables
-      final basicVariablesValues = List<double>.generate(dataEntry.constraints.length, (index) => 0);
-      for (int i = 0; i < basicVariables.length; i++) {
-        if (basicVariables[i] - 1 < dataEntry.objectiveFunction.length) {
-          basicVariablesValues[i] = dataEntry.objectiveFunction[basicVariables[i] - 1];
+        //calculate values for the Z row
+        for (int i = 0; i < ofTabular.length; i++) {
+          double sum = 0;
+          for (int j = 0; j < previousTableu.length - 1; j++) {
+            sum += basicVariablesValues[j] * previousTableu[j + 1][i];
+          }
+          newObjectiveFunction[i] = ofTabular[i] - sum;
         }
-      }
-      //calculate values for the Z row
-      for (int i = 0; i < ofTabular.length; i++) {
-        double sum = 0;
-        for (int j = 0; j < previousTableu.length - 1; j++) {
-          sum += basicVariablesValues[j] * previousTableu[j + 1][i];
+        //remove artificial variables from new objective function
+        _artificialVariablesIndexes.sort((a, b) => b.compareTo(a));
+        for (var index in _artificialVariablesIndexes) {
+          newObjectiveFunction.removeAt(index);
         }
-        newObjectiveFunction[i] = ofTabular[i] - sum;
-      }
-      //remove artificial variables from new objective function
-      _artificialVariablesIndexes.sort((a, b) => b.compareTo(a));
-      for (var index in _artificialVariablesIndexes) {
-        newObjectiveFunction.removeAt(index);
-      }
-      if (dataEntry.objective == Objectives.max) {
-        newObjectiveFunction = newObjectiveFunction * -1;
-      }
-      nextTableu.insert(0, newObjectiveFunction);
+        if (dataEntry.objective == Objectives.max) {
+          newObjectiveFunction = newObjectiveFunction * -1;
+        }
+        nextTableu.insert(0, newObjectiveFunction);
 
-      //set up for second phase
-      _followingTableaus = [
-        TabularFormInformation(
-          matrix: nextTableu,
-          basicVariables: basicVariables,
-        ),
-      ];
-      _firstPhasePivotsCoordinates = [..._pivotsCoordinates];
-      _pivotsCoordinates = [];
+        //set up for second phase
+        _followingTableaus = [
+          TabularFormInformation(
+            matrix: nextTableu,
+            basicVariables: basicVariables,
+          ),
+        ];
+      } else {
+        _followingTableaus = [];
+        _pivotsCoordinates = [];
+      }
     }
 
     int i = 0;
@@ -227,6 +233,33 @@ class SimplexController extends _$SimplexController {
     debugPrint('out of while loop');
     List<List<List<String>>> tableausString = tableausToString(_followingTableaus);
     List<List<List<String>>> tableaus1stString = tableausToString(_firstPhaseTableaus);
+    AnswerPresentationModel? answerPresentation;
+    if (tableausString.isNotEmpty) {
+      double z = _followingTableaus.last.matrix.first.last;
+      if (dataEntry.objective == Objectives.min) z = -z;
+      final List<AnswerVariableData> variablesData = [];
+      for (int i = 0; i < dataEntry.objectiveFunction.length; i++) {
+        final indexInBV = _followingTableaus.last.basicVariables.indexOf(i + 1);
+        if (indexInBV == -1) {
+          variablesData.add(
+            (
+              letter: '${i + 1}',
+              coefficient: dataEntry.objectiveFunction[i],
+              value: 0,
+            ),
+          );
+        } else {
+          variablesData.add(
+            (
+              letter: '${i + 1}',
+              coefficient: dataEntry.objectiveFunction[i],
+              value: _followingTableaus.last.matrix[indexInBV + 1].last,
+            ),
+          );
+        }
+      }
+      answerPresentation = AnswerPresentationModel(variablesData: variablesData, z: z);
+    }
     return SimplexDataModel(
       artificialVariablesIndexes: needsTwoPhase ? _artificialVariablesIndexes : null,
       pivotsCoordinates1st: needsTwoPhase ? _firstPhasePivotsCoordinates : null,
@@ -234,6 +267,7 @@ class SimplexController extends _$SimplexController {
       tableaus: tableausString,
       pivotsCoordinates: _pivotsCoordinates,
       status: status,
+      answerPresentation: answerPresentation,
     );
   }
 
@@ -266,10 +300,14 @@ class SimplexController extends _$SimplexController {
       debugPrint('isOptimal');
       return SimplexStatus.optimal;
     }
+    if (!_shouldContinue()) {
+      return SimplexStatus.unbounded;
+    }
+
     //step 2 - find pivot coordinates
     final Point<int> pivotCoordinates = findPivotCoordinates(_followingTableaus.last.matrix);
     debugPrint('pivotCoordinates: $pivotCoordinates');
-    if (pivotCoordinates == const Point<int>(-1, -1)) return SimplexStatus.unbounded;
+    if (pivotCoordinates == unboundPoint) return SimplexStatus.unbounded;
     //step 3 - form next tableu
     formNextTableu(pivotCoordinates);
     return SimplexStatus.notOptimal;
@@ -284,7 +322,7 @@ class SimplexController extends _$SimplexController {
     //step 2 - find pivot coordinates
     final Point<int> pivotCoordinates = findPivotCoordinates(_followingTableaus.last.matrix);
     debugPrint('pivotCoordinates: $pivotCoordinates');
-    if (pivotCoordinates == const Point<int>(-1, -1)) return SimplexStatus.unbounded;
+    if (pivotCoordinates == unboundPoint) return SimplexStatus.unbounded;
     //step 3 - form next tableu
     formNextTableu(pivotCoordinates);
     return SimplexStatus.notOptimal;
@@ -297,6 +335,15 @@ class SimplexController extends _$SimplexController {
       }
     }
     return true;
+  }
+
+  bool _shouldContinue() {
+    for (var i = 0; i < _followingTableaus.last.matrix.first.length - 1; i++) {
+      if (_followingTableaus.last.matrix.first[i] < 0) {
+        return true;
+      }
+    }
+    return false;
   }
 
   bool isOptimal2ndPhase() {
@@ -316,7 +363,7 @@ class SimplexController extends _$SimplexController {
         smallestColumnPosition = i;
       }
     }
-    if (smallestColumnPosition < 0) return const Point<int>(-1, -1);
+    if (smallestColumnPosition < 0) return unboundPoint;
     int smallestRowPosition = -1;
     double smallestresult = -1;
     for (int i = 0; i < tableu.length; i++) {
@@ -332,7 +379,7 @@ class SimplexController extends _$SimplexController {
       }
     }
     debugPrint('smallestColumnPosition: $smallestColumnPosition; smallestRowPosition: $smallestRowPosition');
-    if (smallestresult <= 0) return const Point<int>(-1, -1);
+    if (smallestresult <= 0) return unboundPoint;
     _pivotsCoordinates.add(Point<int>(smallestColumnPosition, smallestRowPosition));
     return _pivotsCoordinates.last;
   }

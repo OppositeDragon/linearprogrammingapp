@@ -18,3 +18,7 @@ const double spaceXXL = 20;
 
 ///const space of 24
 const double spaceXXXL = 24;
+
+const int maxVariables = 12;
+
+const int maxConstraints = 15;

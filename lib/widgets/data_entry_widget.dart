@@ -3,10 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:linearprogrammingapp/constants/routes.dart';
 
 import '../constants/enums.dart';
 import '../constants/numeric.dart';
+import '../constants/routes.dart';
+import '../constants/strings.dart';
 import '../controllers/data_entry_controller.dart';
 import 'dropdown_button_widget.dart';
 import 'textfield_widget.dart';
@@ -22,42 +23,41 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
   final List<List<TextEditingController>> constraintsControllers = [];
   final formKey = GlobalKey<FormState>();
   final regExpSignNum = RegExp(r'(^\-?\d*\.?\d*)');
-  final invalidMessage = 'Inválido';
   @override
   void initState() {
     super.initState();
     final dataEntry = ref.read(dataEntryControllerProvider);
-    //initialize text field controllers for objective function
+    //initialize text field controllers for objective function and adds
+    //listeners to objective function controllers, if value can be parsed to
+    //double, update on provider.
     for (int i = 0; i < dataEntry.objectiveFunction.length; i++) {
-      objectiveFunctionControllers.add(TextEditingController()
-        ..text = dataEntry.objectiveFunction[i] == 0 ? '' : '${dataEntry.objectiveFunction[i]}');
+      objectiveFunctionControllers.add(
+        TextEditingController()
+          ..text = dataEntry.objectiveFunction[i] == 0 ? '' : '${dataEntry.objectiveFunction[i]}'
+          ..addListener(() {
+            final value = objectiveFunctionControllers[i].text.isEmpty ? '0' : objectiveFunctionControllers[i].text;
+            if (double.tryParse(value) != null) {
+              ref.read(dataEntryControllerProvider.notifier).updateObjectiveFunction(i, double.parse(value));
+            }
+          }),
+      );
     }
-    //initialize text field controllers for constraints
+    //initialize text field controllers for constraints and adds listeners to
+    //constraints controllers, if value can be parsed to double, update on
+    //provider.
     for (int i = 0; i < dataEntry.constraints.length; i++) {
       constraintsControllers.add([]);
       for (int j = 0; j < dataEntry.constraints[i].length; j++) {
         constraintsControllers[i].add(
-            TextEditingController()..text = dataEntry.constraints[i][j] == 0 ? '' : '${dataEntry.constraints[i][j]}');
-      }
-    }
-    //add listeners to objective function controllers, if value can be parsed to double, update on provider.
-    for (int i = 0; i < dataEntry.objectiveFunction.length; i++) {
-      objectiveFunctionControllers[i].addListener(() {
-        final value = objectiveFunctionControllers[i].text;
-        if (double.tryParse(value) != null) {
-          ref.read(dataEntryControllerProvider.notifier).updateObjectiveFunction(i, double.parse(value));
-        }
-      });
-    }
-    //add listeners to constraints controllers, if value can be parsed to double, update on provider.
-    for (int i = 0; i < dataEntry.constraints.length; i++) {
-      for (int j = 0; j < dataEntry.constraints[i].length; j++) {
-        constraintsControllers[i][j].addListener(() {
-          final value = constraintsControllers[i][j].text;
-          if (double.tryParse(value) != null) {
-            ref.read(dataEntryControllerProvider.notifier).updateConstraints(i, j, double.parse(value));
-          }
-        });
+          TextEditingController()
+            ..text = dataEntry.constraints[i][j] == 0 ? '' : '${dataEntry.constraints[i][j]}'
+            ..addListener(() {
+              final value = constraintsControllers[i][j].text.isEmpty ? '0' : constraintsControllers[i][j].text;
+              if (double.tryParse(value) != null) {
+                ref.read(dataEntryControllerProvider.notifier).updateConstraints(i, j, double.parse(value));
+              }
+            }),
+        );
       }
     }
   }
@@ -78,16 +78,23 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
   @override
   Widget build(BuildContext context) {
     final dataEntry = ref.watch(dataEntryControllerProvider);
-
     final textTheme = Theme.of(context).textTheme;
-
     return Form(
       key: formKey,
       child: CustomScrollView(
         slivers: [
           const SliverToBoxAdapter(child: SizedBox(height: spaceXL)),
           SliverToBoxAdapter(
-            child: Text('Ingreso de datos', textAlign: TextAlign.center, style: textTheme.displaySmall),
+            child: Row(
+              children: [
+                Expanded(child: Text('Ingreso de datos', textAlign: TextAlign.center, style: textTheme.displaySmall)),
+                IconButton(
+                  onPressed: clearControllers,
+                  icon: const Icon(Icons.backspace),
+                  tooltip: 'Clear all fields',
+                ),
+              ],
+            ),
           ),
           const SliverToBoxAdapter(child: SizedBox(height: spaceXXL)),
           SliverToBoxAdapter(
@@ -121,7 +128,11 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
           SliverToBoxAdapter(
             child: Column(
               children: [
-                Text(' Funcion objetivo ', textAlign: TextAlign.center, style: textTheme.headlineMedium),
+                Text(
+                  ' Funcion objetivo ',
+                  textAlign: TextAlign.center,
+                  style: textTheme.headlineMedium,
+                ),
                 const SizedBox(height: spaceS),
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -142,6 +153,7 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                               controller: objectiveFunctionControllers[i],
                               autoFocus: i == 0 ? true : false,
                               selectAllOnGainFocus: true,
+                              action: TextInputAction.next,
                               onEditingComplete: FocusScope.of(context).nextFocus,
                               keyboardType: const TextInputType.numberWithOptions(
                                 decimal: true,
@@ -182,9 +194,10 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
               textAlign: TextAlign.center,
             ),
           ),
-          for (int i = 0; i < dataEntry.constraints.length; i++)
-            SliverToBoxAdapter(
-              child: Card(
+          SliverList.builder(
+            itemCount: dataEntry.constraints.length,
+            itemBuilder: (context, i) {
+              return Card(
                 elevation: spaceS,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: spaceM, horizontal: spaceS),
@@ -206,7 +219,7 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
-                                    width: 85,
+                                    width: 75,
                                     child: TextFieldWidget(
                                       label: '',
                                       isDense: true,
@@ -217,6 +230,7 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                                       ),
                                       selectAllOnGainFocus: true,
                                       onEditingComplete: FocusScope.of(context).nextFocus,
+                                      action: TextInputAction.next,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return null;
@@ -275,10 +289,14 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                           label: '',
                           isDense: true,
                           controller: constraintsControllers[i].last,
-                          keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                            signed: true,
+                          ),
                           selectAllOnGainFocus: true,
                           onEditingComplete:
                               i == dataEntry.constraints.length - 1 ? tryContinue : FocusScope.of(context).nextFocus,
+                          action: i == dataEntry.constraints.length - 1 ? TextInputAction.done : TextInputAction.next,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return null;
@@ -298,8 +316,9 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
                     ],
                   ),
                 ),
-              ),
-            ),
+              );
+            },
+          ),
           const SliverToBoxAdapter(child: Divider(height: spaceXXXL, thickness: 2)),
           SliverToBoxAdapter(
             child: Row(
@@ -379,5 +398,17 @@ class _DataEntryWidgetState extends ConsumerState<DataEntryWidget> {
           throw UnsupportedError('Process type not supported');
       }
     }
+  }
+
+  void clearControllers() {
+    for (final controller in objectiveFunctionControllers) {
+      controller.clear();
+    }
+    for (final controllerList in constraintsControllers) {
+      for (final controller in controllerList) {
+        controller.clear();
+      }
+    }
+    ref.invalidate(dataEntryControllerProvider);
   }
 }

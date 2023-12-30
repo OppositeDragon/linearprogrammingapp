@@ -16,18 +16,19 @@ part 'router_controller.g.dart';
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   final router = GoRouter(
-    refreshListenable: ref.read(dbLoginProvider).listenable(keys: [
-      userKey,
-    ]),
+    refreshListenable: ref.read(dbLoginProvider).listenable(
+      keys: [userKey],
+    ),
     redirect: (context, state) async {
       final loginBox = ref.read(dbLoginProvider);
       final bool isLoggedIn = loginBox.get(userKey) != null;
-      final location = state.uri.toString();
-      if (!isLoggedIn && location != routeLogin) {
-        return routeLogin;
+      final bool isLoggingIn = state.matchedLocation == routeLogin;
+      final String targetLocation = state.matchedLocation == '/' ? '' : '?from=${state.uri}';
+      if (!isLoggedIn && !isLoggingIn) {
+        return '$routeLogin$targetLocation';
       }
-      if (isLoggedIn && location == routeLogin) {
-        return routeHome;
+      if (isLoggedIn && isLoggingIn) {
+        return state.uri.queryParameters['from'] ?? routeHome;
       }
       return null;
     },
@@ -46,7 +47,7 @@ GoRouter goRouter(GoRouterRef ref) {
           GoRoute(
             path: routeDataEntry,
             name: routeDataEntryName,
-            builder: (context, state) => const DataEntryPage(),
+            builder: (context, state) => DataEntryPage(state.uri.queryParameters['data']),
             routes: [
               GoRoute(
                 path: routeAlgebraicProcess,
