@@ -24,3 +24,12 @@ enum Objectives {
   const Objectives({required this.label});
   final String label;
 }
+
+enum SimplexStatus {
+  optimal(label: 'Óptimo'),
+  unbounded(label: 'Ilimitado'),
+  notOptimal(label: 'No Óptimo');
+
+  const SimplexStatus({required this.label});
+  final String label;
+}

@@ -133,7 +133,7 @@ class _$EntrySizeStateImpl implements _EntrySizeState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EntrySizeStateImpl &&
@@ -175,12 +175,12 @@ abstract class _EntrySizeState implements EntrySizeState {
       throw _privateConstructorUsedError;
 }
 
-DataEntryState _$DataEntryStateFromJson(Map<String, dynamic> json) {
+DataEntryModel _$DataEntryModelFromJson(Map<String, dynamic> json) {
   return _DataEntryModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$DataEntryState {
+mixin _$DataEntryModel {
   Objectives get objective => throw _privateConstructorUsedError;
   List<double> get objectiveFunction => throw _privateConstructorUsedError;
   List<Operators> get operators => throw _privateConstructorUsedError;
@@ -188,15 +188,15 @@ mixin _$DataEntryState {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $DataEntryStateCopyWith<DataEntryState> get copyWith =>
+  $DataEntryModelCopyWith<DataEntryModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DataEntryStateCopyWith<$Res> {
-  factory $DataEntryStateCopyWith(
-          DataEntryState value, $Res Function(DataEntryState) then) =
-      _$DataEntryStateCopyWithImpl<$Res, DataEntryState>;
+abstract class $DataEntryModelCopyWith<$Res> {
+  factory $DataEntryModelCopyWith(
+          DataEntryModel value, $Res Function(DataEntryModel) then) =
+      _$DataEntryModelCopyWithImpl<$Res, DataEntryModel>;
   @useResult
   $Res call(
       {Objectives objective,
@@ -206,9 +206,9 @@ abstract class $DataEntryStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DataEntryStateCopyWithImpl<$Res, $Val extends DataEntryState>
-    implements $DataEntryStateCopyWith<$Res> {
-  _$DataEntryStateCopyWithImpl(this._value, this._then);
+class _$DataEntryModelCopyWithImpl<$Res, $Val extends DataEntryModel>
+    implements $DataEntryModelCopyWith<$Res> {
+  _$DataEntryModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -246,7 +246,7 @@ class _$DataEntryStateCopyWithImpl<$Res, $Val extends DataEntryState>
 
 /// @nodoc
 abstract class _$$DataEntryModelImplCopyWith<$Res>
-    implements $DataEntryStateCopyWith<$Res> {
+    implements $DataEntryModelCopyWith<$Res> {
   factory _$$DataEntryModelImplCopyWith(_$DataEntryModelImpl value,
           $Res Function(_$DataEntryModelImpl) then) =
       __$$DataEntryModelImplCopyWithImpl<$Res>;
@@ -261,7 +261,7 @@ abstract class _$$DataEntryModelImplCopyWith<$Res>
 
 /// @nodoc
 class __$$DataEntryModelImplCopyWithImpl<$Res>
-    extends _$DataEntryStateCopyWithImpl<$Res, _$DataEntryModelImpl>
+    extends _$DataEntryModelCopyWithImpl<$Res, _$DataEntryModelImpl>
     implements _$$DataEntryModelImplCopyWith<$Res> {
   __$$DataEntryModelImplCopyWithImpl(
       _$DataEntryModelImpl _value, $Res Function(_$DataEntryModelImpl) _then)
@@ -340,11 +340,11 @@ class _$DataEntryModelImpl implements _DataEntryModel {
 
   @override
   String toString() {
-    return 'DataEntryState(objective: $objective, objectiveFunction: $objectiveFunction, operators: $operators, constraints: $constraints)';
+    return 'DataEntryModel(objective: $objective, objectiveFunction: $objectiveFunction, operators: $operators, constraints: $constraints)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DataEntryModelImpl &&
@@ -382,7 +382,7 @@ class _$DataEntryModelImpl implements _DataEntryModel {
   }
 }
 
-abstract class _DataEntryModel implements DataEntryState {
+abstract class _DataEntryModel implements DataEntryModel {
   const factory _DataEntryModel(
       {required final Objectives objective,
       required final List<double> objectiveFunction,
@@ -404,4 +404,165 @@ abstract class _DataEntryModel implements DataEntryState {
   @JsonKey(ignore: true)
   _$$DataEntryModelImplCopyWith<_$DataEntryModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$AnswerPresentationModel {
+  List<({double coefficient, String letter, double value})> get variablesData =>
+      throw _privateConstructorUsedError;
+  double get z => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AnswerPresentationModelCopyWith<AnswerPresentationModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AnswerPresentationModelCopyWith<$Res> {
+  factory $AnswerPresentationModelCopyWith(AnswerPresentationModel value,
+          $Res Function(AnswerPresentationModel) then) =
+      _$AnswerPresentationModelCopyWithImpl<$Res, AnswerPresentationModel>;
+  @useResult
+  $Res call(
+      {List<({double coefficient, String letter, double value})> variablesData,
+      double z});
+}
+
+/// @nodoc
+class _$AnswerPresentationModelCopyWithImpl<$Res,
+        $Val extends AnswerPresentationModel>
+    implements $AnswerPresentationModelCopyWith<$Res> {
+  _$AnswerPresentationModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? variablesData = null,
+    Object? z = null,
+  }) {
+    return _then(_value.copyWith(
+      variablesData: null == variablesData
+          ? _value.variablesData
+          : variablesData // ignore: cast_nullable_to_non_nullable
+              as List<({double coefficient, String letter, double value})>,
+      z: null == z
+          ? _value.z
+          : z // ignore: cast_nullable_to_non_nullable
+              as double,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AnswerPresentationModelImplCopyWith<$Res>
+    implements $AnswerPresentationModelCopyWith<$Res> {
+  factory _$$AnswerPresentationModelImplCopyWith(
+          _$AnswerPresentationModelImpl value,
+          $Res Function(_$AnswerPresentationModelImpl) then) =
+      __$$AnswerPresentationModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<({double coefficient, String letter, double value})> variablesData,
+      double z});
+}
+
+/// @nodoc
+class __$$AnswerPresentationModelImplCopyWithImpl<$Res>
+    extends _$AnswerPresentationModelCopyWithImpl<$Res,
+        _$AnswerPresentationModelImpl>
+    implements _$$AnswerPresentationModelImplCopyWith<$Res> {
+  __$$AnswerPresentationModelImplCopyWithImpl(
+      _$AnswerPresentationModelImpl _value,
+      $Res Function(_$AnswerPresentationModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? variablesData = null,
+    Object? z = null,
+  }) {
+    return _then(_$AnswerPresentationModelImpl(
+      variablesData: null == variablesData
+          ? _value._variablesData
+          : variablesData // ignore: cast_nullable_to_non_nullable
+              as List<({double coefficient, String letter, double value})>,
+      z: null == z
+          ? _value.z
+          : z // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AnswerPresentationModelImpl extends _AnswerPresentationModel {
+  const _$AnswerPresentationModelImpl(
+      {required final List<({double coefficient, String letter, double value})>
+          variablesData,
+      required this.z})
+      : _variablesData = variablesData,
+        super._();
+
+  final List<({double coefficient, String letter, double value})>
+      _variablesData;
+  @override
+  List<({double coefficient, String letter, double value})> get variablesData {
+    if (_variablesData is EqualUnmodifiableListView) return _variablesData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_variablesData);
+  }
+
+  @override
+  final double z;
+
+  @override
+  String toString() {
+    return 'AnswerPresentationModel(variablesData: $variablesData, z: $z)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AnswerPresentationModelImpl &&
+            const DeepCollectionEquality()
+                .equals(other._variablesData, _variablesData) &&
+            (identical(other.z, z) || other.z == z));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_variablesData), z);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AnswerPresentationModelImplCopyWith<_$AnswerPresentationModelImpl>
+      get copyWith => __$$AnswerPresentationModelImplCopyWithImpl<
+          _$AnswerPresentationModelImpl>(this, _$identity);
+}
+
+abstract class _AnswerPresentationModel extends AnswerPresentationModel {
+  const factory _AnswerPresentationModel(
+      {required final List<({double coefficient, String letter, double value})>
+          variablesData,
+      required final double z}) = _$AnswerPresentationModelImpl;
+  const _AnswerPresentationModel._() : super._();
+
+  @override
+  List<({double coefficient, String letter, double value})> get variablesData;
+  @override
+  double get z;
+  @override
+  @JsonKey(ignore: true)
+  _$$AnswerPresentationModelImplCopyWith<_$AnswerPresentationModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -12,14 +12,14 @@ part 'graphic_mode_controller.g.dart';
 @riverpod
 List<Point<double>> getIntersectionsOnAxes(GetIntersectionsOnAxesRef ref) {
   final constraints = ref.watch(dataEntryControllerProvider.select((value) => value.constraints));
-  final List<Point<double>> intersections = [];
+  final Set<Point<double>> intersections = {};
   for (int i = 0; i < constraints.length; i++) {
     final [x, y, ..., z] = constraints[i];
     final points = ref.read(getIntersectionOnAxisProvider(x, y, z));
     if (points.p1 != null) intersections.add(points.p1!);
     if (points.p2 != null) intersections.add(points.p2!);
   }
-  return intersections;
+  return intersections.toList();
 }
 
 @riverpod
@@ -106,8 +106,8 @@ List<Point<double>> getIntersectionsBetweenCostraints(GetIntersectionsBetweenCos
 }
 
 @riverpod
-List<Point<double>> getIntersectionsOnAxesAndBetweenConstraints(
-    GetIntersectionsOnAxesAndBetweenConstraintsRef ref) {
+List<Point<double>> getIntersectionsOnAxesAndConstraints(
+    GetIntersectionsOnAxesAndConstraintsRef ref) {
   final intersectionsBetweenCostraints = ref.watch(getIntersectionsBetweenCostraintsProvider);
   final intersectionsOnAxes = ref.watch(getIntersectionsOnAxesProvider);
   final Set<Point<double>> allIntersections = {};
@@ -120,7 +120,7 @@ List<Point<double>> getIntersectionsOnAxesAndBetweenConstraints(
 List<Point<double>> getCompliantIntersections(GetCompliantIntersectionsRef ref) {
   final constraints = ref.watch(dataEntryControllerProvider.select((value) => value.constraints));
   final operators = ref.watch(dataEntryControllerProvider.select((value) => value.operators));
-  final intersections = ref.watch(getIntersectionsOnAxesAndBetweenConstraintsProvider);
+  final intersections = ref.watch(getIntersectionsOnAxesAndConstraintsProvider);
   final limits = ref.watch(getBiggestIntersectionsOnAxesProvider);
   intersections.addAll([const Point(0, 0), Point(limits.x, limits.y)]);
   for (int i = 0; i < constraints.length; i++) {

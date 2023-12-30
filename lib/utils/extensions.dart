@@ -1,6 +1,8 @@
 import 'dart:math';
 
-extension IntExtension<T extends num> on num {
+import 'package:decimal/decimal.dart';
+
+extension IntExtension<T extends num> on T {
   String getSign() {
     return this < 0 ? '-' : '+';
   }
@@ -35,6 +37,16 @@ extension DoubleExtension on double {
     double roundedNumber = (this / roundingFactor).ceilToDouble();
     return roundedNumber * roundingFactor;
   }
+
+  Decimal toDecimal() {
+    return Decimal.parse(toString());
+  }
+}
+
+extension ListExtension<T extends num> on List<T> {
+  List<T> operator *(T other) {
+    return [for (var i = 0; i < length; i++) this[i] == 0 ? this[i] : this[i] * other as T];
+  }
 }
 
 extension StringExtension on String {
@@ -58,7 +70,7 @@ extension StringExtension on String {
   }
 }
 
-extension ListExtension<T> on List<List<T>> {
+extension MatrixExtension<T> on List<List<T>> {
   List<List<T>> transpose() {
     List<List<T>> transposed = [];
     for (var i = 0; i < this[0].length; i++) {
@@ -69,5 +81,14 @@ extension ListExtension<T> on List<List<T>> {
       transposed.add(aux);
     }
     return transposed;
+  }
+
+  String toStringMatrix() {
+    String str = '[\n';
+    for (var i = 0; i < length; i++) {
+      str += '\t${this[i]}\n';
+    }
+    str += ']';
+    return str;
   }
 }

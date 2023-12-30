@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:linearprogrammingapp/controllers/router_controller.dart';
 
 import '../constants/numeric.dart';
 import '../constants/routes.dart';
 import '../controllers/login_controller.dart';
+import '../controllers/router_controller.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -18,6 +18,7 @@ class HomePage extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
+            tooltip: 'Cerrar sesión',
             onPressed: () => ref.read(loginControllerProvider.notifier).logOut(),
           ),
         ],
