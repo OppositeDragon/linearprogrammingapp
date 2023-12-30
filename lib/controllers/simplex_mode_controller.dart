@@ -126,6 +126,8 @@ Point<int> calculateSize(CalculateSizeRef ref) {
   );
 }
 
+const Point<int> unboundPoint = Point<int>(-1, -1);
+
 @riverpod
 class SimplexController extends _$SimplexController {
   List<TabularFormInformation> _followingTableaus = [];
@@ -238,13 +240,23 @@ class SimplexController extends _$SimplexController {
       final List<AnswerVariableData> variablesData = [];
       for (int i = 0; i < dataEntry.objectiveFunction.length; i++) {
         final indexInBV = _followingTableaus.last.basicVariables.indexOf(i + 1);
-        variablesData.add(
-          (
-            letter: '${i + 1}',
-            coefficient: dataEntry.objectiveFunction[i],
-            value: _followingTableaus.last.matrix[indexInBV + 1].last,
-          ),
-        );
+        if (indexInBV == -1) {
+          variablesData.add(
+            (
+              letter: '${i + 1}',
+              coefficient: dataEntry.objectiveFunction[i],
+              value: 0,
+            ),
+          );
+        } else {
+          variablesData.add(
+            (
+              letter: '${i + 1}',
+              coefficient: dataEntry.objectiveFunction[i],
+              value: _followingTableaus.last.matrix[indexInBV + 1].last,
+            ),
+          );
+        }
       }
       answerPresentation = AnswerPresentationModel(variablesData: variablesData, z: z);
     }
@@ -295,7 +307,7 @@ class SimplexController extends _$SimplexController {
     //step 2 - find pivot coordinates
     final Point<int> pivotCoordinates = findPivotCoordinates(_followingTableaus.last.matrix);
     debugPrint('pivotCoordinates: $pivotCoordinates');
-    if (pivotCoordinates == const Point<int>(-1, -1)) return SimplexStatus.unbounded;
+    if (pivotCoordinates == unboundPoint) return SimplexStatus.unbounded;
     //step 3 - form next tableu
     formNextTableu(pivotCoordinates);
     return SimplexStatus.notOptimal;
@@ -310,7 +322,7 @@ class SimplexController extends _$SimplexController {
     //step 2 - find pivot coordinates
     final Point<int> pivotCoordinates = findPivotCoordinates(_followingTableaus.last.matrix);
     debugPrint('pivotCoordinates: $pivotCoordinates');
-    if (pivotCoordinates == const Point<int>(-1, -1)) return SimplexStatus.unbounded;
+    if (pivotCoordinates == unboundPoint) return SimplexStatus.unbounded;
     //step 3 - form next tableu
     formNextTableu(pivotCoordinates);
     return SimplexStatus.notOptimal;
@@ -326,9 +338,12 @@ class SimplexController extends _$SimplexController {
   }
 
   bool _shouldContinue() {
-    return _followingTableaus.last.matrix.first
-        .sublist(0, _followingTableaus.last.matrix.first.length - 1)
-        .any((element) => element < 0);
+    for (var i = 0; i < _followingTableaus.last.matrix.first.length - 1; i++) {
+      if (_followingTableaus.last.matrix.first[i] < 0) {
+        return true;
+      }
+    }
+    return false;
   }
 
   bool isOptimal2ndPhase() {
@@ -348,7 +363,7 @@ class SimplexController extends _$SimplexController {
         smallestColumnPosition = i;
       }
     }
-    if (smallestColumnPosition < 0) return const Point<int>(-1, -1);
+    if (smallestColumnPosition < 0) return unboundPoint;
     int smallestRowPosition = -1;
     double smallestresult = -1;
     for (int i = 0; i < tableu.length; i++) {
@@ -364,7 +379,7 @@ class SimplexController extends _$SimplexController {
       }
     }
     debugPrint('smallestColumnPosition: $smallestColumnPosition; smallestRowPosition: $smallestRowPosition');
-    if (smallestresult <= 0) return const Point<int>(-1, -1);
+    if (smallestresult <= 0) return unboundPoint;
     _pivotsCoordinates.add(Point<int>(smallestColumnPosition, smallestRowPosition));
     return _pivotsCoordinates.last;
   }
