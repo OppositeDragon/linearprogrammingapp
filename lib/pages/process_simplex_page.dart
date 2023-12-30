@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:linearprogrammingapp/constants/routes.dart';
+import 'package:linearprogrammingapp/controllers/data_entry_controller.dart';
+import 'package:linearprogrammingapp/controllers/router_controller.dart';
 
 import '../constants/numeric.dart';
 import '../controllers/simplex_mode_controller.dart';
@@ -10,11 +13,27 @@ import '../widgets/answer_presentation_widget.dart';
 import '../widgets/gobackgohome_buttons_widget.dart';
 import '../widgets/share.dart';
 
-class SimplexProcessPage extends ConsumerWidget {
+class SimplexProcessPage extends ConsumerStatefulWidget {
   const SimplexProcessPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _SimplexProcessPageState();
+}
+
+class _SimplexProcessPageState extends ConsumerState<SimplexProcessPage> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (ref.read(entrySizeControllerProvider).variables == 0) {
+      Future(() {
+        ref.read(goRouterProvider).goNamed(routeDataEntryName);
+        ref.read(entryPageControllerProvider.notifier).updatePage(0);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
     final simplexData = ref.watch(simplexControllerProvider);
@@ -179,7 +198,6 @@ class SimplexProcessPage extends ConsumerWidget {
                 ),
               ),
             ),
-         
           SliverList.builder(
             itemCount: simplexData.tableaus.length,
             itemBuilder: (context, i) {
@@ -283,7 +301,6 @@ class SimplexProcessPage extends ConsumerWidget {
               sliver: SliverToBoxAdapter(
                 child: AnswerPresentation(answerPresentation: simplexData.answerPresentation!),
               ),
-              
             ),
           const SliverPadding(
             padding: EdgeInsets.symmetric(
