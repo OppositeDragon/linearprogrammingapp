@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/numeric.dart';
 import '../controllers/data_entry_controller.dart';
 import '../controllers/graphic_mode_controller.dart';
 import '../custom_painters/graphic_process_painter.dart';
+import '../models/data_entry_model.dart';
+import '../widgets/answer_presentation_widget.dart';
 import '../widgets/gobackgohome_buttons_widget.dart';
 import '../widgets/share.dart';
 
@@ -15,7 +16,6 @@ class GraphicProcessPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
     final graphicData = ref.watch(graphicControllerProvider);
     final dataEntry = ref.watch(dataEntryControllerProvider);
     final [x, y, ...] = dataEntry.objectiveFunction;
@@ -70,23 +70,15 @@ class GraphicProcessPage extends ConsumerWidget {
               SliverPadding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: spaceXL,
-                  vertical: spaceL,
+                  vertical: spaceXXL,
                 ),
                 sliver: SliverToBoxAdapter(
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          'La solucion optima se encuentra en los puntos x=${graphicData.answer.x}, y=${graphicData.answer.y}. Así:  ',
-                          style: textTheme.headlineMedium!.copyWith(fontFamily: 'CMRomanSerif'),
-                        ),
-                        const SizedBox(height: spaceXL),
-                        FittedBox(
-                          child: Math.tex(
-                            'Z=$x (${graphicData.answer.x}) +$y (${graphicData.answer.y}) = ${x * graphicData.answer.x + y * graphicData.answer.y}',
-                            textStyle: textTheme.headlineSmall,
-                          ),
-                        ),
+                  child: AnswerPresentation(
+                    answerPresentation: AnswerPresentationModel(
+                      z: x * graphicData.answer.x + y * graphicData.answer.y,
+                      variablesData: [
+                        (coefficient: x, letter: '1', value: graphicData.answer.x),
+                        (coefficient: y, letter: '2', value: graphicData.answer.y),
                       ],
                     ),
                   ),
@@ -95,7 +87,7 @@ class GraphicProcessPage extends ConsumerWidget {
               const SliverPadding(
                 padding: EdgeInsets.symmetric(
                   horizontal: spaceXXL,
-                  vertical: spaceXL,
+                  vertical: spaceXXL,
                 ),
                 sliver: SliverToBoxAdapter(child: GoBackGoHomeButtons()),
               ),
