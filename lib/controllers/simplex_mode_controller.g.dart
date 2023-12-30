@@ -53,7 +53,7 @@ final toTabularFormProvider =
 
 typedef ToTabularFormRef
     = AutoDisposeProviderRef<(TabularFormInformation, List<int>)>;
-String _$simplexControllerHash() => r'5b76ea661eea3fc196b0dd26e4c73dcd3d327691';
+String _$simplexControllerHash() => r'2c2cf68864abdfa2f1024f34a1cbbe0bd0dab924';
 
 /// See also [SimplexController].
 @ProviderFor(SimplexController)

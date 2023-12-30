@@ -25,6 +25,8 @@ mixin _$SimplexDataModel {
       throw _privateConstructorUsedError;
   List<int>? get artificialVariablesIndexes =>
       throw _privateConstructorUsedError;
+  AnswerPresentationModel? get answerPresentation =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SimplexDataModelCopyWith<SimplexDataModel> get copyWith =>
@@ -43,7 +45,10 @@ abstract class $SimplexDataModelCopyWith<$Res> {
       List<Point<int>> pivotsCoordinates,
       List<List<List<String>>>? tableaus1st,
       List<Point<int>>? pivotsCoordinates1st,
-      List<int>? artificialVariablesIndexes});
+      List<int>? artificialVariablesIndexes,
+      AnswerPresentationModel? answerPresentation});
+
+  $AnswerPresentationModelCopyWith<$Res>? get answerPresentation;
 }
 
 /// @nodoc
@@ -65,6 +70,7 @@ class _$SimplexDataModelCopyWithImpl<$Res, $Val extends SimplexDataModel>
     Object? tableaus1st = freezed,
     Object? pivotsCoordinates1st = freezed,
     Object? artificialVariablesIndexes = freezed,
+    Object? answerPresentation = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -91,7 +97,24 @@ class _$SimplexDataModelCopyWithImpl<$Res, $Val extends SimplexDataModel>
           ? _value.artificialVariablesIndexes
           : artificialVariablesIndexes // ignore: cast_nullable_to_non_nullable
               as List<int>?,
+      answerPresentation: freezed == answerPresentation
+          ? _value.answerPresentation
+          : answerPresentation // ignore: cast_nullable_to_non_nullable
+              as AnswerPresentationModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AnswerPresentationModelCopyWith<$Res>? get answerPresentation {
+    if (_value.answerPresentation == null) {
+      return null;
+    }
+
+    return $AnswerPresentationModelCopyWith<$Res>(_value.answerPresentation!,
+        (value) {
+      return _then(_value.copyWith(answerPresentation: value) as $Val);
+    });
   }
 }
 
@@ -109,7 +132,11 @@ abstract class _$$SimplexDataModelImplCopyWith<$Res>
       List<Point<int>> pivotsCoordinates,
       List<List<List<String>>>? tableaus1st,
       List<Point<int>>? pivotsCoordinates1st,
-      List<int>? artificialVariablesIndexes});
+      List<int>? artificialVariablesIndexes,
+      AnswerPresentationModel? answerPresentation});
+
+  @override
+  $AnswerPresentationModelCopyWith<$Res>? get answerPresentation;
 }
 
 /// @nodoc
@@ -129,6 +156,7 @@ class __$$SimplexDataModelImplCopyWithImpl<$Res>
     Object? tableaus1st = freezed,
     Object? pivotsCoordinates1st = freezed,
     Object? artificialVariablesIndexes = freezed,
+    Object? answerPresentation = freezed,
   }) {
     return _then(_$SimplexDataModelImpl(
       status: null == status
@@ -155,6 +183,10 @@ class __$$SimplexDataModelImplCopyWithImpl<$Res>
           ? _value._artificialVariablesIndexes
           : artificialVariablesIndexes // ignore: cast_nullable_to_non_nullable
               as List<int>?,
+      answerPresentation: freezed == answerPresentation
+          ? _value.answerPresentation
+          : answerPresentation // ignore: cast_nullable_to_non_nullable
+              as AnswerPresentationModel?,
     ));
   }
 }
@@ -168,7 +200,8 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
       required final List<Point<int>> pivotsCoordinates,
       final List<List<List<String>>>? tableaus1st = null,
       final List<Point<int>>? pivotsCoordinates1st = null,
-      final List<int>? artificialVariablesIndexes = null})
+      final List<int>? artificialVariablesIndexes = null,
+      this.answerPresentation})
       : _tableaus = tableaus,
         _pivotsCoordinates = pivotsCoordinates,
         _tableaus1st = tableaus1st,
@@ -231,8 +264,11 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
   }
 
   @override
+  final AnswerPresentationModel? answerPresentation;
+
+  @override
   String toString() {
-    return 'SimplexDataModel(status: $status, tableaus: $tableaus, pivotsCoordinates: $pivotsCoordinates, tableaus1st: $tableaus1st, pivotsCoordinates1st: $pivotsCoordinates1st, artificialVariablesIndexes: $artificialVariablesIndexes)';
+    return 'SimplexDataModel(status: $status, tableaus: $tableaus, pivotsCoordinates: $pivotsCoordinates, tableaus1st: $tableaus1st, pivotsCoordinates1st: $pivotsCoordinates1st, artificialVariablesIndexes: $artificialVariablesIndexes, answerPresentation: $answerPresentation)';
   }
 
   @override
@@ -250,7 +286,9 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
                 .equals(other._pivotsCoordinates1st, _pivotsCoordinates1st) &&
             const DeepCollectionEquality().equals(
                 other._artificialVariablesIndexes,
-                _artificialVariablesIndexes));
+                _artificialVariablesIndexes) &&
+            (identical(other.answerPresentation, answerPresentation) ||
+                other.answerPresentation == answerPresentation));
   }
 
   @override
@@ -261,7 +299,8 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
       const DeepCollectionEquality().hash(_pivotsCoordinates),
       const DeepCollectionEquality().hash(_tableaus1st),
       const DeepCollectionEquality().hash(_pivotsCoordinates1st),
-      const DeepCollectionEquality().hash(_artificialVariablesIndexes));
+      const DeepCollectionEquality().hash(_artificialVariablesIndexes),
+      answerPresentation);
 
   @JsonKey(ignore: true)
   @override
@@ -273,12 +312,14 @@ class _$SimplexDataModelImpl extends _SimplexDataModel {
 
 abstract class _SimplexDataModel extends SimplexDataModel {
   const factory _SimplexDataModel(
-      {required final SimplexStatus status,
-      required final List<List<List<String>>> tableaus,
-      required final List<Point<int>> pivotsCoordinates,
-      final List<List<List<String>>>? tableaus1st,
-      final List<Point<int>>? pivotsCoordinates1st,
-      final List<int>? artificialVariablesIndexes}) = _$SimplexDataModelImpl;
+          {required final SimplexStatus status,
+          required final List<List<List<String>>> tableaus,
+          required final List<Point<int>> pivotsCoordinates,
+          final List<List<List<String>>>? tableaus1st,
+          final List<Point<int>>? pivotsCoordinates1st,
+          final List<int>? artificialVariablesIndexes,
+          final AnswerPresentationModel? answerPresentation}) =
+      _$SimplexDataModelImpl;
   const _SimplexDataModel._() : super._();
 
   @override
@@ -293,6 +334,8 @@ abstract class _SimplexDataModel extends SimplexDataModel {
   List<Point<int>>? get pivotsCoordinates1st;
   @override
   List<int>? get artificialVariablesIndexes;
+  @override
+  AnswerPresentationModel? get answerPresentation;
   @override
   @JsonKey(ignore: true)
   _$$SimplexDataModelImplCopyWith<_$SimplexDataModelImpl> get copyWith =>

@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:linearprogrammingapp/constants/enums.dart';
 
+import 'data_entry_model.dart';
+
 part 'simplex_data_model.freezed.dart';
 
 @freezed
@@ -15,6 +17,7 @@ class SimplexDataModel with _$SimplexDataModel {
     @Default(null) List<List<List<String>>>? tableaus1st,
     @Default(null) List<Point<int>>? pivotsCoordinates1st,
     @Default(null) List<int>? artificialVariablesIndexes,
+    AnswerPresentationModel? answerPresentation,
   }) = _SimplexDataModel;
 }
 
