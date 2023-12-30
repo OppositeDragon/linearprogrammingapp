@@ -26,3 +26,13 @@ class DataEntryModel with _$DataEntryModel {
   factory DataEntryModel.fromJson(Map<String, dynamic> json) => _$DataEntryModelFromJson(json);
 }
 
+typedef AnswerVariableData = ({String letter, double coefficient, double value});
+
+@freezed
+class AnswerPresentationModel with _$AnswerPresentationModel {
+  const AnswerPresentationModel._();
+  const factory AnswerPresentationModel({
+    required List<AnswerVariableData> variablesData,
+    required double z,
+  }) = _AnswerPresentationModel;
+}

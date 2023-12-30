@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
-import 'package:linearprogrammingapp/utils/extensions.dart';
 
 import '../constants/numeric.dart';
-import '../models/simplex_data_model.dart';
+import '../models/data_entry_model.dart';
+import '../utils/extensions.dart';
 
 class AnswerPresentation extends StatelessWidget {
   const AnswerPresentation({
@@ -16,7 +16,7 @@ class AnswerPresentation extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final textSpans = <InlineSpan>[];
-    final zPans = <InlineSpan>[];
+    final zSpans = <InlineSpan>[];
     for (int i = 0; i < answerPresentation.variablesData.length; i++) {
       final variableData = answerPresentation.variablesData[i];
       textSpans.add(
@@ -35,27 +35,25 @@ class AnswerPresentation extends StatelessWidget {
         ),
       );
       if (i != answerPresentation.variablesData.length - 1) {
-        textSpans.add(
-          const TextSpan(text: ', '),
-        );
+        textSpans.add(const TextSpan(text: ', '));
       }
     }
     for (final (i, variableData) in answerPresentation.variablesData.indexed) {
-      zPans.add(
+      zSpans.add(
         TextSpan(
           text: '${variableData.coefficient}(${variableData.value.toStringAsFixed(3).deleteLastZero()})',
           style: textTheme.headlineSmall!.copyWith(fontFamily: 'CMRomanSerif'),
         ),
       );
       if (i == answerPresentation.variablesData.length - 1) {
-        zPans.add(
+        zSpans.add(
           TextSpan(
             text: ' = ',
             style: textTheme.headlineSmall!.copyWith(fontFamily: 'CMRomanSerif'),
           ),
         );
       } else {
-        zPans.add(
+        zSpans.add(
           TextSpan(
             text: ' + ',
             style: textTheme.headlineSmall!.copyWith(fontFamily: 'CMRomanSerif'),
@@ -84,7 +82,7 @@ class AnswerPresentation extends StatelessWidget {
                 text: 'Z = ',
                 style: textTheme.headlineMedium!.copyWith(fontFamily: 'CMClassic'),
                 children: [
-                  ...zPans,
+                  ...zSpans,
                   TextSpan(
                     text: answerPresentation.z.toStringAsFixed(3).deleteLastZero(),
                     style: textTheme.headlineSmall!.copyWith(fontFamily: 'CMRomanSerif'),

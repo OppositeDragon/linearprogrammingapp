@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:linearprogrammingapp/constants/enums.dart';
 
+import 'data_entry_model.dart';
+
 part 'simplex_data_model.freezed.dart';
 
 @freezed
@@ -26,15 +28,4 @@ class TabularFormInformation with _$TabularFormInformation {
     required List<List<double>> matrix,
     required List<int> basicVariables,
   }) = _TabularFormInformation;
-}
-
-typedef AnswerVariableData = ({String letter, double coefficient, double value});
-
-@freezed
-class AnswerPresentationModel with _$AnswerPresentationModel {
-  const AnswerPresentationModel._();
-  const factory AnswerPresentationModel({
-    required List<AnswerVariableData> variablesData,
-    required double z,
-  }) = _AnswerPresentationModel;
 }
