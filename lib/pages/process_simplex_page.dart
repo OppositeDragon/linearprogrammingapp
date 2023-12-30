@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/numeric.dart';
 import '../controllers/simplex_mode_controller.dart';
+import '../widgets/answer_presentation_widget.dart';
 import '../widgets/gobackgohome_buttons_widget.dart';
 import '../widgets/share.dart';
 
@@ -22,7 +23,7 @@ class SimplexProcessPage extends ConsumerWidget {
         if (j == 0 && k == rowLength - 1) {
           return Colors.tealAccent.withOpacity(0.25);
         }
-      } else {
+      } else if (pivots.length > i) {
         final int x = pivots[i].x;
         final int y = pivots[i].y;
         if (y == j && x + 1 == k) {
@@ -151,7 +152,7 @@ class SimplexProcessPage extends ConsumerWidget {
                 );
               },
             ),
-          if (simplexData.tableaus1st != null)
+          if (simplexData.tableaus1st != null && simplexData.tableaus.isNotEmpty)
             SliverPadding(
               padding: const EdgeInsets.symmetric(
                 horizontal: spaceXXL,
@@ -164,6 +165,21 @@ class SimplexProcessPage extends ConsumerWidget {
                 ),
               ),
             ),
+          if (simplexData.tableaus.isEmpty)
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: spaceXXL,
+                vertical: spaceXL,
+              ),
+              sliver: SliverToBoxAdapter(
+                child: Text(
+                  "No se puede continuar a la fase 2",
+                  style: textTheme.titleMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+         
           SliverList.builder(
             itemCount: simplexData.tableaus.length,
             itemBuilder: (context, i) {
@@ -258,10 +274,21 @@ class SimplexProcessPage extends ConsumerWidget {
               );
             },
           ),
+          if (simplexData.tableaus.isNotEmpty)
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: spaceXL,
+                vertical: spaceXXL,
+              ),
+              sliver: SliverToBoxAdapter(
+                child: AnswerPresentation(answerPresentation: simplexData.answerPresentation!),
+              ),
+              
+            ),
           const SliverPadding(
             padding: EdgeInsets.symmetric(
               horizontal: spaceXXL,
-              vertical: spaceXL,
+              vertical: spaceXXL,
             ),
             sliver: SliverToBoxAdapter(child: GoBackGoHomeButtons()),
           ),
