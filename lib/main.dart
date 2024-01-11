@@ -20,9 +20,9 @@ class MainApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      themeMode: ThemeMode.dark,
-      theme: ThemeData(useMaterial3: true),
-      darkTheme: ThemeData.dark(useMaterial3: true),
+      themeMode: ThemeMode.system,
+      theme: ThemeData(),
+      darkTheme: ThemeData.dark(),
       routerConfig: ref.watch(goRouterProvider),
     );
   }
