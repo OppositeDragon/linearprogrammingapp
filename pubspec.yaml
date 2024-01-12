@@ -1,7 +1,7 @@
 name: linearprogrammingapp
 description: This is an open-source project, that aims to provide a linear programming solver, using the Flutter SDK. Leveraging the power of Flutter's cross-platform capabilities, the project offers a user-friendly interface and efficient algorithms to solve linear programming problems.
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0+2
 
 environment:
   sdk: '>=3.2.2 <4.0.0'
@@ -33,6 +33,7 @@ dev_dependencies:
   json_serializable: ^6.7.1
   riverpod_generator: ^2.3.9
   riverpod_lint: ^2.3.7
+  msix: ^3.16.7
 
 flutter:
   uses-material-design: true
@@ -49,3 +50,13 @@ flutter:
     - family: MonaspaceXenon
       fonts:
         - asset: assets/fonts/MonaspaceXenonVarVF.ttf
+
+msix_config:
+  display_name: Linear Programming App
+  publisher_display_name: OppositeDragon
+  identity_name: 18074OppositeDragon.LinearProgrammigApp
+  publisher: CN=23216037-D05D-4EB7-997A-50250A6A1B8F
+  msix_version: 1.0.0.0
+  languages: es-es, en-us
+  capabilities: internetClient
+  store: true
