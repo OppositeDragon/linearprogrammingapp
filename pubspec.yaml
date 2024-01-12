@@ -60,3 +60,4 @@ msix_config:
   languages: es-es, en-us
   capabilities: internetClient
   store: true
+  logo_path: C:\Repositories\linearprogrammingapp\assets\img\app_icon.png
