@@ -111,7 +111,7 @@ class AlgebraicController extends _$AlgebraicController {
           matrix.add(valuesAux);
         }
         final whereVarEqualsZero = [j + 1, k + 1];
-        final solutions = LUSolver(
+        final List<double> solutions = LUSolver(
                 matrix: RealMatrix.fromData(
                   rows: constraints.length,
                   columns: constraints.length,
