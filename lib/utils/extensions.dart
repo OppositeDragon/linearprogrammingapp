@@ -62,7 +62,7 @@ extension StringExtension on String {
     while ((str.endsWith('0') || str.endsWith('.')) && str.length > 1) {
       if (str.endsWith('.')) {
         str = str.substring(0, str.length - 1);
-        break;
+        return str;
       }
       str = str.substring(0, str.length - 1);
     }

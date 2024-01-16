@@ -281,7 +281,7 @@ class SimplexController extends _$SimplexController {
           rowString.add('Z');
         } else {
           if (tableaus[i].basicVariables.length > j - 1) {
-            rowString.add('x_${tableaus[i].basicVariables[j - 1]}');
+            rowString.add('x_{${tableaus[i].basicVariables[j - 1]}}');
           }
         }
         for (int k = 0; k < tableaus[i].matrix[j].length; k++) {

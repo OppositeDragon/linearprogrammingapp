@@ -117,7 +117,7 @@ class _SimplexProcessPageState extends ConsumerState<SimplexProcessPage> {
                                             ),
                                           )
                                         : Math.tex(
-                                            'x_${j + 1}',
+                                            'x_{${j + 1}}',
                                             textStyle: textTheme.titleLarge,
                                             mathStyle: MathStyle.display,
                                           ),
@@ -238,7 +238,7 @@ class _SimplexProcessPageState extends ConsumerState<SimplexProcessPage> {
                                           ),
                                         )
                                       : Math.tex(
-                                          'x_${j + 1}',
+                                          'x_{${j + 1}}',
                                           textStyle: textTheme.titleLarge,
                                           mathStyle: MathStyle.display,
                                         ),
