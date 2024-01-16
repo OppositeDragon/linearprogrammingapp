@@ -8,9 +8,9 @@ enum ProcessTypes {
 }
 
 enum Operators {
-  geq(label: '≥', value: -1.0),
   leq(label: '≤', value: 1.0),
-  equal(label: '=', value: 1.0);
+  geq(label: '≥', value: -1.0),
+  equal(label: '=', value: -1.0);
 
   const Operators({required this.label, required this.value});
   final String label;
