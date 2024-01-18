@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  appwrite: 8.3.0
+  appwrite: ^11.0.1
   flutter_riverpod: ^2.4.9
   freezed_annotation: ^2.4.1
   go_router: ^11.1.4
