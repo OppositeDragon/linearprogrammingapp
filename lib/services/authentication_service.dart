@@ -89,7 +89,7 @@ class AuthenticationService extends _$AuthenticationService {
   String? _failureCallback() {
     switch (defaultTargetPlatform) {
       default:
-        return '';
+        return 'http://localhost:1001/auth/oauth2/failure';
     }
   }
 }
