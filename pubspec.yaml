@@ -1,0 +1,63 @@
+name: linearprogrammingapp
+description: This is an open-source project, that aims to provide a linear programming solver, using the Flutter SDK. Leveraging the power of Flutter's cross-platform capabilities, the project offers a user-friendly interface and efficient algorithms to solve linear programming problems.
+publish_to: 'none'
+version: 1.0.0+2
+
+environment:
+  sdk: '>=3.2.2 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  appwrite: ^11.0.1
+  flutter_riverpod: ^2.4.9
+  freezed_annotation: ^2.4.1
+  go_router: ^11.1.4
+  json_annotation: ^4.8.1
+  riverpod_annotation: ^2.3.3
+  window_location_href: ^1.0.1+2
+  hive_flutter: ^1.1.0
+  flutter_math_fork: ^0.7.1
+  equations: ^5.0.2
+  decimal: ^2.3.3
+  file_picker: ^5.3.1
+  url_strategy: ^0.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: ^2.4.7
+  custom_lint: ^0.5.7
+  freezed: ^2.4.5
+  json_serializable: ^6.7.1
+  riverpod_generator: ^2.3.9
+  riverpod_lint: ^2.3.7
+  msix: ^3.16.7
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/img/
+  fonts:
+    - family: CMClassic
+      fonts:
+        - asset: assets/fonts/cmunci.ttf
+    - family: CMRomanSerif
+      fonts:
+        - asset: assets/fonts/cmunrm.ttf
+    - family: MonaspaceXenon
+      fonts:
+        - asset: assets/fonts/MonaspaceXenonVarVF.ttf
+
+msix_config:
+  display_name: Linear Programming App
+  publisher_display_name: OppositeDragon
+  identity_name: 18074OppositeDragon.LinearProgrammigApp
+  publisher: CN=23216037-D05D-4EB7-997A-50250A6A1B8F
+  msix_version: 1.0.0.0
+  languages: es-es, en-us
+  capabilities: internetClient
+  store: true
+  logo_path: C:\Repositories\linearprogrammingapp\assets\img\app_icon.png
