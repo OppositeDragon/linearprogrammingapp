@@ -1,7 +1,7 @@
 name: linearprogrammingapp
-description: This is an open-source project, that aims to provide a linear programming solver, using the Flutter SDK. Leveraging the power of Flutter's cross-platform capabilities, the project offers a user-friendly interface and efficient algorithms to solve linear programming problems.
+description: This is an open-source project, that aims to provide a linear programming solver, using the Flutter SDK. Leveraging the power of Flutter's cross-platform capabilities, the project offers a user-friendly interface and algorithms to solve linear programming problems.
 publish_to: 'none'
-version: 1.0.0+2
+version: 1.0.2+3
 
 environment:
   sdk: '>=3.2.2 <4.0.0'
@@ -56,7 +56,7 @@ msix_config:
   publisher_display_name: OppositeDragon
   identity_name: 18074OppositeDragon.LinearProgrammigApp
   publisher: CN=23216037-D05D-4EB7-997A-50250A6A1B8F
-  msix_version: 1.0.0.0
+  msix_version: 1.0.2.0
   languages: es-es, en-us
   capabilities: internetClient
   store: true
