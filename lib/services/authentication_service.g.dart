@@ -35,7 +35,7 @@ final accountProvider = AutoDisposeProvider<Account>.internal(
 
 typedef AccountRef = AutoDisposeProviderRef<Account>;
 String _$authenticationServiceHash() =>
-    r'394ca93a47aaf2ef3bf33f879c2ece98939e1a72';
+    r'36dd57e4afeb0fc273d4b4c67a42f9a7d17efa64';
 
 /// See also [AuthenticationService].
 @ProviderFor(AuthenticationService)

@@ -22,3 +22,5 @@ const double spaceXXXL = 24;
 const int maxVariables = 12;
 
 const int maxConstraints = 15;
+
+const double downloadButtonWidth = 200;
