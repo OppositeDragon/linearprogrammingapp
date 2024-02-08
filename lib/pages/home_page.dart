@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:linearprogrammingapp/controllers/home_page_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/numeric.dart';
 import '../constants/routes.dart';
+import '../constants/strings.dart';
+import '../controllers/home_page_controller.dart';
 import '../controllers/login_controller.dart';
 import '../controllers/router_controller.dart';
 
@@ -18,7 +19,7 @@ class HomePage extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Linear Programming App'),
+        title: const Text(title),
         centerTitle: true,
         actions: [
           IconButton(
@@ -70,7 +71,7 @@ class HomePage extends ConsumerWidget {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Descargas'),
+                          Text('Descargar aplicación'),
                           Icon(Icons.download, size: spaceXXXL),
                         ],
                       ),

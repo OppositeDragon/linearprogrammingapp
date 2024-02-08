@@ -15,3 +15,5 @@ const String uploadDataHelpMessage = '''{
 }''';
 
 const String invalidMessage = 'Inválido';
+
+const String title = 'Linear Programming App';

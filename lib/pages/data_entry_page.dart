@@ -85,7 +85,7 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Linear Programming App'),
+          title: const Text(title),
           centerTitle: true,
           actions: [
             if (entryPage == 0)
@@ -99,7 +99,7 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
                         final uploadController = ref.read(uploadControllerProvider.notifier);
                         return AlertDialog(
                           insetPadding: const EdgeInsets.symmetric(horizontal: spaceXXXL, vertical: spaceXXL),
-                          title: const Text('Upload problem data'),
+                          title: const Text('Carga de datos del problema'),
                           content: ConstrainedBox(
                             constraints: const BoxConstraints(maxWidth: 550),
                             child: SingleChildScrollView(
@@ -190,7 +190,8 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
                   },
                 ),
                 icon: const Icon(Icons.upload_file_rounded),
-                tooltip: 'Upload problem data, as json file',
+                tooltip:
+                    'Cargar datos del problema, como un archivo en formato json.',
               ),
           ],
         ),
