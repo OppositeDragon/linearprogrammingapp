@@ -61,7 +61,7 @@ class HomePage extends ConsumerWidget {
                 firstChild: Padding(
                   padding: const EdgeInsets.symmetric(vertical: spaceL),
                   child: SizedBox(
-                    width: downloadButtonWidth,
+                    width: downloadButtonWidth + 25,
                     child: FilledButton(
                       autofocus: true,
                       onPressed: () => downloadsNotifier.toggleDownloads(),
