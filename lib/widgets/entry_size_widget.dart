@@ -23,7 +23,7 @@ class _EntrySizeWidgetState extends ConsumerState<EntrySizeWidget> {
   @override
   void initState() {
     super.initState();
-variablesController = TextEditingController();
+    variablesController = TextEditingController();
     constraintsController = TextEditingController();
     variablesController.addListener(() {
       ref.read(entrySizeControllerProvider.notifier).setVariables(variablesController.text);

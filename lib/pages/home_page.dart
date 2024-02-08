@@ -25,8 +25,7 @@ class HomePage extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: 'Cerrar sesión',
-            onPressed: () =>
-                ref.read(loginControllerProvider.notifier).logOut(),
+            onPressed: () => ref.read(loginControllerProvider.notifier).logOut(),
           ),
         ],
       ),
@@ -37,8 +36,7 @@ class HomePage extends ConsumerWidget {
               // 1  Center
               child: FilledButton.tonal(
                 autofocus: true,
-                onPressed: () =>
-                    ref.read(goRouterProvider).goNamed(routeDataEntryName),
+                onPressed: () => ref.read(goRouterProvider).goNamed(routeDataEntryName),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -79,9 +77,7 @@ class HomePage extends ConsumerWidget {
                   ),
                 ),
                 secondChild: const DownloadButtons(),
-                crossFadeState: showDownloads
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
+                crossFadeState: showDownloads ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                 duration: const Duration(milliseconds: 350)),
           )
         ],
@@ -105,8 +101,7 @@ class DownloadButtons extends ConsumerWidget {
           child: FilledButton.tonal(
             autofocus: true,
             onPressed: () async => await launchUrl(
-              Uri.https('github.com',
-                  '/OppositeDragon/linearprogrammingapp/releases'),
+              Uri.https('github.com', '/OppositeDragon/linearprogrammingapp/releases'),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.max,
@@ -116,8 +111,7 @@ class DownloadButtons extends ConsumerWidget {
                   'Descarga directa',
                   style: textTheme.titleMedium,
                 ),
-                const Icon(Icons.download_for_offline_outlined,
-                    size: spaceXXXL),
+                const Icon(Icons.download_for_offline_outlined, size: spaceXXXL),
               ],
             ),
           ),
@@ -147,8 +141,7 @@ class DownloadButtons extends ConsumerWidget {
             'assets/img/microsoft-badge.png',
             width: downloadButtonWidth,
             fit: BoxFit.contain,
-            semanticLabel:
-                'Descarga la aplicación desde la tienda de Microsoft',
+            semanticLabel: 'Descarga la aplicación desde la tienda de Microsoft',
           ),
         ),
         const SizedBox(height: spaceL),

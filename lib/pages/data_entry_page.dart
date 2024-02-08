@@ -190,8 +190,7 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
                   },
                 ),
                 icon: const Icon(Icons.upload_file_rounded),
-                tooltip:
-                    'Cargar datos del problema, como un archivo en formato json.',
+                tooltip: 'Cargar datos del problema, como un archivo en formato json.',
               ),
           ],
         ),
