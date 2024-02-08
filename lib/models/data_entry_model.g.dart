@@ -37,7 +37,7 @@ const _$ObjectivesEnumMap = {
 };
 
 const _$OperatorsEnumMap = {
-  Operators.geq: 'geq',
   Operators.leq: 'leq',
+  Operators.geq: 'geq',
   Operators.equal: 'equal',
 };

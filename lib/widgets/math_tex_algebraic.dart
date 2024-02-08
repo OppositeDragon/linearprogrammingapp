@@ -21,15 +21,9 @@ class MathTexAlgebraic extends StatelessWidget {
         height: 25,
         child: center
             ? Center(
-                child: Math.tex(
-                  equation,
-                  textStyle: eqStyle,
-                ),
+                child: Math.tex(equation, textStyle: eqStyle),
               )
-            : Math.tex(
-                equation,
-                textStyle: eqStyle,
-              ),
+            : Math.tex(equation, textStyle: eqStyle),
       ),
     );
   }

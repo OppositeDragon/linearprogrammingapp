@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/numeric.dart';
+import '../constants/strings.dart';
 import '../controllers/algebraic_mode_controller.dart';
 import '../widgets/gobackgohome_buttons_widget.dart';
 import '../widgets/math_tex_algebraic.dart';
@@ -22,7 +23,7 @@ class AlgebraicProcessPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Algebraic Method - Linear Programming App'),
+        title: const Text('Algebraic Method - $title'),
         centerTitle: true,
         actions: const [ShareWidget()],
       ),
@@ -42,7 +43,10 @@ class AlgebraicProcessPage extends ConsumerWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           for (int j = 0; j < dataAlgebraic.constraintsString[i].length; j++)
-                            MathTexAlgebraic(equation: dataAlgebraic.constraintsString[i][j], eqStyle: eqStyle),
+                            MathTexAlgebraic(
+                              equation: dataAlgebraic.constraintsString[i][j],
+                              eqStyle: eqStyle,
+                            ),
                         ],
                       ),
                     Column(
@@ -111,7 +115,8 @@ class AlgebraicProcessPage extends ConsumerWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(vertical: spaceM, horizontal: spaceS),
                                   child: MathTexAlgebraic(equation: combination.solutionString ?? '', eqStyle: eqStyle),
-                                )),
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -133,7 +138,10 @@ class AlgebraicProcessPage extends ConsumerWidget {
                               Text('La solución óptima se encuentra en la combinacion ${algebraicAnswer.step}, así: ',
                                   textAlign: TextAlign.center, style: eqStyle),
                               const SizedBox(height: spaceM),
-                              MathTexAlgebraic(equation: algebraicAnswer.finalSolutionString ?? '', eqStyle: eqStyle),
+                              MathTexAlgebraic(
+                                equation: algebraicAnswer.finalSolutionString ?? '',
+                                eqStyle: eqStyle,
+                              ),
                             ],
                           ),
                   ),

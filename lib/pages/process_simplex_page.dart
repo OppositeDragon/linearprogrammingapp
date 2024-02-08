@@ -3,11 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:linearprogrammingapp/constants/routes.dart';
-import 'package:linearprogrammingapp/controllers/data_entry_controller.dart';
-import 'package:linearprogrammingapp/controllers/router_controller.dart';
 
 import '../constants/numeric.dart';
+import '../constants/routes.dart';
+import '../constants/strings.dart';
+import '../controllers/data_entry_controller.dart';
+import '../controllers/router_controller.dart';
 import '../controllers/simplex_mode_controller.dart';
 import '../widgets/answer_presentation_widget.dart';
 import '../widgets/gobackgohome_buttons_widget.dart';
@@ -57,7 +58,7 @@ class _SimplexProcessPageState extends ConsumerState<SimplexProcessPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Simplex Method - Linear Programming App'),
+        title: const Text('Simplex Method - $title'),
         centerTitle: true,
         actions: const [ShareWidget()],
       ),

@@ -31,7 +31,7 @@ class GoogleSignInButton extends StatelessWidget {
           ),
         ),
       ),
-      label: const Text(' Sign in with Google  '),
+      label: const Text(' Iniciar sesión con Google  '),
     );
   }
 }

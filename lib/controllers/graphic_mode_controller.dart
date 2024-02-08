@@ -106,8 +106,7 @@ List<Point<double>> getIntersectionsBetweenCostraints(GetIntersectionsBetweenCos
 }
 
 @riverpod
-List<Point<double>> getIntersectionsOnAxesAndConstraints(
-    GetIntersectionsOnAxesAndConstraintsRef ref) {
+List<Point<double>> getIntersectionsOnAxesAndConstraints(GetIntersectionsOnAxesAndConstraintsRef ref) {
   final intersectionsBetweenCostraints = ref.watch(getIntersectionsBetweenCostraintsProvider);
   final intersectionsOnAxes = ref.watch(getIntersectionsOnAxesProvider);
   final Set<Point<double>> allIntersections = {};
@@ -222,8 +221,7 @@ List<List<Point<double>>> getFeasibleMatrixPoints(GetFeasibleMatrixPointsRef ref
 
 @riverpod
 Point<double> getOptimalAnswer(GetOptimalAnswerRef ref) {
-  final [x1, x2, ...] =
-      ref.watch(dataEntryControllerProvider.select((value) => value.objectiveFunction));
+  final [x1, x2, ...] = ref.watch(dataEntryControllerProvider.select((value) => value.objectiveFunction));
   final objective = ref.watch(dataEntryControllerProvider.select((value) => value.objective));
   final limits = ref.watch(getBiggestIntersectionsOnAxesProvider);
   final compliantIntersections = ref.watch(getCompliantIntersectionsProvider);
@@ -236,8 +234,7 @@ Point<double> getOptimalAnswer(GetOptimalAnswerRef ref) {
     final double auxResult = x1 * compliantPoint.x + x2 * compliantPoint.y;
     switch (objective) {
       case Objectives.max:
-        if (auxResult > zAnswer &&
-            !(compliantPoint.x == limits.x && compliantPoint.y == limits.y)) {
+        if (auxResult > zAnswer && !(compliantPoint.x == limits.x && compliantPoint.y == limits.y)) {
           awswerPoint = compliantPoint;
           zAnswer = auxResult;
         }
@@ -257,13 +254,11 @@ Point<double> getOptimalAnswer(GetOptimalAnswerRef ref) {
 class GraphicController extends _$GraphicController {
   @override
   GraphicDataModel build() {
-    final [x, y, ...] =
-        ref.watch(dataEntryControllerProvider.select((value) => value.objectiveFunction));
+    final [x, y, ...] = ref.watch(dataEntryControllerProvider.select((value) => value.objectiveFunction));
     final roundedLimits = ref.watch(getLimitsRoundedOnMagnitudeProvider);
     final restrictions = ref.watch(getIntersectionsOnConstraintsAndLimitsProvider);
     final answerPoint = ref.watch(getOptimalAnswerProvider);
-    final answerLine = ref
-        .watch(getIntersectionConstraintLimitProvider(x, y, x * answerPoint.x + y * answerPoint.y));
+    final answerLine = ref.watch(getIntersectionConstraintLimitProvider(x, y, x * answerPoint.x + y * answerPoint.y));
     final feasibleRegion = ref.watch(getFeasibleMatrixPointsProvider);
     final compliantIntersections = ref.watch(getCompliantIntersectionsProvider);
     return GraphicDataModel(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/numeric.dart';
+import '../constants/strings.dart';
 import '../controllers/data_entry_controller.dart';
 import '../controllers/graphic_mode_controller.dart';
 import '../custom_painters/graphic_process_painter.dart';
@@ -27,7 +28,7 @@ class GraphicProcessPage extends ConsumerWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Graphic Method - Linear Programming App'),
+        title: const Text('Graphic Method - $title'),
         centerTitle: true,
         actions: const [ShareWidget()],
       ),

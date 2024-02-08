@@ -23,14 +23,20 @@ class _EntrySizeWidgetState extends ConsumerState<EntrySizeWidget> {
   @override
   void initState() {
     super.initState();
-variablesController = TextEditingController();
-    constraintsController = TextEditingController();
-    variablesController.addListener(() {
-      ref.read(entrySizeControllerProvider.notifier).setVariables(variablesController.text);
-    });
-    constraintsController.addListener(() {
-      ref.read(entrySizeControllerProvider.notifier).setConstraints(constraintsController.text);
-    });
+    variablesController = TextEditingController()
+      ..text = ref.read(entrySizeControllerProvider).variables == 0
+          ? ''
+          : ref.read(entrySizeControllerProvider).variables.toString()
+      ..addListener(
+        () => ref.read(entrySizeControllerProvider.notifier).setVariables(variablesController.text),
+      );
+    constraintsController = TextEditingController()
+      ..text = ref.read(entrySizeControllerProvider).constraints == 0
+          ? ''
+          : ref.read(entrySizeControllerProvider).constraints.toString()
+      ..addListener(
+        () => ref.read(entrySizeControllerProvider.notifier).setConstraints(constraintsController.text),
+      );
   }
 
   @override
@@ -42,16 +48,8 @@ variablesController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    //final dataEntrySizeState = ref.read(entrySizeControllerProvider);
     final textTheme = Theme.of(context).textTheme;
     final dataEntrySizeState = ref.watch(entrySizeControllerProvider);
-    Future(
-      () {
-        variablesController.text = dataEntrySizeState.variables == 0 ? '' : dataEntrySizeState.variables.toString();
-        constraintsController.text =
-            dataEntrySizeState.constraints == 0 ? '' : dataEntrySizeState.constraints.toString();
-      },
-    );
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(
@@ -79,7 +77,7 @@ variablesController = TextEditingController();
                     keyboardType: TextInputType.number,
                     formatters: [FilteringTextInputFormatter.digitsOnly],
                     autoFocus: true,
-                    selectAllOnGainFocus: true,
+                    // selectAllOnGainFocus: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Por favor ingrese un valor';
@@ -90,8 +88,8 @@ variablesController = TextEditingController();
                       if (int.parse(value) < 2) {
                         return 'Digite un numero entero mayor a 1.';
                       }
-                      if (int.parse(value) > 12) {
-                        return 'No pueden haber mas de 12 variables.';
+                      if (int.parse(value) > maxVariables) {
+                        return 'No pueden haber mas de $maxVariables variables.';
                       }
                       return null;
                     },

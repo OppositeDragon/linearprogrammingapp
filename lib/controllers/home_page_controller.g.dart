@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'algebraic_mode_controller.dart';
+part of 'home_page_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$algebraicControllerHash() =>
-    r'5ab8f77cd380756367b34f5f52fba08b7c78c1e9';
+String _$showDownloadsHash() => r'3ba7e1d4b51f53804dfc528cffe84c2049c72fed';
 
-/// See also [AlgebraicController].
-@ProviderFor(AlgebraicController)
-final algebraicControllerProvider =
-    AutoDisposeNotifierProvider<AlgebraicController, void>.internal(
-  AlgebraicController.new,
-  name: r'algebraicControllerProvider',
+/// See also [ShowDownloads].
+@ProviderFor(ShowDownloads)
+final showDownloadsProvider =
+    AutoDisposeNotifierProvider<ShowDownloads, bool>.internal(
+  ShowDownloads.new,
+  name: r'showDownloadsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$algebraicControllerHash,
+      : _$showDownloadsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AlgebraicController = AutoDisposeNotifier<void>;
+typedef _$ShowDownloads = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
