@@ -12,7 +12,7 @@ dependencies:
   appwrite: ^11.0.1
   flutter_riverpod: ^2.4.9
   freezed_annotation: ^2.4.1
-  go_router: ^11.1.4
+  go_router: ^13.2.0
   json_annotation: ^4.8.1
   riverpod_annotation: ^2.3.3
   window_location_href: ^1.0.1+2
@@ -20,16 +20,16 @@ dependencies:
   flutter_math_fork: ^0.7.1
   equations: ^5.0.2
   decimal: ^2.3.3
-  file_picker: ^5.3.1
+  file_picker: ^6.1.1
   url_strategy: ^0.2.0
   url_launcher: ^6.2.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
   build_runner: ^2.4.7
-  custom_lint: ^0.5.7
+  custom_lint: ^0.6.0
   freezed: ^2.4.5
   json_serializable: ^6.7.1
   riverpod_generator: ^2.3.9

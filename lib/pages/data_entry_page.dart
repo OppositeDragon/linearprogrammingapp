@@ -152,10 +152,10 @@ class _DataEntryPageState extends ConsumerState<DataEntryPage> {
                                     debugPrint(jsonContent);
                                     try {
                                       uploadController.operateOnContent(jsonContent);
-                                      if (mounted) context.pop();
+                                      if (context.mounted) context.pop();
                                     } catch (e) {
                                       debugPrint(e.toString());
-                                      if (mounted) {
+                                      if (context.mounted) {
                                         showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
