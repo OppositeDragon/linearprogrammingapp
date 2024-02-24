@@ -28,7 +28,7 @@ class GraphicProcessPage extends ConsumerWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Graphic Method - $title'),
+        title: const Text('Método Gráfico - $title'),
         centerTitle: true,
         actions: const [ShareWidget()],
       ),

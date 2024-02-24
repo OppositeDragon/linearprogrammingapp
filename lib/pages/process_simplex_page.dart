@@ -58,7 +58,7 @@ class _SimplexProcessPageState extends ConsumerState<SimplexProcessPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Simplex Method - $title'),
+        title: const Text('Método Simplex - $title'),
         centerTitle: true,
         actions: const [ShareWidget()],
       ),

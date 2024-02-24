@@ -23,7 +23,7 @@ class AlgebraicProcessPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Algebraic Method - $title'),
+        title: const Text('Método Algebraico - $title'),
         centerTitle: true,
         actions: const [ShareWidget()],
       ),
