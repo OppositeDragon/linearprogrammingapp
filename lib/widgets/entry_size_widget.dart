@@ -50,6 +50,12 @@ class _EntrySizeWidgetState extends ConsumerState<EntrySizeWidget> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final dataEntrySizeState = ref.watch(entrySizeControllerProvider);
+    variablesController.value = variablesController.value.copyWith(
+      text: dataEntrySizeState.variables == 0 ? '' : dataEntrySizeState.variables.toString(),
+    );
+    constraintsController.value = constraintsController.value.copyWith(
+      text: dataEntrySizeState.constraints == 0 ? '' : dataEntrySizeState.constraints.toString(),
+    );
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(
